@@ -121,7 +121,7 @@ iframe{
 		 background-repeat:repeat-y;
 		 background-color: #F4F442; 
 		 background-image:url(images/bkgnd.gif);
-		 background-size: contain;
+		 background-size: cover;
 	 }
 	 
 	 a{
