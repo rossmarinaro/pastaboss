@@ -98,7 +98,7 @@ iframe{
 			display: grid;
 			grid-template-columns: repeat(4, 1fr);
 			position: relative;
-			right: 45px;
+			left: 45px;
 			top: 10px;
 				
 }
