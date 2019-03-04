@@ -120,8 +120,8 @@ iframe{
 	
 		 background-repeat:repeat-y;
 		 background-color: #F4F442; 
-		 background-image:url(images/bkgnd.gif);
-		 background-size: cover;
+		 background-image:url(images/bkgnd2.gif);
+		 background-size: contain;
 	 }
 	 
 	 a{
@@ -139,7 +139,7 @@ iframe{
 	
 	.grid-container{ 
 	
-		right: 30%;
+		margin-right: 15%;
 	
 		}
 	
