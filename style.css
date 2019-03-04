@@ -98,8 +98,8 @@ iframe{
 			display: grid;
 			grid-template-columns: repeat(4, 1fr);
 			position: relative;
-			left: 45px;
-			top: 10px;
+			margin-left: 45px;
+			margin-top: 10px;
 				
 }
 
