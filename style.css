@@ -35,7 +35,7 @@ a{
 
 iframe{
 	
-	margin-right: 300px;
+	margin-left: 300px;
 	padding: 5%;
 	width: 900px;
 	height: 600px;
@@ -59,7 +59,7 @@ iframe{
 #nav-bar ul{
 	
 	 list-style-type: none;
-	 display: inline;
+	 display: inline-block;
 	 
 }
 
@@ -94,12 +94,13 @@ iframe{
 }
 
 .grid-container{
-					
+			
+			width: 50%;
 			display: grid;
 			grid-template-columns: repeat(4, 1fr);
-			position: relative;
-			right: 45%;
-			top: 10%;
+			margin-left: 30%;
+			margin-top: 10%;
+			
 				
 }
 
@@ -145,14 +146,17 @@ iframe{
 		
 		width:200px;
 		height:150px;
-		margin-left: 50px;
+		margin-left: 75px;
 		
 		
 	}
 	
 	.grid-container{ 
-	
-		margin-right: 30%;
+		
+		
+		margin-left: 150px;
+		margin-top: 50px;
+		 
 	
 		}
 	
