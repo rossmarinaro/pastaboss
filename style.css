@@ -47,19 +47,29 @@ iframe{
    
 #nav-bar{
 	
-	 display: none;	
+
+   display: none;
+  transition: 0.5s;
+
+
 	 
 }
+
 
 #nav-bar ul{
 	
 	 list-style-type: none;
+	 display: inline;
 	 
 }
 
 #nav-bar a{
 
+
+
   transition: 0.3s;
+ 
+ 
 	
 }
 
@@ -120,9 +130,9 @@ iframe{
 	
 		 background-repeat:repeat-y;
 		 background-color: #F4F442; 
-		 background-image:url(images/bkgnd3.gif);
+		 background-image:url(images/bkgnd2.gif);
 		 background-size: cover;
-		 background-position: static;
+	
 	 }
 	 
 	 a{
@@ -136,6 +146,7 @@ iframe{
 		width:200px;
 		height:150px;
 		margin-left: 50px;
+		
 		
 	}
 	
