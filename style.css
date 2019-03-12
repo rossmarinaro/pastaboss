@@ -48,9 +48,16 @@ footer p{
 }								
 
 
-footer a{
+footer a span{
 	
-	color: #CD0A0A;
+	margin: auto;
+	padding-bottom: 5%;
+	text-align: center;
+	font-family: 'Arial Black', sans-serif;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 0.4em;
+
 	
 }
 
@@ -59,7 +66,6 @@ footer a:hover{
 			color:#F4F442;
 			text-shadow:  0.2em 0.2em 0.2em  #CD0A0A;
 }
-
 
 a{
 	
@@ -163,7 +169,7 @@ iframe{
 .grid-container img:hover{
 	
 	box-shadow: 0.1em 0.1em 0.1em #EDFF00 , 0.2em 0.2em 0.2em #F9E70B;
-	border: 0.1em solid #EFFF22;
+	border: 0.1em solid #F3FC83;
 	
 }
 
