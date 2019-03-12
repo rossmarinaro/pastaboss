@@ -15,6 +15,7 @@ body{
 	background: -webkit-radial-gradient(#F4F442,#A8A23E);
 	background-image: url(images/bkgnd.gif);
 	background-size: cover;
+	overflow-x: hidden;
 
 	
 }
@@ -56,7 +57,7 @@ footer a{
 footer a:hover{
 	
 			color:#F4F442;
-			text-shadow:  1em 0.8em 0.2em  #CD0A0A;
+			text-shadow:  0.2em 0.2em 0.2em  #CD0A0A;
 }
 
 
@@ -65,7 +66,7 @@ a{
 	font-family: 'Bangers' , 'Arial Black' , sans-serif;
 	font-weight: 700;
 	font-size: 3em;
-	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 1em 1em 1em #000000;
+	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #000000;
 	text-decoration: none;
 	letter-spacing: 0.05em;
 	color: #CD0A0A;
@@ -121,7 +122,7 @@ iframe{
 
 #nav-button a:hover{
 	
-	text-shadow:  0.5em 0.5em 0.5em  #CD0A0A;
+		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;  
 	
 }
 
@@ -129,8 +130,8 @@ iframe{
 #nav-bar a:hover{
 	
 		color:#F4F442;
-		
-
+		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;
+	
 }
 
 .container{
@@ -146,6 +147,7 @@ iframe{
 	grid-template-columns: repeat(4, 1fr);
 	margin-left: 25%;
 	margin-top: 10%;
+	position: relative;
 			
 				
 }
@@ -251,11 +253,9 @@ iframe{
 		
 		}
 		
-		
-	
 		.grid-container{ 
 		
-		margin-left: 130px;
+		margin-left: 100px;
 		margin-top: 50px;
 		width: 250px;
 		
