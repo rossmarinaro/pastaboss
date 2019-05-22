@@ -15,17 +15,12 @@ body{
 	background: -webkit-radial-gradient(#F4F442,#A8A23E);
 	background-image: url(images/bkgnd.gif);
 	background-size: cover;
-	overflow-x: hidden;
+
 
 	
 }
 
-footer{
-	
-	position: relative;
-	
-	
-}
+
 
 footer h5{
 
@@ -82,13 +77,12 @@ a{
 
 
 
-iframe{
+form label{
 	
-	margin-left: 300px;
-	padding: 5%;
-	width: 900px;
-	height: 600px;
-	position: relative;
+	text-align: center;
+	font-family: 'Bangers' , 'Arial Black' sans-serif;
+	
+	
 }
 
 
@@ -113,9 +107,16 @@ iframe{
 	 
 }
 
+#nav-bar li{
+	
+	  padding-bottom: 20px;
+	  
+}
+
 #nav-bar a{
 
   transition: 0.3s;
+
   
 }
 
@@ -139,6 +140,15 @@ iframe{
 		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;
 	
 }
+
+.video-wrapper iframe{
+	left: 80px;
+	padding: 5%;
+	width: 900px;
+	height: 600px;
+	position: relative;
+}
+
 
 .container{
 	
@@ -187,12 +197,6 @@ iframe{
   
  /*tablet*/ @media screen and ( max-width: 1260px){
  
-		iframe{ 
-		
-		width:550px;
-		height:350px;
-		right: 60x;
-	}
 	
 	#nav-bar ul{
 		
@@ -205,16 +209,6 @@ iframe{
 
  /*tablet*/ @media screen and ( max-width: 800px){
  
-		iframe{ 
-		
-		width:400px;
-		height:220px;
-		margin-left: 40px;
-		margin-top: 40px;
-	
-		}
-		
-		
 		a{
 			
 			font-size:2.3em;
@@ -254,13 +248,12 @@ iframe{
 		 font-size: 1.5em;
 		
 		}
-	
-		iframe{
+
+		.video-wrapper	iframe{
 		
 		width:250px;
 		height:200px;
-		left: 20px;
-	
+		left: 30px;
 		
 		}
 	

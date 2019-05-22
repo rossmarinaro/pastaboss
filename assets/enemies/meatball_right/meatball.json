@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "meatball.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 86,
+				"h": 246
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 86,
+						"h": 82
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 86,
+						"h": 82
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 86,
+						"h": 82
+					}
+				},
+				{
+					"filename": "2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 86,
+						"h": 82
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 86,
+						"h": 82
+					},
+					"frame": {
+						"x": 0,
+						"y": 82,
+						"w": 86,
+						"h": 82
+					}
+				},
+				{
+					"filename": "3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 86,
+						"h": 82
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 86,
+						"h": 82
+					},
+					"frame": {
+						"x": 0,
+						"y": 164,
+						"w": 86,
+						"h": 82
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:610126287e4bbf12ae496bf39207fbe3:6c5e99df90cd5c5831e334beb4a9b5bf:aabfb5dfa42b4af25ddb8d5f35c50591$"
+	}
+}
