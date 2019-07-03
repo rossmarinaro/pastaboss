@@ -440,7 +440,7 @@ create() {
 
 		//left button	
 		this.leftButton =
-		this.add.image(100, 900, 'left_button').setOrigin(0).setName('left_button').setInteractive().setScale(1.3); 
+		this.add.image(100, 500, 'left_button').setOrigin(0).setName('left_button').setInteractive().setScale(1.3); 
 		this.leftButton.setScrollFactor(0);
 		this.leftButton.on('pointerover', ()=>{
 		this.leftButton.tint = 0xff0000;	
@@ -452,7 +452,7 @@ create() {
 		}, this);
 		// jump button
 		this.jumpButton = 
-		this.add.image(200, 900, 'jump_button').setOrigin(0).setName('jump_button').setInteractive().setScale(1.3);
+		this.add.image(200, 500, 'jump_button').setOrigin(0).setName('jump_button').setInteractive().setScale(1.3);
 		this.jumpButton.setScrollFactor(0);
 		this.jumpButton.on('pointerover', ()=>{
 			this.jumpButton.tint = 0xff0000;
@@ -464,7 +464,7 @@ create() {
 		}, this);
 		// right button
 		this.rightButton = 
-		this.add.image(300, 900, 'right_button').setOrigin(0).setName('right_button').setInteractive().setScale(1.3);
+		this.add.image(300, 500, 'right_button').setOrigin(0).setName('right_button').setInteractive().setScale(1.3);
 		this.rightButton.setScrollFactor(0);
 		this.rightButton.on('pointerover', ()=>{
 			this.rightButton.tint = 0xff0000;
@@ -476,7 +476,7 @@ create() {
 		}, this);
 		// A button (rolling pin weapon)
 		this.A_button = 
-		this.add.image(500, 900, 'A_button').setOrigin(0).setName('A_button').setInteractive().setScale(1.3);  
+		this.add.image(500, 500, 'A_button').setOrigin(0).setName('A_button').setInteractive().setScale(1.3);  
 		this.A_button.setScrollFactor(0);
 		this.A_button.on('pointerdown', ()=>{
 			this.A_button.tint = 0xff0000;
@@ -489,7 +489,7 @@ create() {
 		
 	//// B button (macaroni weapon)
 		this.B_button = 
-		this.add.image(620, 900, 'B_button').setOrigin(0).setInteractive().setScale(1.3);
+		this.add.image(620, 500, 'B_button').setOrigin(0).setInteractive().setScale(1.3);
 		this.B_button.setScrollFactor(0);
 		this.B_button.on('pointerdown', ()=>{
 				this.B_button.tint = 0x0C1EA5;
