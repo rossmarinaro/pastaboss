@@ -440,7 +440,7 @@ create() {
 
 		//left button	
 		this.leftButton =
-		this.add.image(100, 500, 'left_button').setOrigin(0).setName('left_button').setInteractive().setScale(1.3); 
+		this.add.image(100, 500, 'left_button').setOrigin(0).setName('left_button').setInteractive();
 		this.leftButton.setScrollFactor(0);
 		this.leftButton.on('pointerover', ()=>{
 		this.leftButton.tint = 0xff0000;	
