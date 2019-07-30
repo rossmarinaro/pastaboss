@@ -101,7 +101,6 @@ form label{
 #nav-bar ul{
 	
 	 list-style-type: none;
-	 display: inline-block;
 	 z-index: 1;
 	 position: absolute;
 	 
@@ -129,7 +128,8 @@ form label{
 
 #nav-button a:hover{
 	
-		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;  
+		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A; 
+		color: #ff0000;
 	
 }
 
@@ -142,7 +142,7 @@ form label{
 }
 
 .video-wrapper iframe{
-	left: 80px;
+	margin-left: 300px;
 	padding: 5%;
 	width: 900px;
 	height: 600px;
@@ -197,41 +197,67 @@ form label{
   
  /*tablet*/ @media screen and ( max-width: 1260px){
  
-	
-	#nav-bar ul{
+	#nav-bar ul {
+			display: flex;
+			flex-wrap: nowrap;
+			 font-size: 0.7em;
+			 left: 25px;
+			bottom: 570px;
+			font-size: 0.8em;
+		}
 		
-		
-		font-size: 0.8em;
-		
+		#nav-bar li{
+			padding-left: 25px;
+		}
+
+	.video-wrapper iframe{
+		margin-left: 100px;
+		padding: 5%;
+		width: 600px;
+		height: 400px;
 	}
 
  }
 
  /*tablet*/ @media screen and ( max-width: 800px){
  
-		a{
+		#nav-bar a{
 			
 			font-size:2.3em;
 			
 		}
+
 		
+		#nav-bar ul {
+			display: flex;
+			flex-wrap: nowrap;
+			 font-size: 0.7em;
+			 left: 25px;
+			bottom: 570px;			 
+		}
 		
-		#nav-bar ul{
-			
-			right: 75%;
-			
+		#nav-bar li{
+			padding-left: 25px;
+		}
+
+	
+		.video-wrapper iframe{
+			margin-left:50px;
+			padding: 5%;
+			width: 400px;
+			height: 300px;
 		}
 		
 		.grid-container{ 
 		
 		margin-left: 100px;
-		
+		}
 	
 		
  }
  
   
- /*mobile*/ @media screen and ( max-width: 500px){
+ /*mobile*/ @media screen and ( max-width: 600px){
 	 
 		body{
 	
@@ -251,14 +277,27 @@ form label{
 
 		.video-wrapper	iframe{
 		
-		width:250px;
-		height:200px;
+		width:350px;
+		height:250px;
 		left: 30px;
 		
 		}
-	
 		
-
+		.grid-container{ 
+		margin-left: 150px;
+		}
+		
+		#nav-bar ul{
+			margin-left: 40px;
+		}
+		
+		#nav-bar a{
+			
+			font-size:1.3em;
+			
+		}
+		
+	
 	
  }
 
