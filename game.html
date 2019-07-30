@@ -12,6 +12,8 @@
 					<link rel="stylesheet" type="text/css" href="style.css"/>
 					<link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
 					<title>Pastaboss! &#127837; &#128076;</title>
+					<script type="text/javascript" src="js/jquery.js"></script>
+					<script type="text/javascript" src="js/cycleplugin.js"></script>
 <!-- phaser game script -->	
 	  <script src="js/phaser.min.js"></script>
 	  <script src="js/phaser.js"></script>
@@ -22,11 +24,7 @@
 	  <script type="text/javascript" src="js/PlayState_lv2.js"></script>
 	  <script type="text/javascript" src="js/RetryState.js"></script>
 	  <script type="text/javascript" src="js/LivesState.js"></script>
-	  <script type="text/javascript" src="js/config.js"></script>
-
-<!-- page script-->
-<script src="script.js">
-</script>
+	  <script type="text/javascript" src="js/config.js"></script>	
 				
 </head>
 
@@ -34,9 +32,18 @@
 <body>
 
 			<header>
-
-					
-					</header>
+					<div id="nav-button"  onclick="toggle()"><a>&#9776;</a></div>
+					<div id="nav-bar"  class="fade"> 		
+						
+								<ul>
+									<li><a href="index.html">Home</a></li>
+									<li><a href="comics.html">Comics</a></li>
+									<li><a href="clips.html">Clips</a></li>
+									<li><a href="https://pastaboss.bandcamp.com">Bandcamp</a></li>
+									<li><a href="https://instagram.com/pastaboss/">Instagram</a></li>
+								</ul>
+							</div>
+		    </header>
 
 				
 				
@@ -45,7 +52,8 @@
 				
 
 </body>
-
+<!--script-->
+<script type="text/javascript" src="script.js"></script> 
 </html>
 
 
