@@ -297,7 +297,7 @@ form label{
 			
 		}
 		
-	@media screen and ( max-width: 300px){
+	@media screen and ( max-width: 400px){
 		
 		#nav-bar ul {
 			display: flex;
