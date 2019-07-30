@@ -219,7 +219,7 @@ form label{
 
  }
 
- /*tablet*/ @media screen and ( max-width: 300px){
+ /*tablet*/ @media screen and ( max-width: 800px){
  
 		#nav-bar a{
 			
@@ -297,7 +297,23 @@ form label{
 			
 		}
 		
-	
+	@media screen and ( max-width: 300px){
+		
+		#nav-bar ul {
+			display: flex;
+			flex-wrap: nowrap;
+			 font-size: 0.7em;
+			 left: 25px;
+			bottom: 1000px;			 
+		}
+		
+		#nav-bar li{
+			padding-left: 25px;
+		}
+
+	 }
+       
+		
 	
  }
 
