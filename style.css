@@ -244,8 +244,8 @@ form label{
 		.video-wrapper iframe{
 			margin-left:50px;
 			padding: 5%;
-			width: 400px;
-			height: 300px;
+			width: 300px;
+			height: 200px;
 		}
 		
 		.grid-container{ 
@@ -277,8 +277,8 @@ form label{
 
 		.video-wrapper	iframe{
 		
-		width:350px;
-		height:250px;
+		width:100px;
+		height:70px;
 		left: 30px;
 		
 		}
