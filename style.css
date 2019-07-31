@@ -199,7 +199,11 @@ form label{
  
 	#nav-bar ul {
 		
-			font-size: 0.8em;
+			font-size: 0.8em;	display: flex;
+			flex-wrap: nowrap;
+			 font-size: 0.7em;
+			 
+		
 		}
 		
 		#nav-bar li{
