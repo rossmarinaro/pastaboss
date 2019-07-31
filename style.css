@@ -1,3 +1,4 @@
+
 /* style.css (Pastaboss) */
 
 
@@ -102,7 +103,7 @@ form label{
 	
 	 list-style-type: none;
 	 z-index: 1;
-	 position: absolute;
+	 
 	 
 }
 
@@ -198,12 +199,12 @@ form label{
  /*tablet*/ @media screen and ( max-width: 1260px){
  
 	#nav-bar ul {
-			display: flex;
+		
+			font-size: 0.8em;	display: flex;
 			flex-wrap: nowrap;
 			 font-size: 0.7em;
-			 left: 25px;
-			bottom: 570px;
-			font-size: 0.8em;
+			 
+		
 		}
 		
 		#nav-bar li{
@@ -211,13 +212,24 @@ form label{
 		}
 
 	.video-wrapper iframe{
-		margin-left: 100px;
+		margin-left: 200px;
 		padding: 5%;
 		width: 600px;
 		height: 400px;
 	}
 
  }
+ 
+  /*tablet*/ @media screen and ( max-width: 1000px){
+	  
+	  .video-wrapper iframe{
+		margin-left: 100px;
+		padding: 5%;
+		width: 600px;
+		height: 400px;
+	}
+	  
+  }
 
  /*tablet*/ @media screen and ( max-width: 800px){
  
@@ -233,7 +245,7 @@ form label{
 			flex-wrap: nowrap;
 			 font-size: 0.7em;
 			 left: 25px;
-			bottom: 570px;			 
+			bottom: 1200px;			 
 		}
 		
 		#nav-bar li{
@@ -242,10 +254,10 @@ form label{
 
 	
 		.video-wrapper iframe{
-			margin-left:50px;
+			margin-left:70px;
 			padding: 5%;
-			width: 400px;
-			height: 300px;
+			width: 300px;
+			height: 200px;
 		}
 		
 		.grid-container{ 
@@ -276,11 +288,10 @@ form label{
 		}
 
 		.video-wrapper	iframe{
-		
-		width:350px;
-		height:250px;
-		left: 30px;
-		
+		width:300px;
+		height:200px;
+		left: 20px;
+	
 		}
 		
 		.grid-container{ 
@@ -288,7 +299,7 @@ form label{
 		}
 		
 		#nav-bar ul{
-			margin-left: 40px;
+			margin-left: 25px;
 		}
 		
 		#nav-bar a{
@@ -297,8 +308,29 @@ form label{
 			
 		}
 		
-	
+	@media screen and ( max-width: 300px){
+		
+		#nav-bar ul {
+			display: flex;
+			flex-wrap: nowrap;
+			 font-size: 0.7em;
+			 left: 25px;
+			bottom: 570px;			 
+		}
+		
+		#nav-bar li{
+			padding-left: 25px;
+		}
+		.video-wrapper	iframe{
+		
+		width:50px;
+		height:70px;
+		left: 30px;
+		
+		}
+
+	 }
+       
+		
 	
  }
-
-/*end*/
