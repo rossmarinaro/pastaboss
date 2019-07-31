@@ -202,8 +202,6 @@ form label{
 		
 			font-size: 0.8em;	display: flex;
 			flex-wrap: nowrap;
-			 font-size: 0.7em;
-			 
 		
 		}
 		
@@ -244,7 +242,7 @@ form label{
 			display: flex;
 			flex-wrap: nowrap;
 			 font-size: 0.7em;
-			 left: 15px;
+			 left: 10px;
 			bottom: 1200px;			 
 		}
 		
@@ -299,7 +297,7 @@ form label{
 		}
 		
 		#nav-bar ul{
-			margin-left: 25px;
+			margin-left: 10px;
 		}
 		
 		#nav-bar a{
