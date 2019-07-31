@@ -213,8 +213,8 @@ form label{
 	.video-wrapper iframe{
 		margin-left: 100px;
 		padding: 5%;
-		width: 200px;
-		height: 400px;
+		width: 400px;
+		height: 200px;
 	}
 
  }
@@ -309,6 +309,13 @@ form label{
 		
 		#nav-bar li{
 			padding-left: 25px;
+		}
+		.video-wrapper	iframe{
+		
+		width:100px;
+		height:70px;
+		left: 30px;
+		
 		}
 
 	 }
