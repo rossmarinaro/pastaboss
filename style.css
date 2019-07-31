@@ -198,11 +198,7 @@ form label{
  /*tablet*/ @media screen and ( max-width: 1260px){
  
 	#nav-bar ul {
-			display: flex;
-			flex-wrap: nowrap;
-			 font-size: 0.7em;
-			 left: 25px;
-			bottom: 570px;
+		
 			font-size: 0.8em;
 		}
 		
