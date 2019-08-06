@@ -1,14 +1,15 @@
 //// Pastaboss game Playstate script
 
-class PlayState extends Phaser.Scene {
+class PlayState_lv2 extends Phaser.Scene {
   constructor() {
-    super("PlayState");
+    super("PlayState_lv2");
   }
 
 
 ////create
   
 create() {
+	
 		
 		//background
 		this.bkgnd = 
@@ -18,14 +19,14 @@ create() {
 		this.mainTheme.play();
 		this.mainTheme.setLoop(this.loop);	
 		// load the map 
-		map = this.add.tilemap('map');
-		this.load.image('map',  'assets/map.png');
+		map = this.add.tilemap('map2');
+		this.load.image('map2',  'assets/map2.png');
 		// tiles for the ground layer, background images
 		let backdropTiles = map.addTilesetImage('tiles2');
 		let backdrop = map.createStaticLayer('bkgnd', backdropTiles, 0, 0);
 		let backdropTiles2 = map.addTilesetImage('tiles3');
 		let backdropUnderground = map.createStaticLayer('bkgnd2', backdropTiles2, 0, 0);
-		let groundTiles = map.addTilesetImage('tiles');
+		let groundTiles = map.addTilesetImage('tiles4');
 		groundLayer = map.createStaticLayer('World', groundTiles, 0, 0);
 		groundLayer.setCollisionByExclusion([-1]);
 		let macaroniItemTiles = map.addTilesetImage('coin');   
@@ -33,26 +34,27 @@ create() {
 		//world parameters
 		this.physics.world.bounds.width = groundLayer.width;   
 		this.physics.world.bounds.height = groundLayer.height; 
-	////hazards////
-	//fire
-/*		this.anims.create({
-			key: 'fire_anims',
-			frames:[
-			{ key: 'fire1' },
-				{ key: 'fire2' },
-					{ key: 'fire3' },
-						{ key: 'fire4' }, 
-							{ key: 'fire5' , duration: 5 }
-			],
-			frameRate: 8,
-			repeat: -1
-			});
-		this.fire = this.add.group();
-		const xCoord = Math.random() * 1400;
-		this.fire.create(1390, 570, 'fire1').play('fire_anims').setScale(1.2);
-		this.fire.create(2160, 580, 'fire1').play('fire_anims').setScale(1.2);
-		this.fire.create(2230, 580, 'fire1').play('fire_anims').setScale(1.2);
-		this.fire.create(2300, 580, 'fire1').play('fire_anims').setScale(1.2);      */
+		// health text
+		this.text = this.add.text(20, 20,  '\u2764', { 	
+		fontSize: '30px',
+		fill: '#ffffff'
+		});
+		this.text2 = this.add.text(25, 50,  '3', {
+		fontSize: '25px',
+		fontFamily: 'Bangers',
+		fill: '#ffffff'
+		});
+		// macaroni available
+		this.macaroniText = this.add.text(110, 15, 'Macaroni :', {
+			fontSize: '25px',
+			fontFamily: 'Bangers',
+			fill: '#ffffff'
+		});
+		this.macaroniText2 = this.add.text(120, 50, '25', {
+			fontSize: '25px',
+			fontFamily: 'Bangers',
+			fill: '#ffffff'
+		});		
 	// level pick ups
 		let healthPickups = this.physics.add.group();
         this.healthPickup = healthPickups.create(430, 400, 'ikura');
@@ -148,10 +150,7 @@ create() {
 			frames: this.anims.generateFrameNames('player', {prefix: 'p1_walk', start: 1, end: 4, zeroPad: 2}),
 			frameRate: 10,
 			repeat: -1
-	});	
-
-		
-
+	});	   
  	
 ///////enemy animations//////
 
@@ -223,10 +222,60 @@ create() {
         frameRate: 0
     });
 
-	
+		// fire animation
+				this.anims.create({
+			key: 'fire_anims',
+			frames:[
+			{ key: 'fire1' },
+				{ key: 'fire2' },
+					{ key: 'fire3' },
+						{ key: 'fire4' }, 
+							{ key: 'fire5' , duration: 5 }
+		],
+		frameRate: 8,
+		repeat: -1
+});
 	
 ///////////////////
+		// fire animation
+				this.anims.create({
+			key: 'fire_anims',
+			frames:[
+			{ key: '1' },
+				{ key: '2' },
+					{ key: '3' },
+						{ key: '4' }, 
+							{ key: '5' , duration: 5 }
+		],
+		frameRate: 8,
+		repeat: -1
+});
+		
+		//fire particles
+		
+	const fire = this.add.group();
 	
+	function fireGen(){
+		const xCoord = Math.random() * 800;
+		fire.create(xCoord, 580, 'fire').play('fire_anims');
+	}
+	
+	function fireDestroy(){
+		fire.getChildren().map(child => child.destroy());
+	}
+
+		this.timedEvent = this.time.addEvent({
+						delay: 50,
+						callback: fireGen,
+						callbackScope: this,
+						loop: true,
+						});	
+		this.timedEvent = this.time.addEvent({
+						delay: 2000,
+						callback: fireDestroy,
+						callbackScope: this,
+						loop: true,
+						});	
 		// enemy movement groups 
 		this.enemyStatic = this.physics.add.staticGroup();
 		this.enemyMoving = this.physics.add.group();	
@@ -243,9 +292,9 @@ create() {
 		
 	
 		//cheese pits
-		let cheese_pit = this.enemyStatic.create(1400, 600, 'cheese_pit1').play('cheese_pit_anims');
+		let cheese_pit = this.enemyStatic.create(1400, 800, 'cheese_pit1').play('cheese_pit_anims');
 		cheese_pit.setScale(0.65, 0.7);
-		let cheese_pit2 = this.enemyStatic.create(2240, 666, 'cheese_pit1').play('cheese_pit_anims');
+		let cheese_pit2 = this.enemyStatic.create(2240, 806, 'cheese_pit1').play('cheese_pit_anims');
 		cheese_pit2.setScale(1.3);
 	
 		
@@ -292,10 +341,6 @@ create() {
 		// boss fire
 		this.bossFire = this.physics.add.group();
 		
-
-	
-	
-
 		
 /////////// health, ammo, and lives text  ///////////////////////////////////////////////////////
 
@@ -543,24 +588,16 @@ create() {
 		this.scene.stop('PlayState');
 		this.scene.start('PreloadState_lv2');
 		});
-		
-		
-		
-//////  cameras  //////
+		//cameras 
 		this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 		this.cameras.main.startFollow(player);  
-		
-		
-		
-		
-/////////// game controls  /////////////////
 
+/////////// game controls  /////////////////
 
 //cursors and keys
 		cursors = this.input.keyboard.createCursorKeys();
 		this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);		
 		this.WKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-		
 		
 //virtual buttons
 
@@ -657,26 +694,24 @@ create() {
 //player movements
 
   //left
-	if (this.leftButtonState === true && cursors.left.isUp){	
+	if (this.leftButtonState === true && cursors.left.isDown === false){	
 			player.body.setVelocityX(-250);
 			player.anims.play('walk', true);
 			player.flipX = true;		
 	}
   //jump
-  if (this.jumpButtonState === true && cursors.up.isUp && player.body.onFloor() === true){
+  if (this.jumpButtonState === true && cursors.up.isDown === false && player.body.onFloor() === true){
 			player.body.setVelocityY(-490);
 			player.anims.play('fall', true);
-			this.huh = this.sound.add('huh');
-			this.huh.play();
   }
   //right
-  if (this.rightButtonState === true &&  cursors.left.isUp){
+  if (this.rightButtonState === true &&  cursors.left.isDown === false){
 			player.body.setVelocityX(250);
 			player.anims.play('walk', true);
 			player.flipX = false;
   }
   //A button
-  if(this.A_buttonState === true && this.input.activePointer.isDown && cursors.space.isUp && player.flipX === false){
+  if(this.A_buttonState === true && this.input.activePointer.isDown && cursors.space.isDown === false && player.flipX === false){
 					player.anims.play('rolling_pin');
 					this.huh = this.sound.add('huh');
 					this.huh.play();
@@ -705,7 +740,7 @@ create() {
 					}
 							this.chiliHealth --;
 							this.chili.tint = 0xff0000;
-					return	this.chiliHit = this.sound.add('chili_hit', {volume:0.35});
+					return	this.chiliHit = this.sound.add('chili_hit', {volume:0.25});
 					});
 					this.physics.add.collider(this.rollingPin, this.chili2, ()=>{
 					this.timedEvent = this.time.addEvent({
@@ -718,7 +753,7 @@ create() {
 					}
 							this.chili2Health--;
 							this.chili2.tint = 0xff0000;
-					return	this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+					return	this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 					});
 					this.physics.add.collider(this.rollingPin, this.chili3, ()=>{
 					this.timedEvent = this.time.addEvent({
@@ -731,7 +766,7 @@ create() {
 					}
 							this.chili3Health--;
 							this.chili3.tint = 0xff0000;
-					return	this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+					return	this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 					});
 					//meatballs
 					this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
@@ -791,7 +826,7 @@ create() {
 						return this.rollingPin.destroy();
 					});
 				  }
-		  else if (this.A_buttonState === true && this.input.activePointer.isDown && cursors.space.isUp && player.flipX === true){
+		  else if (this.A_buttonState === true && this.input.activePointer.isDown && cursors.space.isDown === false && player.flipX === true){
 			   player.anims.play('rolling_pin');
 			   player.anims.play('rolling_pin');
 			   this.huh = this.sound.add('huh');
@@ -811,7 +846,7 @@ create() {
 						this.physics.add.collider(this.rollingPin_left, this.chili, ()=>{
 							this.chiliHealth--;	
 							this.chili.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+							this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 						this.timedEvent = this.time.addEvent({
 							delay: 50,
 							callback: onEvent,
@@ -824,7 +859,7 @@ create() {
 							this.physics.add.collider(this.rollingPin_left, this.chili2, ()=>{
 							this.chili2Health--;	
 							this.chili2.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+							this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 						this.timedEvent = this.time.addEvent({
 							delay: 50,
 							callback: onEvent,
@@ -837,7 +872,7 @@ create() {
 						this.physics.add.collider(this.rollingPin_left, this.chili3, ()=>{
 							this.chili3Health--;
 							this.chili3.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+							this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 						this.timedEvent = this.time.addEvent({
 							delay: 50,
 							callback: onEvent,
@@ -928,7 +963,7 @@ create() {
 					});
 				   }
 		// B button
-		 if (this.B_buttonState === true && this.input.activePointer.isDown && cursors.space.isUp && player.flipX === false && macaroniAvailable >= 1){
+		 if (this.B_buttonState === true && this.input.activePointer.isDown && cursors.space.isDown === false && player.flipX === false && macaroniAvailable >= 1){
 					player.anims.play('fire_macaroni');
 					this.macaroni = this.macaronis.create(player.x + 30, player.y, 'macaroni').play('macaroni_loop');
 					this.macaroni.setVelocityX(700);
@@ -952,7 +987,7 @@ create() {
 						this.chiliHealth--;
 						this.chili.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 						this.timedEvent = this.time.addEvent({
 						delay: 50,
 						callback: onEvent,
@@ -966,7 +1001,7 @@ create() {
 						this.chili2Health--;
 						this.chili2.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 					this.timedEvent = this.time.addEvent({
 						delay: 50,
 						callback: onEvent,
@@ -980,7 +1015,7 @@ create() {
 						this.chili3Health--;
 						this.chili3.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 						this.timedEvent = this.time.addEvent({
 						delay: 50,
 						callback: onEvent,
@@ -1048,7 +1083,7 @@ create() {
 					});			
 					
 			}
-			else if(this.B_buttonState === true && this.input.activePointer.isDown && cursors.space.isUp && player.flipX === true && macaroniAvailable >= 1){
+			else if(this.B_buttonState === true && this.input.activePointer.isDown && cursors.space.isDown === false && player.flipX === true && macaroniAvailable >= 1){
 				player.anims.play('fire_macaroni');
 				this.huh = this.sound.add('huh');
 				this.huh.play();
@@ -1075,7 +1110,7 @@ create() {
 				this.chili.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
 				this.chili.destroy();
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1089,7 +1124,7 @@ create() {
 				this.chili2Health--;
 				this.chili2.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1103,7 +1138,7 @@ create() {
 				this.chili3Health--;
 				this.chili3.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit', {volume: 0.25});
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1194,14 +1229,8 @@ create() {
 				});	
 		}
 
-		
-		
-		
 
 ////////////////////////////////           cursors         ////////////////////////
-
-
-
 
 	// player movements 
 	
@@ -1224,8 +1253,6 @@ create() {
 		if (cursors.up.isDown && player.body.onFloor()){
 			player.body.setVelocityY(-500); 
 			player.anims.play('walk', true);
-			this.huh = this.sound.add('huh');
-			this.huh.play();
 		}
 		//fall
 		  if (player.body.onFloor() == false){
@@ -1237,7 +1264,7 @@ create() {
 	//rolling pin weapon	
 
 	 
-	if (this.WKey.isDown && cursors.right.isUp && player.flipX === false){	
+	if (this.WKey.isDown && cursors.right.isDown === false && player.flipX === false){	
 			player.anims.play('rolling_pin');
 			this.huh = this.sound.add('huh');
 			this.huh.play();	
@@ -1256,7 +1283,7 @@ create() {
 			this.physics.add.collider(this.rollingPin, this.chili, ()=>{
 			this.chiliHealth --;
 			this.chili.tint = 0xff0000;
-			this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+			this.chiliHit = this.sound.add('chili_hit');
 			this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1269,7 +1296,7 @@ create() {
 			this.physics.add.collider(this.rollingPin, this.chili2, ()=>{
 			this.chili2Health--;
 			this.chili2.tint = 0xff0000;
-			this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+			this.chiliHit = this.sound.add('chili_hit');
 			this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1282,7 +1309,7 @@ create() {
 			this.physics.add.collider(this.rollingPin, this.chili3, ()=>{
 			this.chili3Health--;
 			this.chili3.tint = 0xff0000;
-			this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+			this.chiliHit = this.sound.add('chili_hit');
 			this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1353,7 +1380,7 @@ create() {
 		}	
 	
 // left	rolling pin weapon
-	if (this.WKey.isDown && cursors.left.isUp && player.flipX === true){	
+	if (this.WKey.isDown && cursors.left.isDown === false && player.flipX === true){	
 		player.anims.play('rolling_pin');
 		this.huh = this.sound.add('huh');
 		this.huh.play();
@@ -1372,7 +1399,7 @@ create() {
 				this.physics.add.collider(this.rollingPin_left, this.chili, ()=>{
 				this.chiliHealth--;	
 				this.chili.tint = 0xff0000;
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1385,7 +1412,7 @@ create() {
 				this.physics.add.collider(this.rollingPin_left, this.chili2, ()=>{
 				this.chili2Health--;	
 				this.chili2.tint = 0xff0000;
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1398,7 +1425,7 @@ create() {
 				this.physics.add.collider(this.rollingPin_left, this.chili3, ()=>{
 				this.chili3Health--;
 				this.chili3.tint = 0xff0000;
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1515,7 +1542,7 @@ create() {
 				this.chiliHealth--;
 				this.chili.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1529,7 +1556,7 @@ create() {
 				this.chili2Health--;
 				this.chili2.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1543,7 +1570,7 @@ create() {
 				this.chili3Health--;
 				this.chili3.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1642,7 +1669,7 @@ create() {
 				this.chili.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
 				this.chili.destroy();
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1656,7 +1683,7 @@ create() {
 				this.chili2Health--;
 				this.chili2.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1670,7 +1697,7 @@ create() {
 				this.chili3Health--;
 				this.chili3.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
 				callback: onEvent,
@@ -1790,8 +1817,8 @@ if (healthScore <= 0){
 		    this.levelBoss.destroy();
 		}
 		
-		
 				
  }//end update function
-   
-}//end state
+ 
+ //////////// end state //////////////////
+}

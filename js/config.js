@@ -20,7 +20,7 @@ var config = {
 		activePointers: 1
 	},
     scene: 
-   [PreloadState, MenuState, PlayState, PreloadState_lv2, RetryState, LivesState]
+   [PreloadState, MenuState, PlayState, PreloadState_lv2, PlayState_lv2, RetryState, LivesState]
    
 };
 
