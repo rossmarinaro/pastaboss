@@ -13,7 +13,7 @@ class LivesState extends Phaser.Scene{
 	this.livesLeftText = this.add.text(480, 280, "3", {font: "45px Bangers", fill: '#ffffff'});
 	livesLeft--;
 	this.livesLeftText.setText(livesLeft);
-	// start game button
+	// start game buttons
 	this.face = this.add.sprite(350, 280, 'lives2');
 	this.face.setInteractive();
 	this.face.on('pointerdown', function(){
@@ -21,7 +21,6 @@ class LivesState extends Phaser.Scene{
 	this.ring = this.sound.add('ring');	
 	this.ring.play();
 	this.scene.start('PlayState');
-
 	}
 	// if player lives score is 0 you lose
 	if (livesAvailable <= 0){	
@@ -29,13 +28,23 @@ class LivesState extends Phaser.Scene{
 			this.gameOver = this.sound.add('game_over');
 			this.gameOver.play();
 		}
-	}, this);   
+	}, this); 
+	this.timedEvent = this.time.addEvent({
+		delay: 2000,
+		callback: onEvent,
+		callbackScope: this
+		});	
+		function onEvent(){
+			if (livesAvailable >= 1){
+			this.input.keyboard.on('keydown', ()=>{
+				this.scene.start('PlayState');
+			}, this);
+			}
+		}
 	// menu audio
 	this.menuMusic = this.sound.add('menu_music');
 	// score
 	
-
-
   }// end create function
   
     update(time, delta){
