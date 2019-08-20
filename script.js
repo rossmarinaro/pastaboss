@@ -1,17 +1,14 @@
-/* javascript "Pastaboss"  */
+//// javascript "Pastaboss"  
+// JQuery
+ const $toggle = $('#nav-button'),
+		  $nav = $('#navigation');
+	
+	$(document).ready(()=>{
+		$toggle.on('click', ()=>{
+		$nav.slideToggle(400);
+		});
+		$('#cycle').cycle({fx:'fade'});
+	});
 
 
-function toggle() {
-var x =
-document.getElementById("nav-bar");
-
-if (window.getComputedStyle(x,null).getPropertyValue("display") === 'none'){
-
-x.style.display = 'block'; }
-
-else {
-
-x.style.display = 'none'; }
-
-};
 
