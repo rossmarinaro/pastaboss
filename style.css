@@ -243,13 +243,13 @@ form label{
 		#navigation ul {
 			display: flex;
 			flex-wrap: nowrap;
-			 font-size: 0.7em;
+			 font-size: 0.5em;
 			bottom: 1200px;	
 				
 		}
 		
 		#navigation li{
-			padding-left: 25px;
+			padding-left: 15px;
 		
 		}
 
