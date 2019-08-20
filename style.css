@@ -274,7 +274,7 @@ form label{
 	 
 		body{
 	
-		 background-repeat:repeat-y,
+		 background-repeat:repeat-y;
 		 background-color: #F4F442; 
 		 background-image:url(images/bkgnd2.gif);
 		 background-size: cover;
