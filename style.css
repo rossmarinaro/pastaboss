@@ -91,7 +91,7 @@ form label{
 							
  /*navigation*/
    
-#nav-bar{
+#navigation{
 	
    display: none;
    transition: 0.5s;
@@ -99,7 +99,7 @@ form label{
 }
 
 
-#nav-bar ul{
+#navigation ul{
 	
 	 list-style-type: none;
 	 z-index: 1;
@@ -107,13 +107,13 @@ form label{
 	 
 }
 
-#nav-bar li{
+#navigation li{
 	
 	  padding-bottom: 20px;
 	  
 }
 
-#nav-bar a{
+#navigation a{
 
   transition: 0.3s;
 
@@ -135,7 +135,7 @@ form label{
 }
 
 
-#nav-bar a:hover{
+#navigation a:hover{
 	
 		color:#F4F442;
 		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;
@@ -198,7 +198,7 @@ form label{
   
  /*tablet*/ @media screen and ( max-width: 1260px){
  
-	#nav-bar ul {
+	#navigation ul {
 		
 			font-size: 0.8em;	display: flex;
 			flex-wrap: nowrap;
@@ -207,7 +207,7 @@ form label{
 		
 		}
 		
-		#nav-bar li{
+		#navigation li{
 			padding-left: 25px;
 		}
 
@@ -233,23 +233,24 @@ form label{
 
  /*tablet*/ @media screen and ( max-width: 800px){
  
-		#nav-bar a{
+		#navigation a{
 			
 			font-size:2.3em;
 			
 		}
 
 		
-		#nav-bar ul {
+		#navigation ul {
 			display: flex;
 			flex-wrap: nowrap;
 			 font-size: 0.7em;
-			 left: 25px;
-			bottom: 1200px;			 
+			bottom: 1200px;	
+				
 		}
 		
-		#nav-bar li{
+		#navigation li{
 			padding-left: 25px;
+		
 		}
 
 	
@@ -273,7 +274,7 @@ form label{
 	 
 		body{
 	
-		 background-repeat:repeat-y;
+		 background-repeat:repeat-y,
 		 background-color: #F4F442; 
 		 background-image:url(images/bkgnd2.gif);
 		 background-size: cover;
@@ -291,6 +292,7 @@ form label{
 		width:300px;
 		height:200px;
 		left: 20px;
+		overflow-x: hidden;
 	
 		}
 		
@@ -298,11 +300,11 @@ form label{
 		margin-left: 150px;
 		}
 		
-		#nav-bar ul{
+		#navigation ul{
 			margin-left: 25px;
 		}
 		
-		#nav-bar a{
+		#navigation a{
 			
 			font-size:1.3em;
 			
@@ -310,7 +312,7 @@ form label{
 		
 	@media screen and ( max-width: 300px){
 		
-		#nav-bar ul {
+		#navigation ul {
 			display: flex;
 			flex-wrap: nowrap;
 			 font-size: 0.7em;
@@ -318,7 +320,7 @@ form label{
 			bottom: 570px;			 
 		}
 		
-		#nav-bar li{
+		#navigation li{
 			padding-left: 25px;
 		}
 		.video-wrapper	iframe{
