@@ -143,10 +143,10 @@ form label{
 }
 
 .video-wrapper iframe{
-	margin-left: 280px;
+	left: 320px;
 	padding: 5%;
-	width: 650px;
-	height: 520px;
+	width: 900px;
+	height: 600px;
 	position: relative;
 }
 
@@ -225,6 +225,8 @@ form label{
 	  .video-wrapper iframe{
 		margin-left: 100px;
 		padding: 5%;
+		width: 600px;
+		height: 400px;
 	}
 	  
   }
