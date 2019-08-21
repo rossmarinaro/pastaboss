@@ -143,7 +143,7 @@ form label{
 }
 
 .video-wrapper iframe{
-	margin-left: 300px;
+	left: 320px;
 	padding: 5%;
 	width: 900px;
 	height: 600px;
@@ -243,13 +243,13 @@ form label{
 		#navigation ul {
 			display: flex;
 			flex-wrap: nowrap;
-			 font-size: 0.5em;
+			 font-size: 0.7em;
 			bottom: 1200px;	
 				
 		}
 		
 		#navigation li{
-			padding-left: 15px;
+			padding-left: 25px;
 		
 		}
 
@@ -270,7 +270,7 @@ form label{
  }
  
   
- /*mobile*/ @media screen and ( max-width: 600px){
+ /*mobile*/ @media screen and ( max-width: 720px){
 	 
 		body{
 	
@@ -278,7 +278,6 @@ form label{
 		 background-color: #F4F442; 
 		 background-image:url(images/bkgnd2.gif);
 		 background-size: cover;
-	
 		}
 		
 	 
@@ -289,9 +288,10 @@ form label{
 		}
 
 		.video-wrapper	iframe{
-		width:300px;
-		height:200px;
-		left: 20px;
+		 margin: auto;
+		 width: 250px;
+		 height: 160px;
+		 left: 35px;
 		overflow-x: hidden;
 	
 		}
@@ -299,14 +299,11 @@ form label{
 		.grid-container{ 
 		margin-left: 150px;
 		}
-		
-		#navigation ul{
-			margin-left: 15px;
-		}
+	
 		
 		#navigation a{
 			
-			font-size:1.3em;
+			font-size: 0.8em;
 			
 		}
 		
