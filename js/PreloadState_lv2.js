@@ -9,12 +9,10 @@ class PreloadState_lv2 extends Phaser.Scene {
   
  //////preload//////
   preload(){
-	this.load.image('fire1', 'assets/hazards/fire/1.png');
-	this.load.image('fire2', 'assets/hazards/fire/2.png');
-	this.load.image('fire3', 'assets/hazards/fire/3.png');	
-	this.load.image('fire4', 'assets/hazards/fire/4.png');
-	this.load.image('fire5', 'assets/hazards/fire/5.png');
-	this.add.text(260, 300, "Loading game...", {font: "35px Bangers", fill: '#ffff00'});
+	 this.add.image(400, 310, 'ramen');
+	 this.add.text(260, 75, "SICKKKK DUUUDEE!", {font: "35px Bangers", fill: '#ffff00'});
+	//music
+	this.load.audio('main', 'assets/audio/music/deep_in_the_sauce.ogg');
 	//// gamepad buttons
     this.load.image('left_button', 'assets/buttons/left_button.png',64,64);
 	this.load.image('jump_button', 'assets/buttons/jump_button.png',96,64);
@@ -24,28 +22,22 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.image('B_button', 'assets/buttons/b_button.png',96,64);
 	//start, retry
 	this.load.image('continue', 'assets/buttons/continue.png',96,64); 
-//// text	  
-	this.load.image('pastaboss_text', 'assets/images/pastaboss_text.png');
-////map, environment, and background
+    //// text	  
+	this.load.image('pastaboss_text', 'assets/pastaboss_text.png');
+    ////map, environment, and background
 	this.load.image('pixel', 'assets/backgrounds/pixel.png');;
-	this.load.tilemapTiledJSON('map2',  'assets/maps/map2.json');
-	this.load.image('map22',  'assets/maps/map2.png'); 
+	this.load.tilemapTiledJSON('map',  'assets/map.json');
+	this.load.image('map',  'assets/map.png'); 
     this.load.spritesheet('tiles', 'assets/tile_sheet_files/tiles.png', {frameWidth: 70, frameHeight: 70});
 	this.load.spritesheet('tiles2', 'assets/tile_sheet_files/tiles2.png', {frameWidth: 70, frameHeight: 70});
-	this.load.spritesheet('tiles4', 'assets/tile_sheet_files/tiles4.png', {frameWidth: 70, frameHeight: 70});
-	////lives icon
-	this.load.image('lives', 'assets/images/lives.png');
-	this.load.image('lives2', 'assets/images/lives2.png');
+	this.load.spritesheet('tiles3', 'assets/tile_sheet_files/tiles3.png', {frameWidth: 70, frameHeight: 70});
 	//// items to pick up
     this.load.image('coin', 'assets/items/coinGold.png'); //macaroni ammo
-	this.load.image('ikura', 'assets/items/ikura_nigiri.png');
-	this.load.image('salmon', 'assets/items/salmon_nigiri.png');
+	this.load.image('codliver', 'assets/items/codliver.png');
 	this.load.image('weed_block', 'assets/items/weed_block.png');
-////// enemies
+	//// enemies
 	//cheese pits
-	this.load.image('cheese_pit1', 'assets/enemies/cheese_pits/1.png');
-	this.load.image('cheese_pit2', 'assets/enemies/cheese_pits/2.png');
-	this.load.image('cheese_pit3', 'assets/enemies/cheese_pits/3.png');
+	this.load.image('cheese_pit', 'assets/enemies/cheese_pit.png');
 	//meatballs facing both directions
 	//facing left
 	this.load.image('left1', 'assets/enemies/meatball_left/1.png');
@@ -69,7 +61,8 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.image('boss7', 'assets/bosses/pizza_boss/7.png');
 	this.load.image('boss8', 'assets/bosses/pizza_boss/8.png');
 	this.load.image('pepperoni', 'assets/bosses/pizza_boss/pepperoni.png');
-////// weapons
+	
+	//// weapons
 	this.load.image('player_weapon', 'assets/weapons/rolling_pin/player_weapon.png');
 	this.load.image('rolling_pin', 'assets/weapons/rolling_pin/rollingpin.png');
 	this.load.image('rolling_pin_left', 'assets/weapons/rolling_pin/rollingpin_left.png');
@@ -77,21 +70,15 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.image('macaroni2', 'assets/weapons/macaroni/macaroni2.png');
 	this.load.image('macaroni3', 'assets/weapons/macaroni/macaroni3.png');
 	this.load.image('macaroni4', 'assets/weapons/macaroni/macaroni4.png');
-///// player 
-	this.load.image('ulooked', 'assets/images/ulooked.png');
-    this.load.atlas('player', 'assets/player/player.png', 'assets/player/player.json');
-	//this.load.atlas('player_weapon', 'assets/player_weapon/tmp.png', 'assets/player_weapon/tmp.json');
-	//idle
-	this.load.image('idle1', 'assets/player/idle/1.png');
-	this.load.image('idle2', 'assets/player/idle/2.png');
-	this.load.image('idle3', 'assets/player/idle/3.png');
-	this.load.image('idle4', 'assets/player/idle/4.png');
-/////sound effects
+    //// player 
+	this.load.image('ulooked', 'assets/ulooked.png');
+    this.load.atlas('player', 'assets/player.png', 'assets/player.json');
+	/////sound effects
 	//misc
 	this.load.audio('ring', 'assets/audio/sounds/ring.mp3');
 	//items
 	this.load.audio('macaroni_ring', 'assets/audio/sounds/macaroni_ring.ogg');
-	this.load.audio('health_ring', 'assets/audio/sounds/ring.mp3');
+	this.load.audio('codliver_ring', 'assets/audio/sounds/ring.mp3');
 	//collision sounds
 	this.load.audio('huh', 'assets/audio/sounds/huh.mp3');
 	this.load.audio('player_hit', 'assets/audio/sounds/ouch.ogg');
@@ -102,21 +89,21 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.audio('level1', 'assets/audio/music/deep_in_the_sauce.ogg');
 	this.load.audio('menu', 'assets/audio/music/pastafarimon.ogg');
 	this.load.audio('game_over', 'assets/audio/music/game_over.ogg');
-	this.load.audio('menu_music', 'assets/audio/music/pastafarimon.ogg');
-	//level 1 end background
-	this.load.image('ramen', 'assets/images/rubberglovedub.png');
-		
   }
-
   //////create///////
-  
-  create() {
-	  
-	  this.scene.start('PlayState_lv2');
-	
-	}
  
+  create() {
+	  this.timedEvent = this.time.addEvent({
+		delay: 4000,
+		callback: onEvent,
+		callbackScope: this
+		});
+		function onEvent(){
+		 this.scene.start('PlayState_lv2');   	
+		}     
+	}
 }
+
 //global variables
 var map;
 var player;
@@ -125,9 +112,6 @@ var groundLayer, macaroniPickupLayer /*codliverTileLayer*/; //tiles
 var text;
 var healthScore = 3;
 var macaroniAvailable = 25;
-var livesAvailable = 3;
-var livesLeft = 3;
-var livesText;
 var ring;
 var continue_button;
 

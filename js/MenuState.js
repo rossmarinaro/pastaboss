@@ -30,17 +30,7 @@ class MenuState extends Phaser.Scene{
 	frameRate: 5,
 	repeat: 3
     });
-	// start game buttons
-	this.timedEvent = this.time.addEvent({
-		delay: 2000,
-		callback: onEvent,
-		callbackScope: this
-		});	
-		function onEvent(){
-			this.input.keyboard.on('keydown', ()=>{
-				this.scene.start('PlayState');
-			}, this);
-			}
+	// start game button
 	player = this.add.sprite(350, 280, 'player').anims.play('walk');
 	player.setInteractive();
 	this.ring = this.sound.add('ring');
@@ -53,6 +43,13 @@ class MenuState extends Phaser.Scene{
 
   }
   
-	
+ /*  update(){
+	  
+		 if (this){
+		  this.menuMusic.play();
+		 
+		 }
+	}
+*/	
 ////////////
 }

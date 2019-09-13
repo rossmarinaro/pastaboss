@@ -7,6 +7,8 @@
 		$toggle.on('click', ()=>{
 		$nav.slideToggle(400);
 		});
+		//book
+		//comics
 		$('#cycle').cycle({fx:'fade'});
 		$('.image1').on('click', ()=>{
 			window.location.assign('images/comics/vector1.png');
