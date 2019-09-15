@@ -11,7 +11,29 @@
 					<script type="text/javascript" src="jquery.js"></script>
 					<script type="text/javascript" src="cycleplugin.js"></script>	
 	<style>
-		#book-cycle:hover{opacity: 0.5;}
+		#book-cycle:hover{
+				opacity: 0.5;
+		}
+		@media screen and (max-width: 800px){
+					#book-cycle{
+					margin-top:20px;
+					margin-left:25px;
+					}
+					#book-cycle img{
+						width: 350px;
+						height: 520px;
+					}
+			}				
+		@media screen and (max-width: 720px){
+					#book-cycle{
+					right: 50px;
+					}
+					#book-cycle img{
+						width: 200px;
+						height: 300px;
+						right: 80px;
+					}
+		}	
 	</style>
 </head>
 <!--body-->
