@@ -21,7 +21,21 @@ body{
 	
 }
 
+a {
+	color: #CD0A0A;
+	text-decoration: none;
+}
 
+ p{
+	font-family: 'Bangers' , 'Arial Black' , sans-serif;
+	font-weight: 700;
+    font-size: 1.5em;	
+	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #ffffff;
+	text-decoration: none;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-left: 3%;
+}
 
 footer h5{
 
@@ -29,12 +43,12 @@ footer h5{
 	text-decoration: underline;		
 }
 
-
 footer p{
 	
 	margin: auto;
 	padding-bottom: 5%;
 	text-align: center;
+	font-size: 0.8em;
 	font-family: 'Arial Black', sans-serif;
 	font-weight: bold;
 	font-style: italic;
@@ -42,41 +56,6 @@ footer p{
 	color: #CD0A0A;
 	
 }								
-
-
-footer a span{
-	
-	margin: auto;
-	padding-bottom: 5%;
-	text-align: center;
-	font-family: 'Arial Black', sans-serif;
-	font-weight: bold;
-	font-style: italic;
-	font-size: 0.4em;
-
-	
-}
-
-footer a:hover{
-	
-			color:#F4F442;
-			text-shadow:  0.2em 0.2em 0.2em  #CD0A0A;
-}
-
-a{
-	
-	font-family: 'Bangers' , 'Arial Black' , sans-serif;
-	font-weight: 700;
-	font-size: 3em;
-	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #000000;
-	text-decoration: none;
-	letter-spacing: 0.05em;
-	color: #CD0A0A;
-	margin-left: 3%;	
-}
-
-
-
 
 form label{
 	
@@ -140,6 +119,35 @@ form label{
 		color:#F4F442;
 		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;
 	
+}
+
+.font-style footer span{
+	
+	margin: auto;
+	padding-bottom: 5%;
+	text-align: center;
+	font-family: 'Arial Black', sans-serif;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 0.4em;
+
+	
+}
+
+.font-style a{
+	
+	font-family: 'Bangers' , 'Arial Black' , sans-serif;
+	font-weight: 700;
+	font-size: 3em;
+	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #000000;
+	letter-spacing: 0.05em;
+	margin-left: 3%;	
+}
+
+.font-style footer:hover{
+	
+			color:#F4F442;
+			text-shadow:  0.2em 0.2em 0.2em  #CD0A0A;
 }
 
 .video-wrapper iframe{
