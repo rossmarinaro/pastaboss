@@ -8,6 +8,10 @@
 		$nav.slideToggle(400);
 		});
 		//book
+		$('#book-cycle').cycle({fx:'fade'});
+		$('#book-cycle').on('click', ()=>{
+			window.location.assign('https://www.amazon.com/dp/1691701394');
+		});
 		//comics
 		$('#cycle').cycle({fx:'fade'});
 		$('.image1').on('click', ()=>{
