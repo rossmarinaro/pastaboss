@@ -13,7 +13,7 @@ var config = {
         arcade: {
             gravity: {y: 500},
 			useTicker: true,
-            debug: true
+            debug: false
         }
     },
 	/*input: {
