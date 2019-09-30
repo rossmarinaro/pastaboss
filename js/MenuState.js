@@ -6,8 +6,7 @@ class MenuState extends Phaser.Scene{
     super("MenuState");
   }
   create(){
-	  
-	//text
+
 	this.pastabossText = this.add.image(340, 130, 'pastaboss_text'); 
 	this.pastabossText.setScale(0.25);
 	this.pastabossText.setInteractive();
@@ -23,7 +22,7 @@ class MenuState extends Phaser.Scene{
 	}, this);
 	this.add.text(165, 350, `You are some sort of spaghetti monster humanoid hybrid!`, {font: "15px Arial", fill: "#ffff00"});
     this.add.text(195, 370, `Go on and frolic about, the world is your oyster...`, {font: "15px Arial", fill: "#ffff00"});
-	this.add.text(85, 400, `use arrow keys, "W" and spacebar if on desktop, or on-screen controls for mobile.`, {font: "15px Arial", fill: "#ffff00"});
+	this.add.text(85, 400, `use arrow keys, "W,A,S,D" and spacebar on desktop, or on-screen controls for mobile.`, {font: "15px Arial", fill: "#ffff00"});
 	this.anims.create({
 	key: 'walk',
 	frames: this.anims.generateFrameNames('player', {prefix: 'p1_walk', start: 8, end: 3, zeroPad: 2}),
@@ -38,6 +37,7 @@ class MenuState extends Phaser.Scene{
 		});	
 		function onEvent(){
 			this.input.keyboard.on('keydown', ()=>{
+				this.ring.play();
 				this.scene.start('PlayState');
 			}, this);
 			}
