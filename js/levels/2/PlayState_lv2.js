@@ -209,8 +209,40 @@ create() {
 			{ key: 'pickle_fr1' },
 				{ key: 'pickle_fr2' },
 					{ key: 'pickle_fr3' },
-						{ key: 'pickle_fr3' },
+						{ key: 'pickle_fr4' },
 							{ key: 'pickle_fr5', duration: 50 }
+		],
+		frameRate: 8,
+		repeat: -1
+	});
+//pickle juice
+		this.anims.create({
+			key: 'pickle_juice_loop',
+			frames:[
+			{ key: 'pickle_juice_fr1' },
+				{ key: 'pickle_juice_fr2' },
+					{ key: 'pickle_juice_fr3' , duration: 50 }
+		],
+		frameRate: 8,
+		repeat: -1
+	});
+//pickle puke
+		this.anims.create({
+			key: 'pickle_puke_loop',
+			frames:[
+			{ key: 'pickle_fr3' },
+				{ key: 'pickle_fr4' },
+					{ key: 'pickle_fr5' , duration: 50 }
+		],
+		frameRate: 8,
+		repeat: -1
+	});
+//pickle juice splat
+		this.anims.create({
+			key: 'pickle_juice_splat_loop',
+			frames:[
+			{ key: 'pickle_juice_splat_fr1' },
+				{ key: 'pickle_juice_splat_fr2' , duration: 50 }
 		],
 		frameRate: 8,
 		repeat: -1
@@ -281,6 +313,7 @@ create() {
 		// enemy movement groups 
 		this.enemyStatic = this.physics.add.staticGroup();
 		this.enemyMoving = this.physics.add.group();	
+		this.enemyFire = this.physics.add.group();
 	//	let x = (player.x < 0) ? Phaser.Math.Between(2200, 3200 ) : Phaser.Math.Between(2200, 3200);
 		let platform = this.obstacleMoving.create(600, 2050, 'platform');
 		// platform tween
@@ -302,40 +335,58 @@ create() {
 		let cheese_pit3 = this.enemyStatic.create(2560, 2730, 'cheese_pit1').play('cheese_pit_anims').setScale(1.7);
 		let cheese_pit4 = this.enemyStatic.create(3330, 2730, 'cheese_pit1').play('cheese_pit_anims').setScale(1.7);
 	//sauce lava
-		let sauceLava = this.enemyStatic.create(1055, 2200, 'sauce_lava1').play('sauce_lava_anims').setScale(1.3);
+		let sauceLava = this.enemyStatic.create(1085, 2205, 'sauce_lava1').play('sauce_lava_anims');
 		//pickles
-		this.pickle2 = this.enemyMoving.create(2000, 450, 'pickle_fr1').play('pickle_loop').setScale(0.75);
-		this.pickle3 = this.enemyMoving.create(2500, 500, 'pickle_fr1').play('pickle_loop').setScale(0.75);
-			//pickle tweens    	
-		this.pickle2Tween = this.tweens.add({
-			targets: this.pickle2, x: 2500, ease: 'Linear', duration: 5000, repeat: -1, yoyo: true, onRepeat: function(){
-		this.pickle2.flipX = true;
+		this.pickle = this.enemyMoving.create(2000, 450, 'pickle_fr1').play('pickle_loop').setScale(0.75);
+		//pickle tweens    	
+		this.pickleTween = this.tweens.add({
+			targets: this.pickle, x: 2500, ease: 'Linear', duration: 2500, repeat: -1, yoyo: true, onRepeat: function(){
+		this.pickle.flipX = true;
 		this.time.addEvent({
-				delay: 5000,
+				delay: 2500,
 				callback: onEvent,
 				callbackScope: this
 			});
 			function onEvent(){
-				this.pickle2.flipX = false;
+				this.pickle.flipX = false;
 			}
-			}, onRepeatScope: this, onRepeatParams: [], repeatDelay: 0
-		});  
-		this.pickle3Tween = this.tweens.add({
-			targets: this.pickle3, x: 3000, ease: 'Linear', duration: 5000, repeat: -1, yoyo: true, onRepeat: function(){
-		this.pickle3.flipX = true;
-		this.time.addEvent({
-				delay: 5000,
-				callback: onEvent,
-				callbackScope: this
+			this.time.addEvent({
+					delay:4000,
+					callback: pickleEvent,
+					callbackScope: this,
 			});
-			function onEvent(){
-				this.pickle3.flipX = false;
+			function pickleEvent(){
+				this.pickle.anims.stop('pickle_loop');
+				this.pickle.anims.play('pickle_puke_loop', true);
+				this.pickleJuice = this.enemyFire.create(this.pickle.x, this.pickle.y, 'pickle_juice_fr1').play('pickle_juice_loop', true).setScale(1);
+				this.pickleJuice.setVelocityX(-400);
+				this.huh = this.sound.add('huh');
+				this.huh.play();
+				this.time.addEvent({
+					delay: 150,
+					callback: onEvent,
+					callbackScope: this
+				});
+				function onEvent(){
+					this.pickle.anims.play('pickle_loop', true);
+				}
 			}
+			this.physics.add.collider(this.enemyFire, groundLayer, ()=>{
+					this.pickleJuice.play('pickle_juice_splat_loop', true);
+					this.time.addEvent({
+						delay: 40,
+						callback: onEvent,
+						callbackScope: this
+					});
+					function onEvent(){
+				this.enemyFire.getChildren().map(child => child.destroy());
+					}
+			});
 			}, onRepeatScope: this, onRepeatParams: [], repeatDelay: 0
-		});
+			});
+			
 		//pickle health
-		this.pickle2Health = 3;	
-		this.pickle3Health = 3;	
+		this.pickleHealth = 3;	
 		//chili peppers
 		this.chili = this.enemyStatic.create(1750, 2125, 'chili_fr1').play('chili_loop');
 		this.chili.flipX = true;
@@ -452,31 +503,7 @@ create() {
 		this.cheese2Health = 3;
 		this.cheese3Health = 3;
 		this.cheese4Health = 3;
-		// level boss
-		this.levelBoss = this.enemyMoving.create(3000, 650, 'boss_fr1').play('boss_loop').setScale(0.1);
-		this.levelBoss.setCollideWorldBounds(true);
-/*		this.levelBossTween = this.tweens.add({
-			targets: this.levelBoss, x: 800, ease: 'Linear', duration: 2000, repeat: -1, yoyo: true, onYoyo: ()=>{
-				//piece of cake (boss weapon)
-				this.levelBossWeapon = this.enemyMoving.create(800, 1150 , 'boss_weapon')
-				this.levelBossWeapon.setVelocityX(250);
-				}, onRepeat: ()=>{
-				this.levelBossWeapon.destroy();	
-				this.levelBoss.flipX = false;
-				this.time.addEvent({
-						delay: 2000,
-						callback: onEvent,
-						callbackScope: this
-					});
-		function onEvent(){
-			this.levelBoss.flipX = true;
-		}
-	}, onRepeatScope: this, onYoyoScope: this, onRepeatParams: [], repeatDelay: 0
-		});      */
-		// level boss health points
-		this.levelBossHealth = 10;
-						
-
+		
 /////////// health, ammo, and lives text  ///////////////////////////////////////////////////////
 
 	// health text
@@ -530,11 +557,6 @@ create() {
 		this.physics.add.collider(platform, player);
 		this.physics.add.collider(this.enemyStatic, groundLayer);
 		this.physics.add.collider(this.enemyMoving, groundLayer);
-		this.physics.add.collider(this.levelBoss, groundLayer);
-		this.physics.add.collider(this.levelBoss, this.meatball);
-		this.physics.add.collider(this.levelBoss, this.meatball2);
-		this.physics.add.collider(this.levelBoss, this.meatball3);
-		this.physics.add.collider(this.levelBoss, this.meatball4);
 		this.physics.add.collider(this.meatball, this.meatball2);
 		this.physics.add.collider(this.meatball, this.meatball3);
 		this.physics.add.collider(this.meatball, this.meatball4);
@@ -668,8 +690,8 @@ create() {
 			this.playerHit = this.sound.add('player_hit');
 			this.playerHit.play();
 		});
-		// boss collison
-		this.physics.add.collider(this.levelBoss, player, ()=>{
+		//enemy fire collision
+		this.physics.add.collider(this.enemyFire, player, ()=>{
 		this.timedEvent = this.time.addEvent({
 		delay: 250,
 		callback: onEvent,
@@ -679,7 +701,7 @@ create() {
 			player.emit('turnRed', player);
 			function handler(player){
 			player.tint = 0xff0000;
-		}
+			}
 		function onEvent(){
 			player.tint = 0xffffff;
 		}
@@ -687,7 +709,7 @@ create() {
 			this.text2.setText(healthScore);
 			this.playerHit = this.sound.add('player_hit');
 			this.playerHit.play();
-		});	
+		});
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -840,8 +862,7 @@ create() {
 		this.leftButton =
 		this.add.image(100, 500, 'left_button').setOrigin(0).setName('left_button').setInteractive();
 		this.leftButton.setScrollFactor(0);
-		this.leftButton.on('pointerover', ()=>{
-		player.flipX = true;	
+		this.leftButton.on('pointerover', ()=>{	
 		}, this);
 		this.leftButton.on('pointerout', ()=>{
 		this.leftButtonState = false;
@@ -876,7 +897,6 @@ create() {
 		this.add.image(200, 500, 'right_button').setOrigin(0).setName('right_button').setInteractive();
 		this.rightButton.setScrollFactor(0);
 		this.rightButton.on('pointerover', ()=>{
-		player.flipX = false;
 		}, this);
 		this.rightButton.on('pointerout', ()=>{
 		this.rightButtonState = false;
@@ -903,10 +923,330 @@ create() {
 			this.A_buttonState = true;
 			this.huh = this.sound.add('huh');
 			this.huh.play();
+			if(player.flipX === false && cursors.space.isUp && this.A_buttonState === true){
+					player.anims.remove('idle', true);
+					player.anims.play('rolling_pin_loop', true);
+					this.rollingPin = this.rollingPinWeapon.create(player.x + 45, player.y, 'rolling_pin_fr1');
+					this.time.addEvent({
+								delay:350,
+								callback: onEvent,
+								callbackScope: this
+							});
+						function onEvent(){
+						this.rollingPinWeapon.getChildren().map(child => child.destroy());	
+						}   
+					//enemy collisions
+					//meatballs
+					this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
+					this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+					});	
+					function onEvent(){
+							this.meatballHit.play();
+							this.meatball.destroy();
+					}
+							this.meatball.tint = 0xff0000;
+					return	this.meatballHit = this.sound.add('meatball_hit');
+					});
+					this.physics.add.collider(this.rollingPin, this.meatball2, ()=>{
+					this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+					});	
+					function onEvent(){
+							this.meatballHit.play();
+							this.meatball2.destroy();
+					}
+							this.meatball2.tint = 0xff0000;	
+					 return this.meatballHit = this.sound.add('meatball_hit');
+					});
+					this.physics.add.collider(this.rollingPin, this.meatball3, ()=>{
+					this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+					});	
+					function onEvent(){
+							this.meatballHit.play();
+							this.meatball3.destroy();
+					}
+							this.meatball3.tint = 0xff0000;
+					return	this.meatballHit = this.sound.add('meatball_hit');
+					});
+					this.physics.add.collider(this.rollingPin, this.meatball4, ()=>{
+					this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+					});	
+					function onEvent(){
+							this.meatballHit.play();
+							this.meatball4.destroy();
+					}
+							this.meatball4.tint = 0xff0000;	
+					return 	this.meatballHit = this.sound.add('meatball_hit');
+					});
+					//pickles
+					this.physics.add.collider(this.rollingPin, this.pickle, ()=>{
+						this.pickle.tint = 0xff0000;
+						this.pickleHealth--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.pickle.tint = 0xffffff;
+						this.enemyOw1 = this.sound.add('enemy_ow1');
+						this.enemyOw1.play();
+					}
+					});
+					//cheese
+					this.physics.add.collider(this.rollingPin, this.cheese1, ()=>{
+						this.cheese1.tint = 0xff0000;
+						this.cheese1Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese1.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});
+					this.physics.add.collider(this.rollingPin, this.cheese2, ()=>{
+						this.cheese2.tint = 0xff0000;
+						this.cheese2Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese2.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});		 
+					this.physics.add.collider(this.rollingPin, this.cheese3, ()=>{
+						this.cheese3.tint = 0xff0000;
+						this.cheese3Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese3.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});
+					this.physics.add.collider(this.rollingPin, this.cheese4, ()=>{
+						this.cheese4.tint = 0xff0000;
+						this.cheese4Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese4.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});
+				this.physics.add.collider(this.rollingPin, player,  ()=>{
+					return this.rollingPin.destroy();
+				});
+				  }
+			// A button weapon 1 (rolling pin)
+		  else if (player.flipX === true && cursors.space.isUp && this.A_buttonState === true){
+			  player.anims.remove('idle', true);
+			   player.anims.play('rolling_pin_loop', true);
+			   this.rollingPin = this.rollingPinWeapon.create(player.x - 45, player.y, 'rolling_pin_fr1');
+			   this.rollingPin.flipX = true;
+		
+					//enemy collisions
+						//chilis
+						this.physics.add.collider(this.rollingPin, this.chili, ()=>{
+						this.chili.tint = 0xff0000;
+						this.chiliHealth--;
+						this.chiliHit = this.sound.add('chili_hit');
+						this.timedEvent = this.time.addEvent({
+						delay: 50,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.chiliHit.play();
+						}
+						});
+						this.physics.add.collider(this.rollingPin, this.chili2, ()=>{
+						this.chili2.tint = 0xff0000;
+						this.chiliHealth--;
+						this.macaronis.getChildren().map(child => child.destroy());
+						this.chiliHit = this.sound.add('chili_hit');
+						this.timedEvent = this.time.addEvent({
+						delay: 50,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.chiliHit.play();
+						}
+						});
+						//meatballs
+						this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
+							this.meatball.tint = 0xff0000;
+							this.meatballHit = this.sound.add('meatball_hit');
+						this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+						});	
+						function onEvent(){
+							this.meatballHit.play();
+							this.meatball.destroy();
+						}
+						});
+						this.physics.add.collider(this.rollingPin, this.meatball2, ()=>{
+							this.meatball2.tint = 0xff0000;	
+							this.meatballHit = this.sound.add('meatball_hit');
+							this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+						});	
+							function onEvent(){
+							this.meatballHit.play();
+							this.meatball2.destroy();
+						}
+						});
+						this.physics.add.collider(this.rollingPin, this.meatball3, ()=>{
+							this.meatball3.tint = 0xff0000;	
+							this.meatballHit = this.sound.add('meatball_hit');
+							this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+						});	
+						function onEvent(){
+							this.meatballHit.play();
+							this.meatball3.destroy();
+						}
+						});
+						this.physics.add.collider(this.rollingPin, this.meatball4, ()=>{
+							this.meatball4.tint = 0xff0000;
+							this.meatballHit = this.sound.add('meatball_hit');
+						this.timedEvent = this.time.addEvent({
+							delay: 50,
+							callback: onEvent,
+							callbackScope: this
+						});	
+						function onEvent(){
+						this.meatballHit.play();
+						this.meatball4.destroy();
+						}
+						});
+						//pickles
+						this.physics.add.collider(this.rollingPin, this.pickle, ()=>{
+						this.pickle.tint = 0xff0000;
+						this.pickleHealth--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.pickle.tint = 0xffffff;
+						this.enemyOw1 = this.sound.add('enemy_ow1');
+						this.enemyOw1.play();
+					}
+					});
+					//cheese
+					this.physics.add.collider(this.rollingPin, this.cheese1, ()=>{
+						this.cheese1.tint = 0xff0000;
+						this.cheese1Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese1.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});
+					this.physics.add.collider(this.rollingPin, this.cheese2, ()=>{
+						this.cheese2.tint = 0xff0000;
+						this.cheese2Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese2.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});		 
+					this.physics.add.collider(this.rollingPin, this.cheese3, ()=>{
+						this.cheese3.tint = 0xff0000;
+						this.cheese3Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese3.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});
+					this.physics.add.collider(this.rollingPin, this.cheese4, ()=>{
+						this.cheese4.tint = 0xff0000;
+						this.cheese4Health--;
+						this.time.addEvent({
+								delay: 50,
+								callback: onEvent,
+								callbackScope: this							
+						});
+						function onEvent(){
+						this.cheese4.tint = 0xffffff;
+						this.enemyOw2 = this.sound.add('enemy_ow2');
+						this.enemyOw2.play();
+					}
+					});	
+					//breakable brick
+					this.physics.add.collider(this.rollingPin, this.breakableBrick, ()=>{
+						this,breakableBrick.destroy();
+					});
+					// weapon collision with player because apparently I have no idea how to really make it disappear =[
+					this.physics.add.collider(this.rollingPin, player, ()=>{
+						this.time.addEvent({
+								delay:100,
+								callback: onEvent,
+								callbackScope: this
+							});
+						function onEvent(){
+							this.rollingPin.destroy();
+						}
+					});
+				   }
 		});
 		this.A_button.on('pointerup', ()=>{
 			this.A_button.tint = 0xffffff;
 			this.A_buttonState = false;
+			this.rollingPinWeapon.getChildren().map(child => child.destroy());
 		});	
 	//// B button (macaroni weapon)
 		this.B_button = 
@@ -1000,47 +1340,17 @@ create() {
 						}
 					});	
 					//pickles
-					this.physics.add.collider(this.macaroni, this.pickle1, ()=>{
+					this.physics.add.collider(this.macaroni, this.pickle, ()=>{
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle1.tint = 0xff0000;
-						this.pickle1Health--;
+						this.pickle.tint = 0xff0000;
+						this.pickleHealth--;
 						this.time.addEvent({
 								delay: 50,
 								callback: onEvent,
 								callbackScope: this							
 						});
 						function onEvent(){
-						this.pickle1.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.macaroni, this.pickle2, ()=>{
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle2.tint = 0xff0000;
-						this.pickle2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle2.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.macaroni, this.pickle3, ()=>{
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
+						this.pickle.tint = 0xffffff;
 						this.enemyOw1 = this.sound.add('enemy_ow1');
 						this.enemyOw1.play();
 					}
@@ -1105,8 +1415,7 @@ create() {
 							this.enemyOw2 = this.sound.add('enemy_ow2');
 							this.enemyOw2.play();
 						}
-						});
-						
+						});						
 			}
 			// B button weapon 2 (macaroni) left
 			else if (player.flipX === true && macaroniAvailable >= 1 && this.B_buttonState === true ){
@@ -1215,47 +1524,17 @@ create() {
 				}
 				});
 				//pickles
-					this.physics.add.collider(this.macaroni, this.pickle1, ()=>{
+					this.physics.add.collider(this.macaroni, this.pickle, ()=>{
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle1.tint = 0xff0000;
-						this.pickle1Health--;
+						this.pickle.tint = 0xff0000;
+						this.pickleHealth--;
 						this.time.addEvent({
 								delay: 50,
 								callback: onEvent,
 								callbackScope: this							
 						});
 						function onEvent(){
-						this.pickle1.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.macaroni, this.pickle2, ()=>{
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle2.tint = 0xff0000;
-						this.pickle2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle2.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.macaroni, this.pickle3, ()=>{
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
+						this.pickle.tint = 0xffffff;
 						this.enemyOw1 = this.sound.add('enemy_ow1');
 						this.enemyOw1.play();
 					}
@@ -1320,30 +1599,8 @@ create() {
 							this.enemyOw2 = this.sound.add('enemy_ow2');
 							this.enemyOw2.play();
 						}
-						});
-					// level boss
-					this.physics.add.collider(this.macaroni, this.levelBoss, ()=>{
-						if (this.levelBoss.flipX === true){
-						this.levelBossHealth--;
-						this.levelBoss.tint = 0xff0000;
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.bossHit = this.sound.add('boss_hit');
-						this.time.addEvent({
-						delay: 500,
-						callback: onEvent,
-						callbackScope: this
 						});	
-						function onEvent(){
-						this.bossHit.play();
-						this.levelBoss.tint = 0xffffff;
-						}
-					  }
-					   else{
-						  this.macaroni.tint = 0xff0000;
-						  this.macaroni.setVelocityX(0).setVelocityY(0);
-						 }
-					});	
-		}
+			}
 		});
 		this.B_button.on('pointerup', ()=>{
 		this.B_button.tint = 0xffffff;
@@ -1370,7 +1627,7 @@ create() {
 					//enemy collisions
 					//meatballs
 					this.physics.add.collider(this.macaroni, this.meatball, ()=>{
-						this.meatball.tint = 0xff0000;
+						this.meatball.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
@@ -1384,7 +1641,7 @@ create() {
 					}
 					});
 					this.physics.add.collider(this.macaroni, this.meatball2, ()=>{
-						this.meatball2.tint = 0xff0000;
+						this.meatball2.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 					this.timedEvent = this.time.addEvent({
@@ -1398,7 +1655,7 @@ create() {
 					}
 					});
 					this.physics.add.collider(this.macaroni, this.meatball3, ()=>{
-						this.meatball3.tint = 0xff0000;
+						this.meatball3.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
@@ -1412,7 +1669,7 @@ create() {
 					}
 					});
 					this.physics.add.collider(this.macaroni, this.meatball4, ()=>{
-						this.meatball4.tint = 0xff0000;
+						this.meatball4.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 					this.timedEvent = this.time.addEvent({
@@ -1426,47 +1683,17 @@ create() {
 						}
 					});
 					//pickles
-					this.physics.add.collider(this.macaroni, this.pickle1, ()=>{
+					this.physics.add.collider(this.macaroni, this.pickle, ()=>{
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle1.tint = 0xff0000;
-						this.pickle1Health--;
+						this.pickle.tint = 0xff0000;
+						this.pickleHealth--;
 						this.time.addEvent({
 								delay: 50,
 								callback: onEvent,
 								callbackScope: this							
 						});
 						function onEvent(){
-						this.pickle1.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.macaroni, this.pickle2, ()=>{
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle2.tint = 0xff0000;
-						this.pickle2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle2.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});	
-							this.physics.add.collider(this.macaroni, this.pickle3, ()=>{
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
+						this.pickle.tint = 0xffffff;
 						this.enemyOw1 = this.sound.add('enemy_ow1');
 						this.enemyOw1.play();
 					}
@@ -1588,7 +1815,7 @@ create() {
 							});
 						//meatballs
 						this.physics.add.collider(this.macaroni, this.meatball, ()=>{
-						this.meatball.tint = 0xff0000;
+						this.meatball.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
@@ -1602,7 +1829,7 @@ create() {
 						}
 						});
 						this.physics.add.collider(this.macaroni, this.meatball2, ()=>{
-						this.meatball2.tint = 0xff0000;
+						this.meatball2.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
@@ -1616,7 +1843,7 @@ create() {
 						}
 						});
 						this.physics.add.collider(this.macaroni, this.meatball3, ()=>{
-						this.meatball3.tint = 0xff0000;
+						this.meatball3.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
@@ -1630,7 +1857,7 @@ create() {
 						}
 						});
 						this.physics.add.collider(this.macaroni, this.meatball4, ()=>{
-						this.meatball4.tint = 0xff0000;
+						this.meatball4.tint = 0x000000;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
@@ -1644,51 +1871,21 @@ create() {
 						}
 						});
 						//pickles
-							this.physics.add.collider(this.macaroni, this.pickle1, ()=>{
+							this.physics.add.collider(this.macaroni, this.pickle, ()=>{
 								this.macaronis.getChildren().map(child => child.destroy());
-								this.pickle1.tint = 0xff0000;
-								this.pickle1Health--;
+								this.pickle.tint = 0xff0000;
+								this.pickleHealth--;
 								this.time.addEvent({
 										delay: 50,
 										callback: onEvent,
 										callbackScope: this							
 								});
 								function onEvent(){
-								this.pickle1.tint = 0xffffff;
+								this.pickle.tint = 0xffffff;
 								this.enemyOw1 = this.sound.add('enemy_ow1');
 								this.enemyOw1.play();
 							}
 							});
-							this.physics.add.collider(this.macaroni, this.pickle2, ()=>{
-								this.macaronis.getChildren().map(child => child.destroy());
-								this.pickle2.tint = 0xff0000;
-								this.pickle2Health--;
-								this.time.addEvent({
-										delay: 50,
-										callback: onEvent,
-										callbackScope: this							
-								});
-								function onEvent(){
-								this.pickle2.tint = 0xffffff;
-								this.enemyOw1 = this.sound.add('enemy_ow1');
-								this.enemyOw1.play();
-							}
-							});
-						this.physics.add.collider(this.macaroni, this.pickle3, ()=>{
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
 						//cheese
 						this.physics.add.collider(this.macaroni, this.cheese1, ()=>{
 							this.macaronis.getChildren().map(child => child.destroy());
@@ -1750,28 +1947,6 @@ create() {
 							this.enemyOw2.play();
 						}
 						});
-						// level boss
-						this.physics.add.collider(this.macaroni, this.levelBoss, ()=>{
-						if (this.levelBoss.flipX === true){
-							this.levelBossHealth--;
-							this.levelBoss.tint = 0xff0000;
-							this.macaronis.getChildren().map(child => child.destroy());
-							this.bossHit = this.sound.add('boss_hit');
-							this.time.addEvent({
-							delay: 500,
-							callback: onEvent,
-							callbackScope: this
-							});	
-							function onEvent(){	
-							this.bossHit.play();
-							this.levelBoss.tint = 0xffffff;
-							}
-						  }
-						  else{
-							  this.macaroni.tint = 0xff0000;
-							  
-						  }
-						});	
 					}
 						
 	});//end weapon (macaroni)
@@ -1783,387 +1958,7 @@ create() {
  update(time, delta) {
 
 ////////////////////////////////////////////////////virtual controls	
-  //A button weapon 1 (rolling pin) 
-   if(player.flipX === false && cursors.space.isUp && this.A_buttonState === true){
-					player.anims.play('rolling_pin_loop', true);
-					this.rollingPin = this.rollingPinWeapon.create(player.x + 45, player.y, 'rolling_pin_fr1');
-					//enemy collisions
-					//meatballs
-					this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
-					this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-					});	
-					function onEvent(){
-							this.meatballHit.play();
-							this.meatball.destroy();
-					}
-							this.meatball.tint = 0xff0000;
-					return	this.meatballHit = this.sound.add('meatball_hit');
-					});
-					this.physics.add.collider(this.rollingPin, this.meatball2, ()=>{
-					this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-					});	
-					function onEvent(){
-							this.meatballHit.play();
-							this.meatball2.destroy();
-					}
-							this.meatball2.tint = 0xff0000;	
-					 return this.meatballHit = this.sound.add('meatball_hit');
-					});
-					this.physics.add.collider(this.rollingPin, this.meatball3, ()=>{
-					this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-					});	
-					function onEvent(){
-							this.meatballHit.play();
-							this.meatball3.destroy();
-					}
-							this.meatball3.tint = 0xff0000;
-					return	this.meatballHit = this.sound.add('meatball_hit');
-					});
-					this.physics.add.collider(this.rollingPin, this.meatball4, ()=>{
-					this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-					});	
-					function onEvent(){
-							this.meatballHit.play();
-							this.meatball4.destroy();
-					}
-							this.meatball4.tint = 0xff0000;	
-					return 	this.meatballHit = this.sound.add('meatball_hit');
-					});
-					//pickles
-					this.physics.add.collider(this.rollingPin, this.pickle1, ()=>{
-						this.pickle1.tint = 0xff0000;
-						this.pickle1Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle1.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle2, ()=>{
-						this.pickle2.tint = 0xff0000;
-						this.pickle2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle2.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle3, ()=>{
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					//cheese
-					this.physics.add.collider(this.rollingPin, this.cheese1, ()=>{
-						this.cheese1.tint = 0xff0000;
-						this.cheese1Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese1.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese2, ()=>{
-						this.cheese2.tint = 0xff0000;
-						this.cheese2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese2.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});		 
-					this.physics.add.collider(this.rollingPin, this.cheese3, ()=>{
-						this.cheese3.tint = 0xff0000;
-						this.cheese3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese3.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese4, ()=>{
-						this.cheese4.tint = 0xff0000;
-						this.cheese4Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese4.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					// weapon collision with player because apparently I have no idea how to really make it disappear =[
-					this.physics.add.collider(this.rollingPin, player, ()=>{
-						return this.rollingPin.destroy();
-					});
-				  }
-			// A button weapon 1 (rolling pin)
-		  else if (player.flipX === true && cursors.space.isUp && this.A_buttonState === true){
-			   player.anims.play('rolling_pin_loop', true);
-			   this.huh = this.sound.add('huh');
-			   this.huh.play();
-			   this.rollingPin = this.rollingPinWeapon.create(player.x - 45, player.y, 'rolling_pin_fr1').play('rolling_pin_loop2', true);
-			   this.rollingPin.flipX = true;
-					//enemy collisions
-						//chilis
-						this.physics.add.collider(this.rollingPin, this.chili, ()=>{
-						this.chili.tint = 0xff0000;
-						this.chiliHealth--;
-						this.chiliHit = this.sound.add('chili_hit');
-						this.timedEvent = this.time.addEvent({
-						delay: 50,
-						callback: onEvent,
-						callbackScope: this
-						});	
-						function onEvent(){
-						this.chiliHit.play();
-						}
-						});
-						this.physics.add.collider(this.macaroni, this.chili2, ()=>{
-						this.chili2.tint = 0xff0000;
-						this.chiliHealth--;
-						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit');
-						this.timedEvent = this.time.addEvent({
-						delay: 50,
-						callback: onEvent,
-						callbackScope: this
-						});	
-						function onEvent(){
-						this.chiliHit.play();
-						}
-						});
-						//meatballs
-						this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
-							this.meatball.tint = 0xff0000;
-							this.meatballHit = this.sound.add('meatball_hit');
-						this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-							this.meatballHit.play();
-							this.meatball.destroy();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.meatball2, ()=>{
-							this.meatball2.tint = 0xff0000;	
-							this.meatballHit = this.sound.add('meatball_hit');
-							this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-							function onEvent(){
-							this.meatballHit.play();
-							this.meatball2.destroy();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.meatball3, ()=>{
-							this.meatball3.tint = 0xff0000;	
-							this.meatballHit = this.sound.add('meatball_hit');
-							this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-							this.meatballHit.play();
-							this.meatball3.destroy();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.meatball4, ()=>{
-							this.meatball4.tint = 0xff0000;
-							this.meatballHit = this.sound.add('meatball_hit');
-						this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-						this.meatballHit.play();
-						this.meatball4.destroy();
-						}
-						});
-						//pickles
-						this.physics.add.collider(this.rollingPin, this.pickle1, ()=>{
-							this.pickle1.tint = 0xff0000;
-							this.pickle1Health--;
-							this.time.addEvent({
-									delay: 50,
-									callback: onEvent,
-									callbackScope: this							
-							});
-							function onEvent(){
-							this.pickle1.tint = 0xffffff;
-							this.enemyOw1 = this.sound.add('enemy_ow1');
-							this.enemyOw1.play();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.pickle2, ()=>{
-							this.pickle2.tint = 0xff0000;
-							this.pickle2Health--;
-							this.time.addEvent({
-									delay: 50,
-									callback: onEvent,
-									callbackScope: this							
-							});
-							function onEvent(){
-							this.pickle2.tint = 0xffffff;
-							this.enemyOw1 = this.sound.add('enemy_ow1');
-							this.enemyOw1.play();
-						}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle3, ()=>{
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					//cheese
-					this.physics.add.collider(this.rollingPin, this.cheese1, ()=>{
-						this.cheese1.tint = 0xff0000;
-						this.cheese1Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese1.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese2, ()=>{
-						this.cheese2.tint = 0xff0000;
-						this.cheese2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese2.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});		 
-					this.physics.add.collider(this.rollingPin, this.cheese3, ()=>{
-						this.cheese3.tint = 0xff0000;
-						this.cheese3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese3.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese4, ()=>{
-						this.cheese4.tint = 0xff0000;
-						this.cheese4Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese4.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-						// level boss
-						this.physics.add.collider(this.rollingPin, this.levelBoss, ()=>{
-							if (this.levelBoss.flipX === true){
-							this.levelBossHealth--;
-							this.levelBoss.tint = 0xff0000;
-							this.bossHit = this.sound.add('boss_hit');
-							this.time.addEvent({
-							delay: 500,
-							callback: onEvent,
-							callbackScope: this
-							});	
-							function onEvent(){
-							this.bossHit.play();
-							this.levelBoss.tint = 0xffffff;
-							}
-						  }
-						   else{
-							  this.rollingPin.tint = 0xff0000;
-						  }
-						});	
-					//breakable brick
-					this.physics.add.collider(this.rollingPin, this.breakableBrick, ()=>{
-						this,breakableBrick.destroy();
-					});
-					// weapon collision with player because apparently I have no idea how to really make it disappear =[
-					this.physics.add.collider(this.rollingPin, player, ()=>{
-						this.rollingPin.destroy();
-					});
-				   }
+ 
 
 		
 ////////////////////////////////////////////////////////////////////end virtual controls
@@ -2195,7 +1990,7 @@ create() {
 							this.meatballHit.play();
 							this.meatball.destroy();
 					}
-							this.meatball.tint = 0xff0000;
+							this.meatball.tint = 0x000000;
 					return	this.meatballHit = this.sound.add('meatball_hit');
 					});
 					this.physics.add.collider(this.rollingPin, this.meatball2, ()=>{
@@ -2208,7 +2003,7 @@ create() {
 							this.meatballHit.play();
 							this.meatball2.destroy();
 					}
-							this.meatball2.tint = 0xff0000;	
+							this.meatball2.tint = 0x000000;	
 					 return this.meatballHit = this.sound.add('meatball_hit');
 					});
 					this.physics.add.collider(this.rollingPin, this.meatball3, ()=>{
@@ -2221,7 +2016,7 @@ create() {
 							this.meatballHit.play();
 							this.meatball3.destroy();
 					}
-							this.meatball3.tint = 0xff0000;
+							this.meatball3.tint = 0x000000;
 					return	this.meatballHit = this.sound.add('meatball_hit');
 					});
 					this.physics.add.collider(this.rollingPin, this.meatball4, ()=>{
@@ -2238,42 +2033,16 @@ create() {
 					return 	this.meatballHit = this.sound.add('meatball_hit');
 					});
 					//pickles
-					this.physics.add.collider(this.rollingPin, this.pickle1, ()=>{
-						this.pickle1.tint = 0xff0000;
-						this.pickle1Health--;
+					this.physics.add.collider(this.rollingPin, this.pickle, ()=>{
+						this.pickle.tint = 0xff0000;
+						this.pickleHealth--;
 						this.time.addEvent({
 								delay: 50,
 								callback: onEvent,
 								callbackScope: this							
 						});
 						function onEvent(){
-						this.pickle1.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle2, ()=>{
-						this.pickle2.tint = 0xff0000;
-						this.pickle2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle2.tint = 0xffffff;
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle3, ()=>{
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
+						this.pickle.tint = 0xffffff;
 						this.enemyOw1 = this.sound.add('enemy_ow1');
 						this.enemyOw1.play();
 					}
@@ -2373,7 +2142,7 @@ create() {
 						});
 						//meatballs
 						this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
-							this.meatball.tint = 0xff0000;
+							this.meatball.tint = 0x000000;
 							this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
 							delay: 50,
@@ -2386,7 +2155,7 @@ create() {
 						}
 						});
 						this.physics.add.collider(this.rollingPin, this.meatball2, ()=>{
-							this.meatball2.tint = 0xff0000;	
+							this.meatball2.tint = 0x000000;	
 							this.meatballHit = this.sound.add('meatball_hit');
 							this.timedEvent = this.time.addEvent({
 							delay: 50,
@@ -2399,7 +2168,7 @@ create() {
 						}
 						});
 						this.physics.add.collider(this.rollingPin, this.meatball3, ()=>{
-							this.meatball3.tint = 0xff0000;	
+							this.meatball3.tint = 0x000000;	
 							this.meatballHit = this.sound.add('meatball_hit');
 							this.timedEvent = this.time.addEvent({
 							delay: 50,
@@ -2412,7 +2181,7 @@ create() {
 						}
 						});
 						this.physics.add.collider(this.rollingPin, this.meatball4, ()=>{
-							this.meatball4.tint = 0xff0000;
+							this.meatball4.tint = 0x000000;
 							this.meatballHit = this.sound.add('meatball_hit');
 						this.timedEvent = this.time.addEvent({
 							delay: 50,
@@ -2425,48 +2194,20 @@ create() {
 						}
 						});
 						//pickles
-						this.physics.add.collider(this.rollingPin, this.pickle1, ()=>{
-							this.pickle1.tint = 0xff0000;
-							this.pickle1Health--;
+						this.physics.add.collider(this.rollingPin, this.pickle, ()=>{
+							this.pickle.tint = 0xff0000;
+							this.pickleHealth--;
 							this.time.addEvent({
 									delay: 50,
 									callback: onEvent,
 									callbackScope: this							
 							});
 							function onEvent(){
-							this.pickle1.tint = 0xffffff;
+							this.pickle.tint = 0xffffff;
 							this.enemyOw1 = this.sound.add('enemy_ow1');
 							this.enemyOw1.play();
-						}
+							}
 						});
-						this.physics.add.collider(this.rollingPin, this.pickle2, ()=>{
-							this.pickle2.tint = 0xff0000;
-							this.pickle2Health--;
-							this.time.addEvent({
-									delay: 50,
-									callback: onEvent,
-									callbackScope: this							
-							});
-							function onEvent(){
-							this.pickle2.tint = 0xffffff;
-							this.enemyOw1 = this.sound.add('enemy_ow1');
-							this.enemyOw1.play();
-						}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle3, ()=>{
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
 					//cheese
 					this.physics.add.collider(this.rollingPin, this.cheese1, ()=>{
 						this.cheese1.tint = 0xff0000;
@@ -2524,26 +2265,6 @@ create() {
 						this.enemyOw2.play();
 					}
 					});
-						// level boss
-						this.physics.add.collider(this.rollingPin, this.levelBoss, ()=>{
-							if (this.levelBoss.flipX === true){
-							this.levelBossHealth--;
-							this.levelBoss.tint = 0xff0000;
-							this.bossHit = this.sound.add('boss_hit');
-							this.time.addEvent({
-							delay: 500,
-							callback: onEvent,
-							callbackScope: this
-							});	
-							function onEvent(){
-							this.bossHit.play();
-							this.levelBoss.tint = 0xffffff;
-							}	
-						  }
-						   else{
-							  this.macaroni.tint = 0xff0000;
-						  }
-						});	
 					//breakable brick
 						this.physics.add.collider(this.rollingPin, this.breakableBrick, ()=>{
 							this.breakableBrick.destroy();
@@ -2575,6 +2296,21 @@ create() {
 			   }
 				
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	if (this.WKey.isDown && player.body.onFloor() === true){
+				player.body.setVelocityX(0);
+		}
+		if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
+			player.setVelocityX(0);
+		}
+		if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
+			player.setVelocityX(0);
+		}
+		if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
+			player.setVelocityX(0);
+		}
+		if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
+			player.setVelocityX(0);
+		}
 ////player movements
 	 //left (ground)
 	if (this.leftButtonState === true || cursors.left.isDown === true && player.body.onFloor() === true && this.WKey.isDown === false){	
@@ -2614,6 +2350,10 @@ create() {
 			this.huh = this.sound.add('huh');
 			this.huh.play();
    }
+    if (player.body.onFloor() === false && this.WKey.isDown === true || this.A_buttonState === true){
+			player.anims.remove('fall');
+			player.anims.play('rolling_pin_loop', true);
+   }
  //idle
    if (player.body.onFloor() === true && cursors.up.isDown === false && cursors.right.isDown === false && cursors.left.isDown === false
    && this.rightButtonState === false && this.jumpButtonState === false && this.leftButtonState === false
@@ -2621,12 +2361,8 @@ create() {
 	   player.body.setVelocityX(0);
 	   player.anims.play('idle', true);
    }
-
-
-	
 		if (player.body.onFloor() === true && this.WKey.isDown){
 			player.body.setVelocityX(0);
-		//	player.anims.play('rolling_pin_loop', true);
 		}
 		if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
 			player.setVelocityX(0);
@@ -2682,27 +2418,17 @@ create() {
 				  this.chili2.destroy();
 				}
 			}
-//pickles			
-			if (this.pickle2Health <= 0){
-				this.pickle2.tint = 0x000000;
+//pickle			
+			if (this.pickleHealth <= 0){
+				this.pickle.tint = 0x000000;
 				this.time.addEvent({
 					delay: 150,
 					callback: onEvent,
 					callbackScope: this
 				});
 				function onEvent(){
-				  this.pickle2.destroy();
-				}
-			}
-			if (this.pickle3Health <= 0){
-				this.pickle3.tint = 0x000000;
-				this.time.addEvent({
-					delay: 150,
-					callback: onEvent,
-					callbackScope: this
-				});
-				function onEvent(){
-				  this.pickle3.destroy();
+				  this.pickle.destroy();
+				  this.pickleJuice.destroy();
 				}
 			}
 		// cheese
@@ -2750,15 +2476,8 @@ create() {
 				  this.cheese4.destroy();
 				}
 			} 	
-		// level boss
-			if (this.levelBossHealth <= 0){
-				this.levelBoss.destroy();
-				this.levelBossTween.stop();
-			}
-
-			
-				
+	 	
  }//end update function
- 
+
  //////////// end state //////////////////
 }

@@ -71,6 +71,13 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.image('pickle_fr3', 'assets/enemies/pickle/3.png');
 	this.load.image('pickle_fr4', 'assets/enemies/pickle/4.png');
 	this.load.image('pickle_fr5', 'assets/enemies/pickle/5.png');
+	//pickle juice
+	this.load.image('pickle_juice_fr1', 'assets/enemies/pickle/pickle_juice/1.png');
+	this.load.image('pickle_juice_fr2', 'assets/enemies/pickle/pickle_juice/2.png');
+	this.load.image('pickle_juice_fr3', 'assets/enemies/pickle/pickle_juice/3.png');
+	//splat
+	this.load.image('pickle_juice_splat_fr1', 'assets/enemies/pickle/pickle_juice/splat/1.png');
+	this.load.image('pickle_juice_splat_fr2', 'assets/enemies/pickle/pickle_juice/splat/2.png');
 	//cheese
 	this.load.image('cheese_fr1', 'assets/enemies/cheese/1.png');
 	this.load.image('cheese_fr2', 'assets/enemies/cheese/2.png');
