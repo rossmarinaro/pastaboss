@@ -84,7 +84,7 @@ create() {
 ////player weapons
 
 	//rolling pin
-	this.rollingPinWeapon = this.physics.add.group();
+	this.rollingPinWeapon = this.physics.add.staticGroup();
 	//macaroni
 		this.macaronis = this.physics.add.group();
 		this.anims.create({
@@ -241,7 +241,7 @@ create() {
 		this.chili2Health = 3;
 		this.chili3Health = 3;
 		//cheese pits
-		let cheese_pit = this.enemyStatic.create(1400, 600, 'cheese_pit1').play('cheese_pit_anims');
+		let cheese_pit = this.enemyStatic.create(1400, 600, 'cheese_pit1').play('cheese_pit_anims').setOffset(0, 40);
 		cheese_pit.setScale(0.65, 0.7);
 		let cheese_pit2 = this.enemyStatic.create(2240, 666, 'cheese_pit1').play('cheese_pit_anims');
 		cheese_pit2.setScale(1.3);	
@@ -569,6 +569,7 @@ create() {
 		this.leftButton.on('pointerover', ()=>{	
 		}, this);
 		this.leftButton.on('pointerout', ()=>{
+		this.leftButton.tint = 0xffffff;	
 		this.leftButtonState = false;
 		}, this);
 		this.leftButton.on('pointerdown', ()=>{	
@@ -587,6 +588,7 @@ create() {
 		this.jumpButton.on('pointerover', ()=>{
 		}, this);
 		this.jumpButton.on('pointerout', ()=>{
+		this.jumpButton.tint = 0xffffff;	
 		this.jumpButtonState = false;
 		}, this);
 		this.jumpButton.on('pointerdown', ()=>{
@@ -604,6 +606,7 @@ create() {
 		this.rightButton.on('pointerover', ()=>{
 		}, this);
 		this.rightButton.on('pointerout', ()=>{
+		this.rightButton.tint = 0xffffff;	
 		this.rightButtonState = false;
 		}, this);
 		this.rightButton.on('pointerdown', ()=>{
@@ -622,9 +625,13 @@ create() {
 		this.A_button.on('pointerover', ()=>{
 		});
 		this.A_button.on('pointerout', ()=>{
+			this.A_button.tint = 0xffffff;
 			this.A_buttonState = false;
-		});
-		this.A_button.on('pointerdown', ()=>{
+				if (this.A_buttonState === false){
+				this.rollingPinWeapon.getChildren().map(child => child.destroy());					
+			}
+		}, this);
+		this.A_button.on('pointerdown', ()=>{	
 			this.A_button.tint = 0xff0000;
 			this.A_buttonState = true;
 			this.huh = this.sound.add('huh');
@@ -632,7 +639,8 @@ create() {
 			if(player.flipX === false && cursors.space.isUp && this.A_buttonState === true){
 					player.anims.remove('idle', true);
 					player.anims.play('rolling_pin_loop', true);
-					this.rollingPin = this.rollingPinWeapon.create(player.x + 45, player.y, 'rolling_pin_fr1');	
+					this.rollingPin = this.rollingPinWeapon.create(player.x + 55, player.y, 'rolling_pin_fr1');	
+			
 					//enemy collisions
 					//meatballs
 					this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
@@ -787,17 +795,7 @@ create() {
 						this.enemyOw2.play();
 					}
 					});
-					// weapon collision with player because apparently I have no idea how to really make it disappear =[
-					this.physics.add.collider(player, this.rollingPin, ()=>{
-							this.time.addEvent({
-								delay:100,
-								callback: onEvent,
-								callbackScope: this
-							});
-						function onEvent(){
-							this.rollingPin.destroy();
-						}
-					});
+	
 				  }
 			// A button weapon 1 (rolling pin)
 		  else if (player.flipX === true && cursors.space.isUp && this.A_buttonState === true){
@@ -1012,22 +1010,14 @@ create() {
 					this.physics.add.collider(this.rollingPin, this.breakableBrick, ()=>{
 						this,breakableBrick.destroy();
 					});
-					// weapon collision with player because apparently I have no idea how to really make it disappear =[
-					this.physics.add.collider(this.rollingPin, player, ()=>{
-						this.time.addEvent({
-								delay:100,
-								callback: onEvent,
-								callbackScope: this
-							});
-						function onEvent(){
-							this.rollingPin.destroy();
-						}
-					});
-				   }
+				  }
 		});
 		this.A_button.on('pointerup', ()=>{
 			this.A_button.tint = 0xffffff;
 			this.A_buttonState = false;
+			if (this.A_buttonState === false){
+				this.rollingPinWeapon.getChildren().map(child => child.destroy());					
+			}
 		});	
 		
 		// B button (macaroni weapon)
@@ -1037,6 +1027,7 @@ create() {
 		this.B_button.on('pointerover', ()=>{
 		});
 		this.B_button.on('pointerout', ()=>{
+		this.B_button.tint = 0xffffff;	
 		this.B_buttonState = false;
 		});
 		this.B_button.on('pointerdown', ()=>{
@@ -1918,11 +1909,12 @@ create() {
 			this.huh = this.sound.add('huh');
 			this.huh.play();
    }
-       if (player.body.onFloor() === false && this.WKey.isDown === true || this.A_buttonState === true){
-			player.anims.remove('fall');
-			player.anims.play('rolling_pin_loop', true);
-   }
-//idle
+	if (player.body.onFloor() === false && this.leftButtonState === true ){
+			player.anims.play('fall', true);
+	}
+	else if (player.body.onFloor() === false && this.rightButtonState === true){
+			player.anims.play('fall', true);
+	}//idle
    if (player.body.onFloor() === true && cursors.up.isDown === false && cursors.right.isDown === false && cursors.left.isDown === false
    && this.rightButtonState === false && this.jumpButtonState === false && this.leftButtonState === false
    && this.WKey.isUp && this.A_buttonState === false){
@@ -1931,7 +1923,7 @@ create() {
    }
 if (player.body.onFloor() === true && this.WKey.isDown){
 	player.body.setVelocityX(0);
-
+//	player.anims.play('rolling_pin_loop', true);
 }
 if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
 	player.setVelocityX(0);

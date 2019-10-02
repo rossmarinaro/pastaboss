@@ -915,6 +915,7 @@ this.obstacle2 = this.physics.add.staticGroup();
 		this.leftButton.on('pointerover', ()=>{
 		}, this);
 		this.leftButton.on('pointerout', ()=>{
+		this.leftButton.tint = 0xffffff;	
 		this.leftButtonState = false;
 		}, this);
 		this.leftButton.on('pointerdown', ()=>{	
@@ -932,6 +933,7 @@ this.obstacle2 = this.physics.add.staticGroup();
 		this.jumpButton.on('pointerover', ()=>{
 		}, this);
 		this.jumpButton.on('pointerout', ()=>{
+		this.jumpButton.tint = 0xffffff;	
 		this.jumpButtonState = false;
 		}, this);
 		this.jumpButton.on('pointerdown', ()=>{
@@ -949,6 +951,7 @@ this.obstacle2 = this.physics.add.staticGroup();
 		this.rightButton.on('pointerover', ()=>{
 		}, this);
 		this.rightButton.on('pointerout', ()=>{
+		this.rightButton.tint = 0xffffff;	
 		this.rightButtonState = false;
 		}, this);
 		this.rightButton.on('pointerdown', ()=>{
@@ -966,6 +969,7 @@ this.obstacle2 = this.physics.add.staticGroup();
 		this.A_button.on('pointerover', ()=>{
 		});
 		this.A_button.on('pointerout', ()=>{
+			this.A_button.tint = 0xffffff;
 			this.A_buttonState = false;
 		});
 		this.A_button.on('pointerdown', ()=>{
@@ -1380,6 +1384,7 @@ this.obstacle2 = this.physics.add.staticGroup();
 		this.B_button.on('pointerover', ()=>{
 		});
 		this.B_button.on('pointerout', ()=>{
+		this.B_button.tint = 0xffffff;	
 		this.B_buttonState = false;
 		});
 		this.B_button.on('pointerdown', ()=>{
@@ -2905,39 +2910,34 @@ this.obstacle2 = this.physics.add.staticGroup();
 			this.huh = this.sound.add('huh');
 			this.huh.play();
    }
-      if (player.body.onFloor() === false && this.WKey.isDown === true || this.A_buttonState === true){
-			player.anims.remove('fall');
-			player.anims.play('rolling_pin_loop', true);
-
-   }
- //idle
+	if (player.body.onFloor() === false && this.leftButtonState === true ){
+			player.anims.play('fall', true);
+	}
+	else if (player.body.onFloor() === false && this.rightButtonState === true){
+			player.anims.play('fall', true);
+	}//idle
    if (player.body.onFloor() === true && cursors.up.isDown === false && cursors.right.isDown === false && cursors.left.isDown === false
    && this.rightButtonState === false && this.jumpButtonState === false && this.leftButtonState === false
    && this.WKey.isUp && this.A_buttonState === false){
 	   player.body.setVelocityX(0);
 	   player.anims.play('idle', true);
    }
-
-
-	
-		if (player.body.onFloor() === true && this.WKey.isDown){
-			player.body.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
-			player.setVelocityX(0);
-		}	
-		if (player.body.onFloor() === false && this.right_buttonState === true && this.WKey.isDown){
-			player.anims.play('rolling_pin_loop', true);
-		}
+if (player.body.onFloor() === true && this.WKey.isDown){
+	player.body.setVelocityX(0);
+//	player.anims.play('rolling_pin_loop', true);
+}
+if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
+	player.setVelocityX(0);
+}
+if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
+	player.setVelocityX(0);
+}
+if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
+	player.setVelocityX(0);
+}
+if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
+	player.setVelocityX(0);
+}
 		if (healthScore <= 0){
 			this.mainTheme.stop()	
 			this.scene.stop('PlayState_lv3');
