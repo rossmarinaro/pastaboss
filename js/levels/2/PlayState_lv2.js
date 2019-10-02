@@ -330,10 +330,10 @@ create() {
 		});
 ///////////////enemy spawns	
 	//cheese pits
-		let cheese_pit = this.enemyStatic.create(1150, 2730, 'cheese_pit1').play('cheese_pit_anims').setScale(1.7);
-		let cheese_pit2 = this.enemyStatic.create(1860, 2730, 'cheese_pit1').play('cheese_pit_anims').setScale(1.7);
-		let cheese_pit3 = this.enemyStatic.create(2560, 2730, 'cheese_pit1').play('cheese_pit_anims').setScale(1.7);
-		let cheese_pit4 = this.enemyStatic.create(3330, 2730, 'cheese_pit1').play('cheese_pit_anims').setScale(1.7);
+		let cheese_pit = this.enemyStatic.create(1155, 2735, 'cheese_pit1').play('cheese_pit_anims').setScale(1.66).setSize(350, 230).setOffset(-60, -11);
+		let cheese_pit2 = this.enemyStatic.create(1857, 2735, 'cheese_pit1').play('cheese_pit_anims').setScale(1.66).setSize(350, 230).setOffset(-60, -11);
+		let cheese_pit3 = this.enemyStatic.create(2557, 2735, 'cheese_pit1').play('cheese_pit_anims').setScale(1.66).setSize(350, 230).setOffset(-60, -11);
+		let cheese_pit4 = this.enemyStatic.create(3327, 2735, 'cheese_pit1').play('cheese_pit_anims').setScale(1.66).setSize(350, 230).setOffset(-60, -11);
 	//sauce lava
 		let sauceLava = this.enemyStatic.create(1085, 2205, 'sauce_lava1').play('sauce_lava_anims');
 		//pickles
@@ -356,8 +356,7 @@ create() {
 					callbackScope: this,
 			});
 			function pickleEvent(){
-				this.pickle.anims.stop('pickle_loop');
-				this.pickle.anims.play('pickle_puke_loop', true);
+			//	this.pickle.anims.play('pickle_puke_loop', true);
 				this.pickleJuice = this.enemyFire.create(this.pickle.x, this.pickle.y, 'pickle_juice_fr1').play('pickle_juice_loop', true).setScale(1);
 				this.pickleJuice.setVelocityX(-400);
 				this.huh = this.sound.add('huh');
@@ -580,57 +579,6 @@ create() {
 		this.macaroniText2.setText(macaroniAvailable);
 		this.macaronis.getChildren().map(child => child.destroy());
 		});
-////pickaxe player interface
-		this.C_buttonState = false;
-		this.physics.add.collider(player, pickaxe, ()=>{
-			this.pickaxePickedUp = true;
-			pickaxe.destroy();
-			this.C_button = 
-		this.add.image(560, 420, 'C_button').setOrigin(0).setInteractive();
-		this.C_button.setScrollFactor(0);
-		this.pickaxe_UI = this.add.image(595, 455, 'pickaxe').setScale(0.4).setScrollFactor(0).setInteractive();
-		this.pickaxe_UI.on('pointerdown', ()=>{
-			this.C_buttonState = true;
-		});
-		this.pickaxe_UI.on('pointerover', ()=>{
-				this.pickaxe_UI.tint = 0x08511B;
-				this.C_button.tint = 0x08511B;
-		});
-		this.pickaxe_UI.on('pointerout', ()=>{
-				this.pickaxe_UI.tint = 0xffffff;	
-				this.C_button.tint = 0xffffff;
-				this.C_buttonState = false;
-		});
-		this.C_button.on('pointerover', ()=>{
-				this.pickaxe_UI.tint = 0x08511B;	
-				this.C_button.tint = 0x08511B;
-		});
-				this.C_button.on('pointerout', ()=>{
-				this.pickaxe_UI.tint = 0xffffff;	
-				this.C_button.tint = 0xffffff;
-				this.C_buttonState = false;
-		});
-		this.pickaxe_UI.on('pointerdown', ()=>{
-			if (player.flipX === true && this.iceBlockHitBoxState === true){
-			player.anims.play('rolling_pin_loop', true);
-				player.setVelocityX(0);
-					   this.huh = this.sound.add('huh');
-					   this.huh.play();
-					   let pickAxe = this.rollingPinWeapon.create(player.x - 45, player.y, 'pickaxe');
-					   this.timedEvent = this.time.addEvent({
-									delay: 50,
-									callback: onEvent,
-									callbackScope: this
-							});	
-						function onEvent(){
-									this.huh.stop();
-									this.rollingPinWeapon.getChildren().map(child => child.destroy());
-							}
-
-			}
-		});
-		
-	});
 		
 ////hazard collisons
 		this.physics.add.collider(player, this.hazardMoving, ()=>{
@@ -865,6 +813,7 @@ create() {
 		this.leftButton.on('pointerover', ()=>{	
 		}, this);
 		this.leftButton.on('pointerout', ()=>{
+		this.leftButton.tint = 0xffffff;	
 		this.leftButtonState = false;
 		}, this);
 		this.leftButton.on('pointerdown', ()=>{	
@@ -882,6 +831,7 @@ create() {
 		this.jumpButton.on('pointerover', ()=>{
 		}, this);
 		this.jumpButton.on('pointerout', ()=>{
+		this.jumpButton.tint = 0xffffff;	
 		this.jumpButtonState = false;
 		}, this);
 		this.jumpButton.on('pointerdown', ()=>{
@@ -899,6 +849,7 @@ create() {
 		this.rightButton.on('pointerover', ()=>{
 		}, this);
 		this.rightButton.on('pointerout', ()=>{
+		this.rightButton.tint = 0xffffff;	
 		this.rightButtonState = false;
 		}, this);
 		this.rightButton.on('pointerdown', ()=>{
@@ -916,6 +867,7 @@ create() {
 		this.A_button.on('pointerover', ()=>{
 		});
 		this.A_button.on('pointerout', ()=>{
+			this.A_button.tint = 0xffffff;
 			this.A_buttonState = false;
 		});
 		this.A_button.on('pointerdown', ()=>{
@@ -1255,6 +1207,7 @@ create() {
 				this.B_button.on('pointerover', ()=>{
 		});
 		this.B_button.on('pointerout', ()=>{
+		this.B_button.tint = 0xffffff;	
 		this.B_buttonState = false;
 		});
 		this.B_button.on('pointerdown', ()=>{
@@ -2275,42 +2228,8 @@ create() {
 					});
 		 }
 //end weapon (rolling pin)
-
-	// pickaxe
-			if (player.flipX === true && this.pickaxePickedUp === true && this.iceBlockHitBoxState === true && this.AKey.isDown && this.WKey.isUp ){
-				player.anims.play('rolling_pin_loop', true);
-				player.setVelocityX(0);
-					   this.huh = this.sound.add('huh');
-					   this.huh.play();
-					   let pickAxe = this.rollingPinWeapon.create(player.x - 45, player.y, 'pickaxe');
-					   this.timedEvent = this.time.addEvent({
-									delay: 50,
-									callback: onEvent,
-									callbackScope: this
-							});	
-						function onEvent(){
-									this.huh.stop();
-									this.rollingPinWeapon.getChildren().map(child => child.destroy());
-							}
-
-			   }
 				
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	if (this.WKey.isDown && player.body.onFloor() === true){
-				player.body.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
-			player.setVelocityX(0);
-		}
 ////player movements
 	 //left (ground)
 	if (this.leftButtonState === true || cursors.left.isDown === true && player.body.onFloor() === true && this.WKey.isDown === false){	
@@ -2350,35 +2269,34 @@ create() {
 			this.huh = this.sound.add('huh');
 			this.huh.play();
    }
-    if (player.body.onFloor() === false && this.WKey.isDown === true || this.A_buttonState === true){
-			player.anims.remove('fall');
-			player.anims.play('rolling_pin_loop', true);
-   }
- //idle
+	if (player.body.onFloor() === false && this.leftButtonState === true ){
+			player.anims.play('fall', true);
+	}
+	else if (player.body.onFloor() === false && this.rightButtonState === true){
+			player.anims.play('fall', true);
+	}//idle
    if (player.body.onFloor() === true && cursors.up.isDown === false && cursors.right.isDown === false && cursors.left.isDown === false
    && this.rightButtonState === false && this.jumpButtonState === false && this.leftButtonState === false
    && this.WKey.isUp && this.A_buttonState === false){
 	   player.body.setVelocityX(0);
 	   player.anims.play('idle', true);
    }
-		if (player.body.onFloor() === true && this.WKey.isDown){
-			player.body.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
-			player.setVelocityX(0);
-		}
-		if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
-			player.setVelocityX(0);
-		}	
-		if (player.body.onFloor() === false && this.right_buttonState === true && this.WKey.isDown){
-			player.anims.play('rolling_pin_loop', true);
-		}
+if (player.body.onFloor() === true && this.WKey.isDown){
+	player.body.setVelocityX(0);
+//	player.anims.play('rolling_pin_loop', true);
+}
+if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
+	player.setVelocityX(0);
+}
+if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
+	player.setVelocityX(0);
+}
+if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
+	player.setVelocityX(0);
+}
+if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
+	player.setVelocityX(0);
+}
 		if (healthScore <= 0){
 		//	this.mainTheme.stop()	
 			this.scene.stop('PlayState_lv2');
@@ -2427,8 +2345,9 @@ create() {
 					callbackScope: this
 				});
 				function onEvent(){
+				  this.pickleTween.stop();
 				  this.pickle.destroy();
-				  this.pickleJuice.destroy();
+				  this.enemyFire.getChildren().map(child => child.destroy());
 				}
 			}
 		// cheese
