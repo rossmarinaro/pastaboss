@@ -126,6 +126,13 @@ create() {
 			repeat: -1
 	});			
 
+	
+	
+	let iceBlock = this.physics.add.sprite(300, 300, 'ice_block_fr1');
+	this.physics.add.collider(iceBlock, ground);	
+	this.iceBlockCollider = this.physics.add.collider(player, iceBlock, ()=>{
+		console.log('sick');
+	});
 /////////// health, ammo, and lives text  ///////////////////////////////////////////////////////
 
 	// health text
@@ -608,7 +615,9 @@ this.physics.add.collider(player, ground);
 		livesText.setText(livesAvailable);
 		}		
 
-			
+			if (macaroniAvailable <= 0){ 
+			this.iceBlockCollider.active = false;
+			}
 				
  }//end update function
  
