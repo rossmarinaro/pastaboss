@@ -71,22 +71,19 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.image('pickle_fr3', 'assets/enemies/pickle/3.png');
 	this.load.image('pickle_fr4', 'assets/enemies/pickle/4.png');
 	this.load.image('pickle_fr5', 'assets/enemies/pickle/5.png');
-	//pickle juice
-	this.load.image('pickle_juice_fr1', 'assets/enemies/pickle/pickle_juice/1.png');
-	this.load.image('pickle_juice_fr2', 'assets/enemies/pickle/pickle_juice/2.png');
-	this.load.image('pickle_juice_fr3', 'assets/enemies/pickle/pickle_juice/3.png');
-	//splat
-	this.load.image('pickle_juice_splat_fr1', 'assets/enemies/pickle/pickle_juice/splat/1.png');
-	this.load.image('pickle_juice_splat_fr2', 'assets/enemies/pickle/pickle_juice/splat/2.png');
 	//cheese
 	this.load.image('cheese_fr1', 'assets/enemies/cheese/1.png');
 	this.load.image('cheese_fr2', 'assets/enemies/cheese/2.png');
 	this.load.image('cheese_fr3', 'assets/enemies/cheese/3.png');
 	//level 2 boss
-	this.load.image('boss_fr1', 'assets/enemies/bosses/cake_boss/1.png');
-	this.load.image('boss_fr2', 'assets/enemies/bosses/cake_boss/2.png');
-	this.load.image('boss_fr3', 'assets/enemies/bosses/cake_boss/3.png');	
-	this.load.image('boss_weapon', 'assets/enemies/bosses/cake_boss/piece_of_cake.png');	
+	this.load.image('boss_fr1', 'assets/enemies/bosses/hotdog/1.png');
+	this.load.image('boss_fr2', 'assets/enemies/bosses/hotdog/2.png');
+	this.load.image('boss_fr3', 'assets/enemies/bosses/hotdog/3.png');	
+	// boss attack
+	this.load.image('boss_attack_fr1', 'assets/enemies/bosses/hotdog/attack/1.png');
+	this.load.image('boss_attack_fr2', 'assets/enemies/bosses/hotdog/attack/2.png');
+	this.load.image('boss_attack_fr3', 'assets/enemies/bosses/hotdog/attack/3.png');
+	this.load.image('boss_attack_fr4', 'assets/enemies/bosses/hotdog/attack/4.png');
 ////// hazards                                                                                    
 	//ice block
 	this.load.image('ice_block_fr1', 'assets/hazards/ice_block/1.png');
@@ -139,7 +136,7 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.audio('enemy_ow1', 'assets/audio/sounds/enemy_ow1.ogg');
 	this.load.audio('enemy_ow2', 'assets/audio/sounds/enemy_ow2.ogg');
 	////music
-	this.load.audio('level2', 'assets/audio/music/level2.ogg');
+	this.load.audio('lv2ext', 'assets/audio/music/lv2ext.ogg');
 	this.load.audio('menu', 'assets/audio/music/pastafarimon.ogg');
 	this.load.audio('game_over', 'assets/audio/music/game_over.ogg');
 	this.load.audio('menu_music', 'assets/audio/music/pastafarimon.ogg');

@@ -12,7 +12,7 @@ class PlayState_MiniGame1 extends Phaser.Scene {
 ////create
   
 create() {
-
+       
 		//background
 		this.bkgnd = 
 		this.add.image(500, 200, 'pixel2').setScale(1000);
@@ -170,6 +170,12 @@ create() {
 			fill: '#ffffff'
 		});	
 		livesText.setScrollFactor(0);
+		this.scene.pause('PlayState_MiniGame1');
+		let txt = this.add.text(400, 400, 'paused', {fontSize:'50px', fontFamily:'Arial', fill:'#ff0000'}).setInteractive();
+		txt.on('pointerdown', ()=>{
+			this.scene.run('PlayState_MiniGame1', true);
+			txt.tint = 0x000000;
+		}, this);
 	
 ////collisions
 this.physics.add.collider(player, ground);

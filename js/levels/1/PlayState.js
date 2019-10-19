@@ -291,41 +291,40 @@ create() {
 /////////// health, ammo, and lives text  ///////////////////////////////////////////////////////
 
 	// health text
-		this.add.image(150, 60, 'player_interface').setScrollFactor(0);
+		this.playerInterface = this.add.image(150, 60, 'player_interface').setScrollFactor(0);
 		this.text = this.add.text(20, 20,  '\u2764', { 	
 		fontSize: '30px',
 		fill: '#ffffff'
-		});
-		this.text.setScrollFactor(0);
+		}).setScrollFactor(0);
 		this.text2 = this.add.text(25, 50,  '3', {
 		fontSize: '25px',
 		fontFamily: 'Bangers',
 		fill: '#ffffff'
-		});
-		this.text2.setScrollFactor(0);
+		}).setScrollFactor(0);
 		// macaroni available
 		this.macaroniText = this.add.text(110, 15, 'Macaroni :', {
 			fontSize: '25px',
 			fontFamily: 'Bangers',
 			fill: '#ffffff'
-		});
-		this.macaroniText.setScrollFactor(0);
+		}).setScrollFactor(0);
 		this.macaroniText2 = this.add.text(120, 50, '25', {
 			fontSize: '25px',
 			fontFamily: 'Bangers',
 			fill: '#ffffff'
-		});	
-		this.macaroniText2.setScrollFactor(0);
+		}).setScrollFactor(0);	
 		// lives available
-		this.lives = this.add.image(260, 30, 'lives');
-		this.lives.setScrollFactor(0);
+		this.lives = this.add.image(260, 30, 'lives').setScrollFactor(0);
 		livesText = this.add.text(245, 50, '3', {
 			fontSize: '25px',
 			fontFamily: 'Bangers',
 			fill: '#ffffff'
-		});	
-		livesText.setScrollFactor(0);
-	
+		}).setScrollFactor(0);	
+		this.text3 = this.add.text(10, 70,  'Low health!', {
+		fontSize: '15px',
+		fontFamily: 'Bangers',
+		fill: '#ff0000'
+		}).setScrollFactor(0);
+
 ////collisions
 		//general collisions 
 		this.physics.add.collider(groundLayer, player);
@@ -373,7 +372,9 @@ create() {
 			}
 			function onEvent(){
 			player.tint = 0xffffff;
+			player.setBounce(0);
 			}
+			player.setBounce(1);
 			healthScore--;
 			this.text2.setText(healthScore);
 			this.playerHit = this.sound.add('player_hit');
@@ -393,8 +394,10 @@ create() {
 			player.tint = 0xff0000;
 			}
 		function onEvent(){
+			player.setBounce(0);
 			player.tint = 0xffffff;
 		}
+			player.setBounce(1);
 			healthScore--;
 			this.text2.setText(healthScore);
 			this.playerHit = this.sound.add('player_hit');
@@ -413,8 +416,10 @@ create() {
 			player.tint = 0xff0000;
 		}
 		function onEvent(){
+			player.setBounce(0);
 			player.tint = 0xffffff;
 		}
+			player.setBounce(1);
 			healthScore--;
 			this.text2.setText(healthScore);
 			this.playerHit = this.sound.add('player_hit');
@@ -539,7 +544,7 @@ create() {
 //////cameras 
 		this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 		this.cameras.main.startFollow(player);  
-	
+	//	this.cameras.main.setZoom(1.2);
 /////////// game controls  /////////////////
 
 
@@ -639,9 +644,57 @@ create() {
 			if(player.flipX === false && cursors.space.isUp && this.A_buttonState === true){
 					player.anims.remove('idle', true);
 					player.anims.play('rolling_pin_loop', true);
-					this.rollingPin = this.rollingPinWeapon.create(player.x + 55, player.y, 'rolling_pin_fr1');	
-			
+					this.rollingPin = this.rollingPinWeapon.create(player.x + 45, player.y, 'rolling_pin_fr1');
+					this.timedEvent = this.time.addEvent({
+							delay: 150,
+							callback: onEvent,
+							callbackScope: this
+					});	
+					function onEvent(){
+							this.huh.stop();
+					}
 					//enemy collisions
+						//chilis
+						this.physics.add.collider(this.rollingPin, this.chili, ()=>{
+						this.chili.tint = 0xff0000;
+						this.chiliHealth--;
+						this.chiliHit = this.sound.add('chili_hit');
+						this.timedEvent = this.time.addEvent({
+						delay: 50,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.chiliHit.play();
+						}
+						});
+						this.physics.add.collider(this.rollingPin, this.chili2, ()=>{
+						this.chili2.tint = 0xff0000;
+						this.chiliHealth--;
+						this.macaronis.getChildren().map(child => child.destroy());
+						this.chiliHit = this.sound.add('chili_hit');
+						this.timedEvent = this.time.addEvent({
+						delay: 50,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.chiliHit.play();
+						}
+						});
+						this.physics.add.collider(this.rollingPin, this.chili3, ()=>{
+						this.chili3.tint = 0xff0000;
+						this.chili3Health--;
+						this.chiliHit = this.sound.add('chili_hit');
+						this.timedEvent = this.time.addEvent({
+						delay: 50,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.chiliHit.play();
+						}
+						});
 					//meatballs
 					this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
 					this.timedEvent = this.time.addEvent({
@@ -695,107 +748,6 @@ create() {
 							this.meatball4.tint = 0x000000;	
 					return 	this.meatballHit = this.sound.add('meatball_hit');
 					});
-					//pickles
-					this.physics.add.collider(this.rollingPin, this.pickle1, ()=>{
-						this.pickle1.tint = 0xff0000;
-						this.pickle1Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle1.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle2, ()=>{
-						this.pickle2.tint = 0xff0000;
-						this.pickle2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle2.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle3, ()=>{
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					//cheese
-					this.physics.add.collider(this.rollingPin, this.cheese1, ()=>{
-						this.cheese1.tint = 0xff0000;
-						this.cheese1Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese1.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese2, ()=>{
-						this.cheese2.tint = 0xff0000;
-						this.cheese2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese2.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});		 
-					this.physics.add.collider(this.rollingPin, this.cheese3, ()=>{
-						this.cheese3.tint = 0xff0000;
-						this.cheese3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese3.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese4, ()=>{
-						this.cheese4.tint = 0xff0000;
-						this.cheese4Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese4.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-	
 				  }
 			// A button weapon 1 (rolling pin)
 		  else if (player.flipX === true && cursors.space.isUp && this.A_buttonState === true){
@@ -803,7 +755,14 @@ create() {
 			   player.anims.play('rolling_pin_loop', true);
 			   this.rollingPin = this.rollingPinWeapon.create(player.x - 45, player.y, 'rolling_pin_fr1');
 			   this.rollingPin.flipX = true;
-		
+				this.timedEvent = this.time.addEvent({
+							delay: 150,
+							callback: onEvent,
+							callbackScope: this
+					});	
+					function onEvent(){
+							this.huh.stop();
+					}
 					//enemy collisions
 						//chilis
 						this.physics.add.collider(this.rollingPin, this.chili, ()=>{
@@ -821,7 +780,21 @@ create() {
 						});
 						this.physics.add.collider(this.rollingPin, this.chili2, ()=>{
 						this.chili2.tint = 0xff0000;
-						this.chiliHealth--;
+						this.chili2Health--;
+						this.macaronis.getChildren().map(child => child.destroy());
+						this.chiliHit = this.sound.add('chili_hit');
+						this.timedEvent = this.time.addEvent({
+						delay: 50,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.chiliHit.play();
+						}
+						});
+						this.physics.add.collider(this.rollingPin, this.chili3, ()=>{
+						this.chili3.tint = 0xff0000;
+						this.chili3Health--;
 						this.macaronis.getChildren().map(child => child.destroy());
 						this.chiliHit = this.sound.add('chili_hit');
 						this.timedEvent = this.time.addEvent({
@@ -886,137 +859,47 @@ create() {
 						this.meatball4.destroy();
 						}
 						});
-						//pickles
-						this.physics.add.collider(this.rollingPin, this.pickle1, ()=>{
-							this.pickle1.tint = 0xff0000;
-							this.pickle1Health--;
-							this.time.addEvent({
-									delay: 50,
-									callback: onEvent,
-									callbackScope: this							
-							});
-							function onEvent(){
-							this.pickle1.tint = 0xffffff;
-							this.enemyOw1 = this.sound.add('enemy_ow1');
-							this.enemyOw1.play();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.pickle2, ()=>{
-							this.pickle2.tint = 0xff0000;
-							this.pickle2Health--;
-							this.time.addEvent({
-									delay: 50,
-									callback: onEvent,
-									callbackScope: this							
-							});
-							function onEvent(){
-							this.pickle2.tint = 0xffffff;
-							this.enemyOw1 = this.sound.add('enemy_ow1');
-							this.enemyOw1.play();
-						}
-					});
-					this.physics.add.collider(this.rollingPin, this.pickle3, ()=>{
-						this.pickle3.tint = 0xff0000;
-						this.pickle3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.pickle3.tint = 0xffffff;
-						this.enemyOw1 = this.sound.add('enemy_ow1');
-						this.enemyOw1.play();
-					}
-					});
-					//cheese
-					this.physics.add.collider(this.rollingPin, this.cheese1, ()=>{
-						this.cheese1.tint = 0xff0000;
-						this.cheese1Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese1.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese2, ()=>{
-						this.cheese2.tint = 0xff0000;
-						this.cheese2Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese2.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});		 
-					this.physics.add.collider(this.rollingPin, this.cheese3, ()=>{
-						this.cheese3.tint = 0xff0000;
-						this.cheese3Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese3.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
-					this.physics.add.collider(this.rollingPin, this.cheese4, ()=>{
-						this.cheese4.tint = 0xff0000;
-						this.cheese4Health--;
-						this.time.addEvent({
-								delay: 50,
-								callback: onEvent,
-								callbackScope: this							
-						});
-						function onEvent(){
-						this.cheese4.tint = 0xffffff;
-						this.enemyOw2 = this.sound.add('enemy_ow2');
-						this.enemyOw2.play();
-					}
-					});
 						// level boss
-						this.physics.add.collider(this.rollingPin, this.levelBoss, ()=>{
-							if (this.levelBoss.flipX === true){
+							this.physics.add.collider(this.rollingPin, this.levelBoss, ()=>{
 							this.levelBossHealth--;
 							this.levelBoss.tint = 0xff0000;
 							this.bossHit = this.sound.add('boss_hit');
-							this.time.addEvent({
-							delay: 500,
-							callback: onEvent,
-							callbackScope: this
-							});	
-							function onEvent(){
-							this.bossHit.play();
-							this.levelBoss.tint = 0xffffff;
+							this.levelBoss.anims.play('boss_hit_anim');
+							this.pepperoni2 =  
+							this.bossFire.create(this.levelBoss.x + 50, this.levelBoss.y + 80 , 'pepperoni');
+							this.pepperoni2.setVelocityX(800).setVelocityY(-350);
+								this.time.addEvent({
+								delay: 500,
+								callback: onEvent,
+								callbackScope: this
+								});		
+								function onEvent(){
+								this.pepperoni2.destroy();	
+								this.bossHit.play();
+								}
+							if (this.levelBossHealth >= 3){ 	
+								this.time.addEvent({
+								delay: 500,
+								callback: onEvent2,
+								callbackScope: this
+								});	
+								function onEvent2(){
+								if (this.levelBoss.active){
+								this.pepperoni2.destroy();	
+								this.bossHit.play();
+								this.levelBoss.tint = 0xffffff;
+								this.levelBoss.anims.play('boss_idle');
+								}
+								} 
 							}
-						  }
-						   else{
-							  this.rollingPin.tint = 0xff0000;
-						  }
-						});	
-					//breakable brick
-					this.physics.add.collider(this.rollingPin, this.breakableBrick, ()=>{
-						this,breakableBrick.destroy();
-					});
-				  }
+				});		
+			 }
 		});
 		this.A_button.on('pointerup', ()=>{
 			this.A_button.tint = 0xffffff;
 			this.A_buttonState = false;
 			if (this.A_buttonState === false){
-				this.rollingPinWeapon.getChildren().map(child => child.destroy());					
+				this.rollingPinWeapon.getChildren().map(child => child.destroy());
 			}
 		});	
 		
@@ -1033,13 +916,14 @@ create() {
 		this.B_button.on('pointerdown', ()=>{
 		this.B_button.tint = 0x0c1ea5;
 		this.B_buttonState = true;
-		this.huh = this.sound.add('huh');
-		this.huh.play();
 				// B button weapon 2 (macaroni)
 		 if (player.flipX === false && macaroniAvailable >= 1 && this.input.activePointer.isDown && this.B_buttonState === true){
 					player.anims.play('fire_macaroni', true);
+					this.huh = this.sound.add('huh');
+					this.huh.play();
 					this.macaroni = this.macaronis.create(player.x + 30, player.y, 'macaroni').play('macaroni_loop');
 					this.macaroni.setVelocityX(700);
+					this.macaroni.setBounce(0.5);
 					this.time.addEvent({
 						delay: 10000,
 						callback: onEvent,
@@ -1060,7 +944,7 @@ create() {
 						this.chiliHealth--;
 						this.chili.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit');
 						this.timedEvent = this.time.addEvent({
 						delay: 150,
 						callback: onEvent,
@@ -1075,7 +959,7 @@ create() {
 						this.chili2Health--;
 						this.chili2.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit');
 					this.timedEvent = this.time.addEvent({
 						delay: 150,
 						callback: onEvent,
@@ -1090,7 +974,7 @@ create() {
 						this.chili3Health--;
 						this.chili3.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit');
 						this.timedEvent = this.time.addEvent({
 						delay: 150,
 						callback: onEvent,
@@ -1166,6 +1050,7 @@ create() {
 				this.macaroni= this.macaronis.create(player.x - 50, player.y, 'macaroni').play('macaroni_loop');
 				this.macaroni.flipX = true;
 				this.macaroni.setVelocityX(-700);
+				this.macaroni.setBounce(0.5);
 				this.time.addEvent({
 						delay: 10000,
 						callback: onEvent,
@@ -1186,8 +1071,7 @@ create() {
 				this.chiliHealth--;
 				this.chili.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chili.destroy();
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 150,
 				callback: onEvent,
@@ -1202,7 +1086,7 @@ create() {
 				this.chili2Health--;
 				this.chili2.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 150,
 				callback: onEvent,
@@ -1217,7 +1101,7 @@ create() {
 				this.chili3Health--;
 				this.chili3.tint = 0xff0000;
 				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+				this.chiliHit = this.sound.add('chili_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 150,
 				callback: onEvent,
@@ -1245,7 +1129,7 @@ create() {
 				});
 				this.physics.add.collider(this.macaroni, this.meatball2, ()=>{
 				this.meatball2.tint = 0x000000;
-				this.macaroni_left.destroy();
+				this.macaronis.getChildren().map(child => child.destroy());
 				this.meatballHit = this.sound.add('meatball_hit');
 				this.timedEvent = this.time.addEvent({
 				delay: 50,
@@ -1295,15 +1179,28 @@ create() {
 					this.pepperoni2 =  
 					this.bossFire.create(this.levelBoss.x + 50, this.levelBoss.y + 80 , 'pepperoni');
 					this.pepperoni2.setVelocityX(800).setVelocityY(-350);
-					this.time.addEvent({
-					delay: 500,
-					callback: onEvent,
-					callbackScope: this
-					});	
-					function onEvent(){
-					this.pepperoni2.destroy();	
-					this.bossHit.play();
-					this.levelBoss.tint = 0xffffff;
+			if (this.levelBossHealth >= 3){
+						this.time.addEvent({
+						delay: 500,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.pepperoni2.destroy();	
+						this.bossHit.play();
+						this.levelBoss.tint = 0xffffff;
+						this.levelBoss.anims.play('boss_idle', true);
+						}
+					} else{
+						this.time.addEvent({
+						delay: 500,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.pepperoni2.destroy();	
+						this.bossHit.play();
+						}	
 					}
 				});	
 		}
@@ -1312,14 +1209,15 @@ create() {
 		this.B_button.tint = 0xffffff;
 		this.B_buttonState = false;
 		});		
-	 this.input.keyboard.on('keydown-' + 'SPACE', ()=>{	
-//weapon 2 macaroni keyboard controls
-		 if (player.flipX === false && macaroniAvailable >= 1 && cursors.space.isDown){
+//weapon keyboard (macaroni)	
+	this.input.keyboard.on('keydown-' + 'SPACE', ()=>{	
+		if (macaroniAvailable >= 1){ 
 					player.anims.play('fire_macaroni', true);
 					this.huh = this.sound.add('huh');
 					this.huh.play();
-					this.macaroni = this.macaronis.create(player.x + 30, player.y, 'macaroni').play('macaroni_loop');
-					this.macaroni.setVelocityX(700);
+					player.flipX === true ? this.macaroni = this.macaronis.create(player.x - 50, player.y, 'macaroni').play('macaroni_loop').setVelocityX(-700) : this.macaroni = this.macaronis.create(player.x + 50, player.y, 'macaroni').play('macaroni_loop').setVelocityX(700);
+					this.macaroni.flipX = player.flipX === true;
+					this.macaroni.setBounce(0.5);
 					this.time.addEvent({
 						delay: 10000,
 						callback: onEvent,
@@ -1340,7 +1238,7 @@ create() {
 						this.chiliHealth--;
 						this.chili.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit');
 						this.timedEvent = this.time.addEvent({
 						delay: 150,
 						callback: onEvent,
@@ -1355,7 +1253,7 @@ create() {
 						this.chili2Health--;
 						this.chili2.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit');
 					this.timedEvent = this.time.addEvent({
 						delay: 150,
 						callback: onEvent,
@@ -1370,7 +1268,7 @@ create() {
 						this.chili3Health--;
 						this.chili3.tint = 0xff0000;
 						this.macaronis.getChildren().map(child => child.destroy());
-						this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+						this.chiliHit = this.sound.add('chili_hit');
 						this.timedEvent = this.time.addEvent({
 						delay: 150,
 						callback: onEvent,
@@ -1438,132 +1336,7 @@ create() {
 						this.meatball4.destroy();
 						}
 					});
-		 }
-		 //weapon 2 macaroni keyboard controls left
-		 else if (player.flipX === true && macaroniAvailable >= 1 && cursors.space.isDown){
-				player.anims.play('fire_macaroni', true);
-				this.huh = this.sound.add('huh');
-				this.huh.play();
-				this.macaroni = this.macaronis.create(player.x - 50, player.y, 'macaroni').play('macaroni_loop');
-				this.macaroni.flipX = true;
-				this.macaroni.setVelocityX(-700);
-				this.time.addEvent({
-						delay: 10000,
-						callback: onEvent,
-						callbackScope: this
-					});	
-					function onEvent(){
-						this.macaronis.getChildren().map(child => child.destroy());
-					}
-					macaroniAvailable--;	
-					this.macaroniText2.setText(macaroniAvailable);
-					//// if run out of macaroni shots 
-					if (macaroniAvailable <= 0){
-						this.macaroniText2.setText(0);
-					}
-				//enemy collisions
-			   //chilis
-				this.physics.add.collider(this.macaroni, this.chili, ()=>{
-				this.chiliHealth--;
-				this.chili.tint = 0xff0000;
-				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
-				this.timedEvent = this.time.addEvent({
-				delay: 150,
-				callback: onEvent,
-				callbackScope: this
-				});	
-				function onEvent(){
-				this.chiliHit.play();
-				this.chili.tint = 0xffffff;
-				}
-				});
-				this.physics.add.collider(this.macaroni, this.chili2, ()=>{
-				this.chili2Health--;
-				this.chili2.tint = 0xff0000;
-				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
-				this.timedEvent = this.time.addEvent({
-				delay: 150,
-				callback: onEvent,
-				callbackScope: this
-				});	
-				function onEvent(){
-				this.chiliHit.play();
-				}
-				});
-				this.physics.add.collider(this.macaroni, this.chili3, ()=>{
-				this.chili3Health--;
-				this.chili3.tint = 0xff0000;
-				this.macaronis.getChildren().map(child => child.destroy());
-				this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
-				this.timedEvent = this.time.addEvent({
-				delay: 150,
-				callback: onEvent,
-				callbackScope: this
-				});	
-				function onEvent(){
-				this.chiliHit.play();
-				}
-				});
-				//meatballs
-				this.physics.add.collider(this.macaroni, this.meatball, ()=>{
-				this.meatball.tint = 0x000000;
-				this.macaronis.getChildren().map(child => child.destroy());
-				this.meatballHit = this.sound.add('meatball_hit');
-				this.timedEvent = this.time.addEvent({
-				delay: 50,
-				callback: onEvent,
-				callbackScope: this
-				});	
-				function onEvent(){
-				this.meatballHit.play();
-				this.meatball.destroy();
-				}
-				});
-				this.physics.add.collider(this.macaroni, this.meatball2, ()=>{
-				this.meatball2.tint = 0x000000;
-				this.macaronis.getChildren().map(child => child.destroy());
-				this.meatballHit = this.sound.add('meatball_hit');
-				this.timedEvent = this.time.addEvent({
-				delay: 50,
-				callback: onEvent,
-				callbackScope: this
-				});	
-				function onEvent(){
-				this.meatballHit.play();
-				this.meatball2.destroy();
-				}
-				});
-				this.physics.add.collider(this.macaroni, this.meatball3, ()=>{
-				this.meatball3.tint = 0x000000;
-				this.macaronis.getChildren().map(child => child.destroy());
-				this.meatballHit = this.sound.add('meatball_hit');
-				this.timedEvent = this.time.addEvent({
-				delay: 50,
-				callback: onEvent,
-				callbackScope: this
-				});	
-				function onEvent(){
-				this.meatballHit.play();
-				this.meatball3.destroy();
-				}
-				});
-				this.physics.add.collider(this.macaroni, this.meatball4, ()=>{
-				this.meatball4.tint = 0x000000;
-				this.macaronis.getChildren().map(child => child.destroy());
-				this.meatballHit = this.sound.add('meatball_hit');
-				this.timedEvent = this.time.addEvent({
-				delay: 50,
-				callback: onEvent,
-				callbackScope: this
-				});	
-				function onEvent(){
-				this.meatballHit.play();
-				this.meatball4.destroy();
-				}
-				});
-				// level boss
+					// level boss
 				this.physics.add.collider(this.macaroni, this.levelBoss, ()=>{
 					this.levelBossHealth--;
 					this.levelBoss.tint = 0xff0000;
@@ -1573,35 +1346,51 @@ create() {
 					this.pepperoni2 =  
 					this.bossFire.create(this.levelBoss.x + 50, this.levelBoss.y + 80 , 'pepperoni');
 					this.pepperoni2.setVelocityX(800).setVelocityY(-350);
-					this.time.addEvent({
-					delay: 500,
-					callback: onEvent,
-					callbackScope: this
-					});	
-					function onEvent(){
-					this.pepperoni2.destroy();	
-					this.bossHit.play();
-					this.levelBoss.tint = 0xffffff;
+			if (this.levelBossHealth >= 3){
+						this.time.addEvent({
+						delay: 500,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.pepperoni2.destroy();	
+						this.bossHit.play();
+						this.levelBoss.tint = 0xffffff;
+						this.levelBoss.anims.play('boss_idle', true);
+						}
+					} else{
+						this.time.addEvent({
+						delay: 500,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.pepperoni2.destroy();	
+						this.bossHit.play();
+						}	
 					}
 				});	
-		}
+				}
 		
-	 });	
+			});	
 /////////////////////	
 	this.timer = false;
-
+	
 }//end create function
 //////////////////////////////////////////////////////////////////////////////////////////// update/////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  update(time, delta) {
 
-			// W key weapon 1 rolling pin
-		   if (player.flipX === false && cursors.space.isUp && this.WKey.isDown){
+			//weapon keyboard (rolling pin)
+				// W key weapon 1 rolling pin
+		   if (cursors.space.isUp && this.WKey.isDown){
 					player.anims.play('rolling_pin_loop', true);
 					this.huh = this.sound.add('huh');
 					this.huh.play();	
-					this.rollingPin = this.rollingPinWeapon.create(player.x + 45, player.y, 'rolling_pin_fr1');
+					let weaponX = player.flipX === true ? player.x - 45 : player.x + 45;
+					this.rollingPin = this.rollingPinWeapon.create(weaponX , player.y, 'rolling_pin_fr1');
+					this.rollingPin.flipX = player.flipX === true;
 					this.timedEvent = this.time.addEvent({
 							delay: 50,
 							callback: onEvent,
@@ -1630,7 +1419,7 @@ create() {
 					this.physics.add.collider(this.rollingPin, this.chili2, ()=>{
 							this.chili2Health--;
 							this.chili2.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+							this.chiliHit = this.sound.add('chili_hit');
 					this.timedEvent = this.time.addEvent({
 								delay: 150,
 								callback: onEvent,
@@ -1644,7 +1433,7 @@ create() {
 					this.physics.add.collider(this.rollingPin, this.chili3, ()=>{
 							this.chili3Health--;
 							this.chili3.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
+							this.chiliHit = this.sound.add('chili_hit');
 					this.timedEvent = this.time.addEvent({
 						delay: 150,
 						callback: onEvent,
@@ -1708,192 +1497,92 @@ create() {
 							this.meatball4.tint = 0x000000;	
 					return 	this.meatballHit = this.sound.add('meatball_hit');
 					});
+					// level boss
+				this.physics.add.collider(this.rollingPin, this.levelBoss, ()=>{
+					this.levelBossHealth--;
+					this.levelBoss.tint = 0xff0000;
+					this.macaronis.getChildren().map(child => child.destroy());
+					this.bossHit = this.sound.add('boss_hit');
+					this.levelBoss.anims.play('boss_hit_anim');
+					this.pepperoni2 =  
+					this.bossFire.create(this.levelBoss.x + 50, this.levelBoss.y + 80 , 'pepperoni');
+					this.pepperoni2.setVelocityX(800).setVelocityY(-350);
+			if (this.levelBossHealth >= 3){
+						this.time.addEvent({
+						delay: 500,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.pepperoni2.destroy();	
+						this.bossHit.play();
+						this.levelBoss.tint = 0xffffff;
+						this.levelBoss.anims.play('boss_idle', true);
+						}
+					} else{
+						this.time.addEvent({
+						delay: 500,
+						callback: onEvent,
+						callbackScope: this
+						});	
+						function onEvent(){
+						this.pepperoni2.destroy();	
+						this.bossHit.play();
+						}	
+					}
+				});	
 					// weapon collision with player because apparently I have no idea how to really make it disappear =[
 					this.physics.add.collider(this.rollingPin, player, ()=>{
 						return this.rollingPin.destroy();
 					});
-				  }
-		// W key weapon 1 rolling pin left
-		 else if (player.flipX === true && cursors.space.isUp && this.WKey.isDown){
-			   player.anims.play('rolling_pin_loop', true);
-			   this.huh = this.sound.add('huh');
-			   this.huh.play();
-			   this.rollingPin = this.rollingPinWeapon.create(player.x - 45, player.y, 'rolling_pin_fr1');
-			   this.rollingPin.flipX = true;
-			   this.timedEvent = this.time.addEvent({
-							delay: 150,
-							callback: onEvent,
-							callbackScope: this
-					});	
-					function onEvent(){
-							this.huh.stop();
-							this.rollingPinWeapon.getChildren().map(child => child.destroy());
-					}
-					//enemy collisions
-						//chilis
-						this.physics.add.collider(this.rollingPin, this.chili, ()=>{
-							this.chiliHealth--;	
-							this.chili.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
-						this.timedEvent = this.time.addEvent({
-							delay: 150,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-							this.chiliHit.play();
-							this.chili.tint = 0xffffff;
-						}
-						});
-							this.physics.add.collider(this.rollingPin, this.chili2, ()=>{
-							this.chili2Health--;	
-							this.chili2.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
-						this.timedEvent = this.time.addEvent({
-							delay: 150,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-							this.chiliHit.play();
-							this.chili2.tint = 0xffffff;
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.chili3, ()=>{
-							this.chili3Health--;
-							this.chili3.tint = 0xff0000;
-							this.chiliHit = this.sound.add('chili_hit', {volume: 0.35});
-						this.timedEvent = this.time.addEvent({
-							delay: 150,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-							this.chiliHit.play();
-							this.chili3.tint = 0xffffff;
-						}
-						});
-						//meatballs
-						this.physics.add.collider(this.rollingPin, this.meatball, ()=>{
-							this.meatball.tint = 0x000000;
-							this.meatballHit = this.sound.add('meatball_hit');
-						this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-							this.meatballHit.play();
-							this.meatball.destroy();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.meatball2, ()=>{
-							this.meatball2.tint = 0x000000;	
-							this.meatballHit = this.sound.add('meatball_hit');
-							this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-							function onEvent(){
-							this.meatballHit.play();
-							this.meatball2.destroy();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.meatball3, ()=>{
-							this.meatball3.tint = 0x000000;	
-							this.meatballHit = this.sound.add('meatball_hit');
-							this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-							this.meatballHit.play();
-							this.meatball3.destroy();
-						}
-						});
-						this.physics.add.collider(this.rollingPin, this.meatball4, ()=>{
-							this.meatball4.tint = 0x000000;
-							this.meatballHit = this.sound.add('meatball_hit');
-						this.timedEvent = this.time.addEvent({
-							delay: 50,
-							callback: onEvent,
-							callbackScope: this
-						});	
-						function onEvent(){
-						this.meatballHit.play();
-						this.meatball4.destroy();
-						}
-						});
-						// level boss
-						this.physics.add.collider(this.rollingPin, this.levelBoss, ()=>{
-							this.levelBossHealth--;
-							this.levelBoss.tint = 0xff0000;
-							this.bossHit = this.sound.add('boss_hit');
-							this.levelBoss.anims.play('boss_hit_anim');
-							this.pepperoni2 =  
-							this.bossFire.create(this.levelBoss.x + 50, this.levelBoss.y + 80 , 'pepperoni');
-							this.pepperoni2.setVelocityX(800).setVelocityY(-350);
-							this.time.addEvent({
-							delay: 500,
-							callback: onEvent,
-							callbackScope: this
-							});	
-							function onEvent(){
-							this.pepperoni2.destroy();
-							this.bossHit.play();
-							this.levelBoss.tint = 0xffffff;
-							}
-						});	
-					// weapon collision with player because apparently I have no idea how to really make it disappear =[
-					this.physics.add.collider(this.rollingPin, player, ()=>{
-						this.rollingPin.destroy();
-					});
-				   }	
+				  }	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-		
+
+	//player movements
 		if (this.WKey.isDown && player.body.onFloor() === true){
 				player.body.setVelocityX(0);
 		}
 		if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
 			player.setVelocityX(0);
+		
 		}
+		
 		if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
 			player.setVelocityX(0);
+		
 		}
 		if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
 			player.setVelocityX(0);
+		
 		}
 		if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
 			player.setVelocityX(0);
-		}		
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////player movements
+		
+		}
+	
 	 //left (ground)
-	if (this.leftButtonState === true || cursors.left.isDown === true && player.body.onFloor() === true && this.WKey.isDown === false){	
+	if (this.leftButtonState === true || cursors.left.isDown === true && player.body.onFloor() === true && this.WKey.isDown === false && this.A_buttonState === false){	
 			player.body.setVelocityX(-250);
 			player.anims.play('walk', true);
 			player.flipX = true;		
 	}//(air)
-	else if (this.leftButtonState === true || cursors.left.isDown === true && player.body.onFloor() === false && this.WKey.isDown === false){	
+	 if (this.leftButtonState === true && player.body.onFloor() === false && this.WKey.isDown === false){	
 			player.body.setVelocityX(-250);
 			player.anims.play('fall', true);
 			player.flipX = true;		
 	}
-	else if (player.body.onFloor() === false){
-		player.anims.play('fall', true);
+	 if (player.body.onFloor() === false && this.WKey.isDown === true){
+		player.anims.play('rolling_pin_loop', true);
 	}
 	 //right (ground)
-    if (this.rightButtonState === true || cursors.right.isDown === true && player.body.onFloor() === true && this.WKey.isDown === false){
+    if (this.rightButtonState === true || cursors.right.isDown === true && player.body.onFloor() === true && this.WKey.isDown === false && this.A_buttonState === false){
 			player.body.setVelocityX(250);
 			player.anims.play('walk', true);
 			player.flipX = false;
-	}//(air)
-	else if (this.rightButtonState === true || cursors.right.isDown === true && player.body.onFloor() === false){
+	}
+	//(air)
+	 if (this.rightButtonState === true || cursors.right.isDown === true && player.body.onFloor() === false){
 			player.body.setVelocityX(250);
-			player.anims.play('fall', true);
 			player.flipX = false;
 	}	
    //jump
@@ -1912,33 +1601,66 @@ create() {
 	if (player.body.onFloor() === false && this.leftButtonState === true ){
 			player.anims.play('fall', true);
 	}
-	else if (player.body.onFloor() === false && this.rightButtonState === true){
+   if (player.body.onFloor() === false && this.rightButtonState === true){
 			player.anims.play('fall', true);
-	}//idle
+	}
+   if (player.body.onFloor() === false && this.A_buttonState === true){
+			player.anims.play('rolling_pin_loop', true);
+	}
+	if (player.body.onFloor() === false && this.WKey.isDown === false && cursors.isUp && this.rightButtonState === false && this.jumpButtonState === false
+	&& this.rightButtonState === false && this.A_buttonState === false && this.B_buttonState === false){
+		player.anims.play('fall');
+	}
+	//idle
    if (player.body.onFloor() === true && cursors.up.isDown === false && cursors.right.isDown === false && cursors.left.isDown === false
    && this.rightButtonState === false && this.jumpButtonState === false && this.leftButtonState === false
    && this.WKey.isUp && this.A_buttonState === false){
 	   player.body.setVelocityX(0);
 	   player.anims.play('idle', true);
-   }
-if (player.body.onFloor() === true && this.WKey.isDown){
-	player.body.setVelocityX(0);
-//	player.anims.play('rolling_pin_loop', true);
+	   }
+	if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
+		player.setVelocityX(0);
+	
+	}
+	if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
+		player.setVelocityX(0);
+	
+	}
+
+	if (player.body.onFloor() === false && cursors.left.isDown && this.A_buttonState === false){
+		player.setVelocityX(-250);
+	}
+	if (player.body.onFloor() === false && cursors.left.isDown){
+		player.flipX = true;
+	}
+	if (player.body.onFloor() === false && this.A_buttonState === false && this.B_buttonState === false
+			&& player.body.velocity.y >= 1){
+				player.anims.play('fall');
+				this.rollingPinWeapon.getChildren().map(child => child.destroy());
+			}
+	if (player.body.onFloor() === false && this.A_buttonState === true){
+		player.setVelocityX(0);
+		player.setVelocityY(0);
+		this.time.addEvent({
+			delay: 250,
+			callback: onEvent,
+			callbackScope: this
+		});
+		function onEvent(){
+				this.rollingPinWeapon.getChildren().map(child => child.destroy());
+				player.anims.play('fall');
+					player.body.velocity.y = 300;
+		}
+	}
+	
+///////////////////////////	
+if (healthScore === 1){
+	this.text3.visible = true;
+}	
+else if (healthScore >= 2){
+	this.text3.visible = false;
 }
-if (player.body.onFloor() && this.A_buttonState === true && this.rightButtonState === true){
-	player.setVelocityX(0);
-}
-if (player.body.onFloor() && this.A_buttonState === true && this.leftButtonState === true){
-	player.setVelocityX(0);
-}
-if (player.body.onFloor() && this.A_buttonState === true && cursors.right.isDown){
-	player.setVelocityX(0);
-}
-if (player.body.onFloor() && this.A_buttonState === true && cursors.left.isDown){
-	player.setVelocityX(0);
-}		
-///////////////////////////		
-if (healthScore <= 0){
+else if (healthScore <= 0){
 			this.mainTheme.stop()	
 			this.scene.stop('PlayState');
 			this.scene.start('LivesState');
@@ -1995,14 +1717,23 @@ if (healthScore <= 0){
 		// level boss
 		if (this.levelBossHealth <= 0){
 		    this.levelBoss.tint = 0x000000;
+			
+			//particles
+/*		 this.particleEmitter = this.add.particles('macaroni').createEmitter({
+			 x: {min: 150, max: 450}, y: { min:1000, max: 1250},
+			 lifespan: 150, speedY: { min: 10, max: 30},
+			 scale: 0.3, quantity: 5, blendMode: 'SCREEN'
+		 });  */
 				this.time.addEvent({
 					delay: 150,
-					callback: onEvent,
+					callback: onEvent2,
 					callbackScope: this
 				});
-				function onEvent(){
+				function onEvent2(){
 				  this.levelBoss.destroy();
-				}
+				  
+			//	  this.particleEmitter.explode();
+				} 
 		}			
  }//end update function
    

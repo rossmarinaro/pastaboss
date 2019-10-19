@@ -3,7 +3,7 @@
 var config = {
     type: Phaser.AUTO,
     width: 800,
-    height: 600,
+    height:600,
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH
@@ -21,7 +21,8 @@ var config = {
 	},  */
     scene: //array of stages/ minigames within the game
    [BootState, PreloadState, MenuState, PlayState, PreloadState_lv2, PlayState_lv2,
-   PreloadState_lv3, PlayState_lv3, PreloadState_MiniGame1, PlayState_MiniGame1,
+   PreloadState_lv3, PlayState_lv3, PreloadState_MiniGame1, 
+   PlayState_MiniGame1, PreloadState_MiniGame2, PlayState_MiniGame2,
    RetryState, LivesState, LivesState_lv2, LivesState_lv3
    ]
    
@@ -44,5 +45,6 @@ var livesLeft = 3;
 var livesText;
 var ring;
 var continue_button;
-
+var iter = 0;
+var tilesprites = [];
 ////////////////////
