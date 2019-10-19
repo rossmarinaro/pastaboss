@@ -1,6 +1,12 @@
 
 /* style.css (Pastaboss) */
 
+@font-face{
+	font-family: "Bangers";
+   src: url("fonts/bangers-regular-webfont.woff") format("woff"),
+   url("fonts/bangers-regular-webfont.woff2") format("woff2");
+}
+
 
 html{
 	
