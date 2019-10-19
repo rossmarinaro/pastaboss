@@ -1,11 +1,12 @@
-////Pastaboss game preload assets lv 2
+////Preload mini game 1
 
 
-class PreloadState_lv2 extends Phaser.Scene {
+class PreloadState_MiniGame1 extends Phaser.Scene {
   constructor() {
-    super("PreloadState_lv2");
+    super("PreloadState_MiniGame1");
   }
-   
+  
+  
  //////preload//////
   preload(){
 	this.add.text(260, 300, "Loading game...", {font: "35px Bangers", fill: '#ffff00'});
@@ -22,15 +23,17 @@ class PreloadState_lv2 extends Phaser.Scene {
 //// text	  
 	this.load.image('pastaboss_text', 'assets/images/pastaboss_text.png');
 ////map, environment, and background
-	this.load.image('pixel', 'assets/backgrounds/pixel.png');;
-	this.load.tilemapTiledJSON('map2',  'assets/maps/map2.json');
-	this.load.image('map2',  'assets/maps/map.png'); 
-	this.load.spritesheet('tiles3', 'assets/maps/tile_sheet_files/tiles3.png', {frameWidth: 70, frameHeight: 70});
+	this.load.image('pixel2', 'assets/backgrounds/pixel2.png');;
+	this.load.tilemapTiledJSON('miniGame1', 'assets/maps/miniGame1.json');
+	this.load.image('miniGame1',  'assets/maps/miniGame1.png'); 
+	this.load.spritesheet('tiles', 'assets/maps/tile_sheet_files/tiles.png', {frameWidth: 70, frameHeight: 70});
 	this.load.spritesheet('tiles2', 'assets/maps/tile_sheet_files/tiles2.png', {frameWidth: 70, frameHeight: 70});
 	this.load.spritesheet('tiles4', 'assets/maps/tile_sheet_files/tiles4.png', {frameWidth: 70, frameHeight: 70});
-	//objects
-	this.load.image('breakable_brick', 'assets/objects/breakable_brick.png');
-	this.load.image('platform', 'assets/objects/platforms/1.png');
+	//particles
+	this.load.image('snow',  'assets/particles/snow.png'); 
+	this.load.image('rubble_fr1', 'assets/particles/rubble/1.png');
+	this.load.image('rubble_fr2', 'assets/particles/rubble/2.png');
+	this.load.image('rubble_fr3', 'assets/particles/rubble/3.png');
 	////lives icon
 	this.load.image('player_interface', 'assets/images/player_interface.png');
 	this.load.image('lives', 'assets/images/lives.png');
@@ -41,49 +44,31 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.image('salmon', 'assets/items/salmon_nigiri.png');
 	this.load.image('pickaxe', 'assets/items/pickaxe.png');
 	this.load.image('weed_block', 'assets/items/weed_block.png');
-////// hazards
-	//cheese pits
-	this.load.image('cheese_pit1', 'assets/hazards/cheese_pits/1.png');
-	this.load.image('cheese_pit2', 'assets/hazards/cheese_pits/2.png');
-	this.load.image('cheese_pit3', 'assets/hazards/cheese_pits/3.png');	
-	//sauce lava
-	this.load.image('sauce_lava1', 'assets/hazards/sauce_lava/1.png');	
-	this.load.image('sauce_lava2', 'assets/hazards/sauce_lava/2.png');
-	this.load.image('sauce_lava3', 'assets/hazards/sauce_lava/3.png');
 ////// enemies
-	//chili peppers 
-	this.load.image('chili_fr1', 'assets/enemies/chili/1.png');
-	this.load.image('chili_fr2', 'assets/enemies/chili/2.png');
-	this.load.image('chili_fr3', 'assets/enemies/chili/3.png');
-	//fire
-	this.load.image('fire_fr1', 'assets/hazards/fire/1.png');
-	this.load.image('fire_fr2', 'assets/hazards/fire/2.png');
-	this.load.image('fire_fr3', 'assets/hazards/fire/3.png');	
-	this.load.image('fire_fr4', 'assets/hazards/fire/4.png');
-	this.load.image('fire_fr5', 'assets/hazards/fire/5.png');
 	//meatballs 
 	this.load.image('meatball_fr1', 'assets/enemies/meatball/1.png');
 	this.load.image('meatball_fr2', 'assets/enemies/meatball/2.png');
 	this.load.image('meatball_fr3', 'assets/enemies/meatball/3.png');
+	//ice cream cone
+	this.load.image('icecream_fr1', 'assets/enemies/icecream/1.png');
+	this.load.image('icecream_fr2', 'assets/enemies/icecream/2.png');
+	this.load.image('icecream_fr3', 'assets/enemies/icecream/3.png');
+	this.load.image('icecream_fr4', 'assets/enemies/icecream/4.png');
 	//pickles
 	this.load.image('pickle_fr1', 'assets/enemies/pickle/1.png');
 	this.load.image('pickle_fr2', 'assets/enemies/pickle/2.png');
 	this.load.image('pickle_fr3', 'assets/enemies/pickle/3.png');
 	this.load.image('pickle_fr4', 'assets/enemies/pickle/4.png');
 	this.load.image('pickle_fr5', 'assets/enemies/pickle/5.png');
-	//cheese
-	this.load.image('cheese_fr1', 'assets/enemies/cheese/1.png');
-	this.load.image('cheese_fr2', 'assets/enemies/cheese/2.png');
-	this.load.image('cheese_fr3', 'assets/enemies/cheese/3.png');
+	//cupcakes
+	this.load.image('cupcake_fr1', 'assets/enemies/cupcakes/1.png');
+	this.load.image('cupcake_fr2', 'assets/enemies/cupcakes/2.png');
+	this.load.image('cupcake_fr3', 'assets/enemies/cupcakes/3.png');
 	//level 2 boss
-	this.load.image('boss_fr1', 'assets/enemies/bosses/hotdog/1.png');
-	this.load.image('boss_fr2', 'assets/enemies/bosses/hotdog/2.png');
-	this.load.image('boss_fr3', 'assets/enemies/bosses/hotdog/3.png');	
-	// boss attack
-	this.load.image('boss_attack_fr1', 'assets/enemies/bosses/hotdog/attack/1.png');
-	this.load.image('boss_attack_fr2', 'assets/enemies/bosses/hotdog/attack/2.png');
-	this.load.image('boss_attack_fr3', 'assets/enemies/bosses/hotdog/attack/3.png');
-	this.load.image('boss_attack_fr4', 'assets/enemies/bosses/hotdog/attack/4.png');
+	this.load.image('boss_fr1', 'assets/enemies/bosses/cake_boss/1.png');
+	this.load.image('boss_fr2', 'assets/enemies/bosses/cake_boss/2.png');
+	this.load.image('boss_fr3', 'assets/enemies/bosses/cake_boss/3.png');	
+	this.load.image('boss_weapon', 'assets/enemies/bosses/cake_boss/piece_of_cake.png');	
 ////// hazards                                                                                    
 	//ice block
 	this.load.image('ice_block_fr1', 'assets/hazards/ice_block/1.png');
@@ -136,7 +121,7 @@ class PreloadState_lv2 extends Phaser.Scene {
 	this.load.audio('enemy_ow1', 'assets/audio/sounds/enemy_ow1.ogg');
 	this.load.audio('enemy_ow2', 'assets/audio/sounds/enemy_ow2.ogg');
 	////music
-	this.load.audio('lv2ext', 'assets/audio/music/lv2ext.ogg');
+	this.load.audio('level2', 'assets/audio/music/level2.ogg');
 	this.load.audio('menu', 'assets/audio/music/pastafarimon.ogg');
 	this.load.audio('game_over', 'assets/audio/music/game_over.ogg');
 	this.load.audio('menu_music', 'assets/audio/music/pastafarimon.ogg');
@@ -150,15 +135,12 @@ class PreloadState_lv2 extends Phaser.Scene {
 		
   }
 
-  //////create///////
-  
+  //////create/////// 
   create() {
-	  
-	  this.scene.start('PlayState_lv2');
+	  this.scene.start('PlayState_MiniGame1');
 	
 	}
- 
+// end state 
 }
-
 
 /////////////////

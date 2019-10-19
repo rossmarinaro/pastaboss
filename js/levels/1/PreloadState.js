@@ -20,7 +20,8 @@ class PreloadState extends Phaser.Scene {
 	this.load.image('B_button', 'assets/buttons/b_button.png',96,64);
 	//start, retry
 	this.load.image('continue', 'assets/buttons/continue.png',96,64); 
-//// text	  
+//// text/image
+	this.load.image('logo', 'assets/images/logo.png');
 	this.load.image('pastaboss_text', 'assets/images/pastaboss_text.png');
 ////map, environment, and background
 	this.load.image('pixel', 'assets/backgrounds/pixel.png');;
@@ -112,7 +113,7 @@ class PreloadState extends Phaser.Scene {
 	this.load.audio('dead', 'assets/audio/music/dead.ogg');
 	//level 1 end background
 	this.load.image('ramen', 'assets/images/rubberglovedub.png');
-		
+	this.load.atlas('bkgnd', 'assets/images/bkgnd.png', 'assets/images/bkgnd.json');	
   }
 
   //////create///////

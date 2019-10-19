@@ -60,15 +60,22 @@ class PreloadState_lv3 extends Phaser.Scene {
 	this.load.image('pickle_fr3', 'assets/enemies/pickle/3.png');
 	this.load.image('pickle_fr4', 'assets/enemies/pickle/4.png');
 	this.load.image('pickle_fr5', 'assets/enemies/pickle/5.png');
+	//pickle juice
+	this.load.image('pickle_juice_fr1', 'assets/enemies/pickle/pickle_juice/1.png');
+	this.load.image('pickle_juice_fr2', 'assets/enemies/pickle/pickle_juice/2.png');
+	this.load.image('pickle_juice_fr3', 'assets/enemies/pickle/pickle_juice/3.png');
+	//splat
+	this.load.image('pickle_juice_splat_fr1', 'assets/enemies/pickle/pickle_juice/splat/1.png');
+	this.load.image('pickle_juice_splat_fr2', 'assets/enemies/pickle/pickle_juice/splat/2.png');
 	//cupcakes
 	this.load.image('cupcake_fr1', 'assets/enemies/cupcakes/1.png');
 	this.load.image('cupcake_fr2', 'assets/enemies/cupcakes/2.png');
 	this.load.image('cupcake_fr3', 'assets/enemies/cupcakes/3.png');
 	//level 2 boss
-	this.load.image('boss_fr1', 'assets/enemies/bosses/cake_boss/1.png');
-	this.load.image('boss_fr2', 'assets/enemies/bosses/cake_boss/2.png');
-	this.load.image('boss_fr3', 'assets/enemies/bosses/cake_boss/3.png');	
-	this.load.image('boss_weapon', 'assets/enemies/bosses/cake_boss/piece_of_cake.png');	
+	this.load.image('cake_boss_fr1', 'assets/enemies/bosses/cake_boss/1.png');
+	this.load.image('cake_boss_fr2', 'assets/enemies/bosses/cake_boss/2.png');
+	this.load.image('cake_boss_fr3', 'assets/enemies/bosses/cake_boss/3.png');	
+	this.load.image('cake_boss_weapon', 'assets/enemies/bosses/cake_boss/piece_of_cake.png');	
 ////// hazards                                                                                    
 	//ice block
 	this.load.image('ice_block_fr1', 'assets/hazards/ice_block/1.png');
