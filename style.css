@@ -36,12 +36,12 @@ footer h5{
 }
 
 
-footer p{
+ p{
 	
 	margin: auto;
 	padding-bottom: 5%;
 	text-align: center;
-	font-family: 'Arial Black', sans-serif;
+	font-family: 'Bangers', 'Arial Black', sans-serif;
 	font-weight: bold;
 	font-style: italic;
 	text-shadow: 0.08em 0.08em 0.08em #F4F442 , 0.1em 0.1em #000000;
