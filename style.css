@@ -21,13 +21,8 @@ body{
 	
 	background: -webkit-radial-gradient(#F4F442,#A8A23E);
 	background-image: url(images/bkgnd.gif);
-	background-size: cover;
-
-
-	
+	background-size: cover;	
 }
-
-
 
 footer h5{
 
@@ -77,69 +72,46 @@ a{
 	text-decoration: none;
 	letter-spacing: 0.05em;
 	color: #CD0A0A;
-	margin-left: 3%;	
+	
 }
 
-
-
-
-form label{
-	
+form label{	
 	text-align: center;
 	font-family: 'Bangers' , 'Arial Black' sans-serif;
-	
-	
+		
 }
-
 
 														/* id  */
 							
  /*navigation*/
    
-#navigation{
-	
+#navigation{	
    display: none;
-   transition: 0.5s;
-  
+   transition: 0.5s; 
 }
 
-
-#navigation ul{
-	
+#navigation ul{	
 	 list-style-type: none;
-	 z-index: 1;
-	 
-	 
+	 z-index: 1;	 
 }
-
-#navigation li{
-	
-	  padding-bottom: 20px;
-	  
+#navigation li{	
+	  padding-bottom: 20px;	  
 }
-
 #navigation a{
-
-  transition: 0.3s;
-
-  
+  transition: 0.3s; 
 }
-
 	
 #nav-button a{
 	
 	cursor: pointer;
-	
+	margin-left: 3%;
 }
 
 #nav-button a:hover{
-	
 		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A; 
 		color: #ff0000;
-	
+
 }
-
-
 #navigation a:hover{
 	
 		color:#F4F442;
@@ -160,13 +132,19 @@ form label{
 	height: 520px;
 	position: relative;
 }
+.book-content{
+ float: center;
+	left: 250px;
+}
 .book-text{
 	box-sizing: border-box;
+	border: 0.5em solid #000000;
+	background: #D39009;
 	margin: auto;
+	width: 80%;
 }
 .book-text p {
-	
-	padding-bottom: 5%;
+	padding: 0 5% 0 5%;
 	text-align: center;
 	font-size: 2em;
 	font-family: 'Bangers', 'Arial Black', sans-serif;
@@ -174,8 +152,15 @@ form label{
 	font-style: italic;
 	text-shadow: 0.08em 0.08em 0.08em #F4F442 , 0.1em 0.1em #000000;
 	color: #000000;
-	margin-left: 30%;
 	
+	
+}
+.video-text{
+	box-sizing: border-box;
+	border: 0.5em solid #000000;
+	background: #D39009;
+	margin: auto;
+	width: 80%;
 }
 .video-text p {
 	
@@ -202,9 +187,7 @@ form label{
 	grid-template-columns: repeat(4, 1fr);
 	margin-left: 25%;
 	margin-top: 10%;
-	position: relative;
-			
-				
+	position: relative;				
 }
 
 .grid-container img{
@@ -283,17 +266,16 @@ form label{
 		}
 		
 		.book-text p{
-			font-size: 1.5em;
-			margin-right: 150px;
+			font-size: 1em;
+
 		}
 		.video-text p{
 			font-size: 1.5em;
 		}
 		.video-wrapper	iframe{
 		 margin: auto;
-		 width: 400px;
-		 height: 280px;
-		right: 5%;
+		 width: 250px;
+		 height: 180px;
 		overflow-x: hidden;
 	
 		}
@@ -303,8 +285,9 @@ form label{
 		}
 		
 		#navigation a{	
-			font-size: 2em;	
+			font-size: 1.7em;	
 		}
+	
 
       	
 	
