@@ -126,7 +126,7 @@ form label{
 }
 
 .video-wrapper iframe{
-	left: 60px;
+
 	padding: 5%;
 	width: 650px;
 	height: 520px;
@@ -221,19 +221,17 @@ form label{
  
 	#navigation ul {
 		
-			font-size: 0.8em;	display: flex;
+			font-size: 0.8em;
+			display: flex;
 			flex-wrap: nowrap;
 			 font-size: 0.7em;
-			 
-		
-		}
-		
+
+		}	
 		#navigation li{
 			padding-left: 25px;
 		}
 
 	.video-wrapper iframe{
-		margin-left: 200px;
 		padding: 5%;
 		width: 600px;
 		height: 400px;
@@ -257,17 +255,11 @@ form label{
 		 background-image:url(images/bkgnd2.gif);
 		 background-size: cover;
 		}
-		
-	 
 		a{
-		 
-		 font-size: 1.5em;
-		
+		 font-size: 1.5em;	
 		}
-		
 		.book-text p{
 			font-size: 1em;
-
 		}
 		.video-text p{
 			font-size: 1.5em;
@@ -275,15 +267,19 @@ form label{
 		.video-wrapper	iframe{
 		 margin: auto;
 		 width: 250px;
-		 height: 180px;
-		overflow-x: hidden;
-	
+		 height: 180px;	
 		}
-		
 		.grid-container{ 
 		margin-left: 150px;
 		}
-		
+		#navigation ul{
+			display: block;
+			bottom: 640px;
+			right: 30px;
+		}
+		#navigation li{
+			font-size: 0.8em;
+		}
 		#navigation a{	
 			font-size: 1.7em;	
 		}
