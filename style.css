@@ -273,7 +273,8 @@ form label{
 		 background-repeat:repeat-y;
 		 background-color: #F4F442; 
 		 background-image:url(images/bkgnd2.gif);
-		 background-size: cover;
+		 background-size: cover; 
+		background-repeat: repeat-y;
 		}
 		
 	 
