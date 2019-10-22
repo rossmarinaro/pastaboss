@@ -293,9 +293,9 @@ form label{
 		}
 		.video-wrapper	iframe{
 		 margin: auto;
-		 width: 400px;
+		 width: 350px;
 		 height: 280px;
-		right: 5%;
+		right: 15%;
 		overflow-x: hidden;
 	
 		}
