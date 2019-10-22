@@ -6,31 +6,39 @@
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
 					<link rel="stylesheet" type="text/css" href="reset.css"/>
 					<link rel="stylesheet" type="text/css" href="style.css"/>
+					<link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
 					<title>Pastaboss! &#127837; &#128076;</title>
 					<script type="text/javascript" src="jquery.js"></script>
 					<script type="text/javascript" src="cycleplugin.js"></script>	
+		<!--				@media screen and (min-width: 1000px){
+		#book-cycle{
+			left: 35%;
+		}
+		}  -->
 	<style>
+
 		#book-cycle:hover{
 				opacity: 0.5;
 		}
-		@media screen and (max-width: 800px){
+
+		@media screen and (min-width: 800px){
 					#book-cycle{
 					margin-top:20px;
-					margin-left:25px;
+					left:35%;
 					}
 					#book-cycle img{
-						width: 350px;
-						height: 520px;
+						width: 380px;
+						height: 580px;
 					}
 			}				
 		@media screen and (max-width: 720px){
 					#book-cycle{
-					right: 50px;
+					left: 20%;
 					}
 					#book-cycle img{
-						width: 200px;
+						width: 220px;
 						height: 300px;
-						right: 80px;
+						margin-right: 20px;
 					}
 		}	
 	</style>
@@ -52,9 +60,10 @@
 						</ul>
 					</div>						
 		<header>
-		<section>
+		<section class="content-grid">
 		<!--book-->
-				 <figure id="book-cycle" style="left: 35%;">					 
+				<div class="book-content">
+				 <figure id="book-cycle">					 
 						<img class="cycle-images" src="images/book/1.png" alt="image">
 						<img class="cycle-images" src="images/book/2.png" alt="image">
 						<img class="cycle-images" src="images/book/3.png" alt="image">
@@ -64,16 +73,25 @@
 						<img class="cycle-images" src="images/book/7.png" alt="image">
 						<img class="cycle-images" src="images/book/8.png" alt="image">
 				</figure>		
-				<p>
-					 "Pastaboss: A Brief Introduction" 2019 release 30 page paperback comic 
-					 book "Pastaboss Vol:1", now available now on Amazon&copy;  Kindle
-				</p>
-		<!--featured video-->	   
+				<div class="book-text">
+					<p> "Pastaboss: A Brief Introduction"
+					<p>2019 release 30 page paperback comic 
+					 book "Pastaboss Vol:1", now available now on Amazon&copy;  Kindle </p>					
+				</div>
+				</div>
+		<!--featured video-->
+			<div class="video-content">
 			<figure class="video-wrapper">  
 				<iframe src="https://www.youtube.com/embed/HblOPqqm3aU" 
 				frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 				</iframe>
 			</figure>
+			<div class="video-text">
+					<p> Demo Reel <p>
+					<p>An overview of latest happenings in the food grade realm</p>	
+				</div>
+				</div>
+			<div>
 	</section>
 		<!--footer-->
 	<footer>
