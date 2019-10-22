@@ -22,6 +22,7 @@ body{
 	background: -webkit-radial-gradient(#F4F442,#A8A23E);
 	background-image: url(images/bkgnd.gif);
 	background-size: cover;
+	background-repeat: repeat-x;
 
 
 	
