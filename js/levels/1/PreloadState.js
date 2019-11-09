@@ -9,8 +9,15 @@ class PreloadState extends Phaser.Scene {
  //////preload//////
 
   preload(){
-	
-	this.add.text(260, 300, "Loading game...", {font: "35px Bangers", fill: '#ffff00'});
+	//loading text
+	this.loadingText =  this.add.text(300, 300, "Loading...", {font: "35px Digitizer", fill: '#ffff00'}).setStroke("#ff0000", 4);
+	 	//tween alpha loading pulse
+		this.pulseTween = this.tweens.add({
+				targets: this.loadingText,
+				alpha: {value: 0.2, duration: 1000, ease: 'Power1'},
+				yoyo: true,
+				repeat: -1
+			});
 	//// gamepad buttons
     this.load.image('left_button', 'assets/buttons/left_button.png',64,64);
 	this.load.image('jump_button', 'assets/buttons/jump_button.png',96,64);
@@ -24,7 +31,7 @@ class PreloadState extends Phaser.Scene {
 	this.load.image('logo', 'assets/images/logo.png');
 	this.load.image('pastaboss_text', 'assets/images/pastaboss_text.png');
 ////map, environment, and background
-	this.load.image('pixel', 'assets/backgrounds/pixel.png');;
+	this.load.image('pixel', 'assets/backgrounds/pixel.png');
 	this.load.tilemapTiledJSON('map',  'assets/maps/map.json');
 	this.load.image('map',  'assets/maps/map.png'); 
     this.load.spritesheet('tiles', 'assets/maps/tile_sheet_files/tiles.png', {frameWidth: 70, frameHeight: 70});
@@ -113,18 +120,19 @@ class PreloadState extends Phaser.Scene {
 	this.load.audio('dead', 'assets/audio/music/dead.ogg');
 	//level 1 end background
 	this.load.image('ramen', 'assets/images/rubberglovedub.png');
-	this.load.atlas('bkgnd', 'assets/images/bkgnd.png', 'assets/images/bkgnd.json');	
+	this.load.atlas('bkgnd', 'assets/images/bkgnd.png', 'assets/images/bkgnd.json');
+	this.load.atlas('bkgnd2', 'assets/images/bkgnd2.png', 'assets/images/bkgnd2.json');
+	this.load.image('exit', 'assets/doors/exit.png');
   }
+
+
 
   //////create///////
   
   create() {
-	  
-	  this.scene.start('MenuState');
-	
+		this.scene.start('Preload_IntroState');
 	}
  
 }
-
 
 /////////////////
