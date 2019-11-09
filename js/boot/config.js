@@ -18,10 +18,8 @@ var config = {
     },
     //array of stages/ minigames within the game
     scene: 
-        [BootState, PreloadState, Preload_IntroState, IntroState, MenuState, PlayState
-        //////////////////////////////////////////////////////    
-           
-         ]
+        [BootState, PreloadState, Preload_IntroState, IntroState, MenuState, PlayState]
+        /////////////////////////////////////////////////////// 
    
 };
 //////////////////////
