@@ -9,8 +9,7 @@ class PlayState extends Phaser.Scene {
 ////create
   
 create() {
-		this.socket = io();
-		this.socket.emit('delete');
+	
 		//background
 		this.bkgnd = 
 		this.add.image(500, 200, 'pixel').setScale(270);
