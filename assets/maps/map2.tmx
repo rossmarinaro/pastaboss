@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="61" height="40" tilewidth="70" tileheight="70" infinite="0" backgroundcolor="#000000" nextlayerid="77" nextobjectid="31">
  <tileset firstgid="1" name="tiles4" tilewidth="70" tileheight="70" tilecount="16" columns="4">
-  <image source="../../../../../wamp64/www/pastabossgamebuild/assets/maps/tile_sheet_files/tiles4.png" width="280" height="280"/>
+  <image source="tile_sheet_files/tiles4.png" width="280" height="280"/>
  </tileset>
  <tileset firstgid="17" name="coin" tilewidth="70" tileheight="70" tilecount="1" columns="1">
-  <image source="../../../../../wamp64/www/pastabossgamebuild/assets/items/coinGold.png" width="70" height="70"/>
+  <image source="../items/coinGold.png" width="70" height="70"/>
  </tileset>
  <tileset firstgid="18" name="tiles2" tilewidth="70" tileheight="70" tilecount="16" columns="4">
-  <image source="../../../../../wamp64/www/pastabossgamebuild/assets/maps/tile_sheet_files/tiles2.png" width="280" height="280"/>
+  <image source="tile_sheet_files/tiles2.png" width="280" height="280"/>
  </tileset>
  <tileset firstgid="34" name="tiles" tilewidth="70" tileheight="70" tilecount="16" columns="4">
-  <image source="../../../../../wamp64/www/pastabossgamebuild/assets/maps/tile_sheet_files/tiles.png" width="280" height="280"/>
+  <image source="tile_sheet_files/tiles.png" width="280" height="280"/>
  </tileset>
  <tileset firstgid="50" name="tiles3" tilewidth="70" tileheight="70" tilecount="16" columns="4">
-  <image source="../../../../../wamp64/www/pastabossgamebuild/assets/maps/tile_sheet_files/tiles3.png" width="280" height="280"/>
+  <image source="tile_sheet_files/tiles3.png" width="280" height="280"/>
  </tileset>
  <layer id="72" name="bkgnd" width="61" height="40">
   <data encoding="csv">
