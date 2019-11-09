@@ -84,7 +84,7 @@
         {
          "columns":4,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/wamp64\/www\/pastabossgamebuild\/assets\/maps\/tile_sheet_files\/tiles4.png",
+         "image":"tile_sheet_files\/tiles4.png",
          "imageheight":280,
          "imagewidth":280,
          "margin":0,
@@ -97,7 +97,7 @@
         {
          "columns":1,
          "firstgid":17,
-         "image":"..\/..\/..\/..\/..\/wamp64\/www\/pastabossgamebuild\/assets\/items\/coinGold.png",
+         "image":"..\/items\/coinGold.png",
          "imageheight":70,
          "imagewidth":70,
          "margin":0,
@@ -110,7 +110,7 @@
         {
          "columns":4,
          "firstgid":18,
-         "image":"..\/..\/..\/..\/..\/wamp64\/www\/pastabossgamebuild\/assets\/maps\/tile_sheet_files\/tiles2.png",
+         "image":"tile_sheet_files\/tiles2.png",
          "imageheight":280,
          "imagewidth":280,
          "margin":0,
@@ -123,7 +123,7 @@
         {
          "columns":4,
          "firstgid":34,
-         "image":"..\/..\/..\/..\/..\/wamp64\/www\/pastabossgamebuild\/assets\/maps\/tile_sheet_files\/tiles.png",
+         "image":"tile_sheet_files\/tiles.png",
          "imageheight":280,
          "imagewidth":280,
          "margin":0,
@@ -136,7 +136,7 @@
         {
          "columns":4,
          "firstgid":50,
-         "image":"..\/..\/..\/..\/..\/wamp64\/www\/pastabossgamebuild\/assets\/maps\/tile_sheet_files\/tiles3.png",
+         "image":"tile_sheet_files\/tiles3.png",
          "imageheight":280,
          "imagewidth":280,
          "margin":0,

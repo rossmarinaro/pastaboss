@@ -9,7 +9,15 @@ class PreloadState_MiniGame1 extends Phaser.Scene {
   
  //////preload//////
   preload(){
-	this.add.text(260, 300, "Loading game...", {font: "35px Bangers", fill: '#ffff00'});
+	//loading text
+	this.loadingText =  this.add.text(300, 300, "Loading...", {font: "35px Digitizer", fill: '#ffff00'}).setStroke("#ff0000", 4);
+		 	//tween alpha loading pulse
+			 this.pulseTween = this.tweens.add({
+				targets: this.loadingText,
+				alpha: {value: 0.2, duration: 1000, ease: 'Power1'},
+				yoyo: true,
+				repeat: -1
+			});
 	//// gamepad buttons
     this.load.image('left_button', 'assets/buttons/left_button.png',64,64);
 	this.load.image('jump_button', 'assets/buttons/jump_button.png',96,64);
@@ -35,7 +43,7 @@ class PreloadState_MiniGame1 extends Phaser.Scene {
 	this.load.image('rubble_fr2', 'assets/particles/rubble/2.png');
 	this.load.image('rubble_fr3', 'assets/particles/rubble/3.png');
 	////lives icon
-	this.load.image('player_interface', 'assets/images/player_interface.png');
+	this.load.image('this.player_interface', 'assets/images/this.player_interface.png');
 	this.load.image('lives', 'assets/images/lives.png');
 	this.load.image('lives2', 'assets/images/lives2.png');
 	//// items to pick up
@@ -69,16 +77,8 @@ class PreloadState_MiniGame1 extends Phaser.Scene {
 	this.load.image('boss_fr2', 'assets/enemies/bosses/cake_boss/2.png');
 	this.load.image('boss_fr3', 'assets/enemies/bosses/cake_boss/3.png');	
 	this.load.image('boss_weapon', 'assets/enemies/bosses/cake_boss/piece_of_cake.png');	
-////// hazards                                                                                    
-	//ice block
-	this.load.image('ice_block_fr1', 'assets/hazards/ice_block/1.png');
-	this.load.image('ice_block_fr2', 'assets/hazards/ice_block/2.png');
-	this.load.image('ice_block_fr3', 'assets/hazards/ice_block/3.png');
-	//icicle
-	this.load.image('icicle_fr1', 'assets/hazards/icicle/1.png');
-	this.load.image('icicle_fr2', 'assets/hazards/icicle/2.png');
-	//ice
-	this.load.image('ice', 'assets/hazards/ice/1.png');
+	this.load.image('chef', 'assets/enemies/bosses/chef/1.png');
+	this.load.image('table', 'assets/objects/table/1.png');
 ////// weapons
 	//rolling pin
 	this.load.image('rolling_pin_fr1', 'assets/weapons/rolling_pin/1.png');
@@ -94,11 +94,11 @@ class PreloadState_MiniGame1 extends Phaser.Scene {
 	this.load.image('ulooked', 'assets/images/ulooked.png');
     this.load.atlas('player', 'assets/player/player.png', 'assets/player/player.json');
 	//weapon stance
-	this.load.image('player_weapon_fr1', 'assets/player/player_weapon/1.png');
-	this.load.image('player_weapon_fr2', 'assets/player/player_weapon/2.png');
-	this.load.image('player_weapon_fr3', 'assets/player/player_weapon/3.png');
-	this.load.image('player_weapon_fr4', 'assets/player/player_weapon/4.png');
-	//this.load.atlas('player_weapon', 'assets/player_weapon/tmp.png', 'assets/player_weapon/tmp.json');
+	this.load.image('this.player_weapon_fr1', 'assets/player/this.player_weapon/1.png');
+	this.load.image('this.player_weapon_fr2', 'assets/player/this.player_weapon/2.png');
+	this.load.image('this.player_weapon_fr3', 'assets/player/this.player_weapon/3.png');
+	this.load.image('this.player_weapon_fr4', 'assets/player/this.player_weapon/4.png');
+	//this.load.atlas('this.player_weapon', 'assets/this.player_weapon/tmp.png', 'assets/this.player_weapon/tmp.json');
 	//idle
 	this.load.image('idle1', 'assets/player/idle/1.png');
 	this.load.image('idle2', 'assets/player/idle/2.png');
@@ -114,7 +114,7 @@ class PreloadState_MiniGame1 extends Phaser.Scene {
 	this.load.audio('extra_life_sound', 'assets/audio/sounds/record_scratch.ogg');
 	//collision sounds
 	this.load.audio('huh', 'assets/audio/sounds/huh.mp3');
-	this.load.audio('player_hit', 'assets/audio/sounds/ouch.ogg');
+	this.load.audio('this.player_hit', 'assets/audio/sounds/ouch.ogg');
 	this.load.audio('chili_hit', 'assets/audio/sounds/chili_hit.ogg');
 	this.load.audio('meatball_hit', 'assets/audio/sounds/meatball_hit.ogg');
 	this.load.audio('boss_hit', 'assets/audio/sounds/boss_hit.ogg');

@@ -12,7 +12,17 @@ class PlayState_MiniGame1 extends Phaser.Scene {
 ////create
   
 create() {
-       
+       this.time.addEvent({
+		   delay: 5000,
+		   callback: onEvent,
+		   callbackScope: this
+	   });
+	   function onEvent(){
+		  this.scene.stop('PlayState_MiniGame1');
+		  this.scene.start('PlayState_lv2');
+		   onBegin === false ? onBegin = true : onBegin = false;
+		   this.mainTheme.stop();
+	   }
 		//background
 		this.bkgnd = 
 		this.add.image(500, 200, 'pixel2').setScale(1000);
@@ -99,10 +109,10 @@ create() {
 		this.anims.create({
 			key: 'rolling_pin_loop',
 		frames:[
-			{ key: 'player_weapon_fr1' },
-				{ key: 'player_weapon_fr2' },
-					{ key: 'player_weapon_fr3' },
-						{ key: 'player_weapon_fr4', duration: 50 } 				
+			{ key: 'this.player_weapon_fr1' },
+				{ key: 'this.player_weapon_fr2' },
+					{ key: 'this.player_weapon_fr3' },
+						{ key: 'this.player_weapon_fr4', duration: 50 } 				
 		],
 		frameRate: 25,
 		repeat: 1
@@ -134,48 +144,6 @@ create() {
 		console.log('sick');
 	});
 /////////// health, ammo, and lives text  ///////////////////////////////////////////////////////
-
-	// health text
-		this.add.image(150, 60, 'player_interface').setScrollFactor(0);
-		this.text = this.add.text(20, 20,  '\u2764', { 	
-		fontSize: '30px',
-		fill: '#ffffff'
-		});
-		this.text.setScrollFactor(0);
-		this.text2 = this.add.text(25, 50,  '3', {
-		fontSize: '25px',
-		fontFamily: 'Bangers',
-		fill: '#ffffff'
-		});
-		this.text2.setScrollFactor(0);
-		// macaroni available
-		this.macaroniText = this.add.text(110, 15, 'Macaroni :', {
-			fontSize: '25px',
-			fontFamily: 'Bangers',
-			fill: '#ffffff'
-		});
-		this.macaroniText.setScrollFactor(0);
-		this.macaroniText2 = this.add.text(120, 50, '25', {
-			fontSize: '25px',
-			fontFamily: 'Bangers',
-			fill: '#ffffff'
-		});	
-		this.macaroniText2.setScrollFactor(0);
-		// lives available
-		this.lives = this.add.image(260, 30, 'lives');
-		this.lives.setScrollFactor(0);
-		livesText = this.add.text(245, 50, '3', {
-			fontSize: '25px',
-			fontFamily: 'Bangers',
-			fill: '#ffffff'
-		});	
-		livesText.setScrollFactor(0);
-		this.scene.pause('PlayState_MiniGame1');
-		let txt = this.add.text(400, 400, 'paused', {fontSize:'50px', fontFamily:'Arial', fill:'#ff0000'}).setInteractive();
-		txt.on('pointerdown', ()=>{
-			this.scene.run('PlayState_MiniGame1', true);
-			txt.tint = 0x000000;
-		}, this);
 	
 ////collisions
 this.physics.add.collider(player, ground);
@@ -194,8 +162,8 @@ this.physics.add.collider(player, ground);
 			player.tint = 0xff0000;
 			healthScore--;
 			this.text2.setText(healthScore);
-			this.playerHit = this.sound.add('player_hit');
-			this.playerHit.play();
+			this.this.playerHit = this.sound.add('this.player_hit');
+			this.this.playerHit.play();
 			this.timedEvent = this.time.addEvent({
 			delay: 250,
 			callback: onEvent,
@@ -222,8 +190,8 @@ this.physics.add.collider(player, ground);
 			}
 			healthScore--;
 			this.text2.setText(healthScore);
-			this.playerHit = this.sound.add('player_hit');
-			this.playerHit.play();
+			this.this.playerHit = this.sound.add('this.player_hit');
+			this.this.playerHit.play();
 		});
 		
 		//static enemy collision
@@ -243,27 +211,13 @@ this.physics.add.collider(player, ground);
 		}
 			healthScore--;
 			this.text2.setText(healthScore);
-			this.playerHit = this.sound.add('player_hit');
-			this.playerHit.play();
+			this.this.playerHit = this.sound.add('this.player_hit');
+			this.this.playerHit.play();
 		});
 		
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////
 		
-//// pick up items	     
-		 
-//macaroni (coin) tile collision
-		macaroniPickupLayer.setTileIndexCallback(17, collectmacaroni, this);   
-		this.physics.add.overlap(player, macaroniPickupLayer);
-		function collectmacaroni(player, tile) {                 
-		macaroniPickupLayer.removeTileAt(tile.x, tile.y);  
-		this.macaroniRing = this.sound.add('macaroni_ring');
-		this.macaroniRing.play();
-		macaroniAvailable++; 
-		this.macaroniText2.setText(macaroniAvailable); 
-		return false;
-		}
-	
 
 /////////////////////////////////////////////////////////////   LEVEL COMPLETE!  ///////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -610,20 +564,7 @@ this.physics.add.collider(player, ground);
 		if (player.body.onFloor() === false && this.right_buttonState === true && this.WKey.isDown){
 			player.anims.play('rolling_pin_loop', true);
 		}
-		if (healthScore <= 0){
-			this.mainTheme.stop()	
-			this.scene.stop('PlayState_lv2');
-			this.scene.start('LivesState_lv2');
-			livesAvailable--;
-			livesText.setText(livesAvailable);
-		}
-		if (livesAvailable <= 2){
-		livesText.setText(livesAvailable);
-		}		
-
-			if (macaroniAvailable <= 0){ 
-			this.iceBlockCollider.active = false;
-			}
+		
 				
  }//end update function
  

@@ -12,7 +12,7 @@ class PlayState_MiniGame2 extends Phaser.Scene {
 ////create
   
 create() {
-
+		
 		//background
 		this.bkgnd = 
 		this.add.image(500, 200, 'pixel2').setScale(1000);
@@ -51,7 +51,6 @@ create() {
 		player.setBounce(0.2); // our player will bounce from items
 		player.setCollideWorldBounds(true); // don't go out of the map    
 		player.body.setSize(player.width, player.height-8);
-		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 ////animations
 	//rolling pin
@@ -112,7 +111,7 @@ create() {
 		frames:[
 			{ key: 'rolling_pin_fr1' },
 				{ key: 'rolling_pin_fr2' },
-					{ key: 'rollinng_pin_fr3' },
+					{ key: 'rolling_pin_fr3' },
 						{ key: 'rolling_pin_fr4', duration: 50 } 				
 		],
 		frameRate: 100,
@@ -127,16 +126,10 @@ create() {
 	});			
 
 	
-	
-	let iceBlock = this.physics.add.sprite(300, 300, 'ice_block_fr1');
-	this.physics.add.collider(iceBlock, ground);	
-	this.iceBlockCollider = this.physics.add.collider(player, iceBlock, ()=>{
-		console.log('sick');
-	});
 /////////// health, ammo, and lives text  ///////////////////////////////////////////////////////
 
 	// health text
-		this.add.image(150, 60, 'player_interface').setScrollFactor(0);
+		this.add.image(150, 60, 'this.player_interface').setScrollFactor(0);
 		this.text = this.add.text(20, 20,  '\u2764', { 	
 		fontSize: '30px',
 		fill: '#ffffff'
@@ -188,8 +181,8 @@ this.physics.add.collider(player, ground);
 			player.tint = 0xff0000;
 			healthScore--;
 			this.text2.setText(healthScore);
-			this.playerHit = this.sound.add('player_hit');
-			this.playerHit.play();
+			this.this.playerHit = this.sound.add('this.player_hit');
+			this.this.playerHit.play();
 			this.timedEvent = this.time.addEvent({
 			delay: 250,
 			callback: onEvent,
@@ -216,8 +209,8 @@ this.physics.add.collider(player, ground);
 			}
 			healthScore--;
 			this.text2.setText(healthScore);
-			this.playerHit = this.sound.add('player_hit');
-			this.playerHit.play();
+			this.this.playerHit = this.sound.add('this.player_hit');
+			this.this.playerHit.play();
 		});
 		
 		//static enemy collision
@@ -237,8 +230,8 @@ this.physics.add.collider(player, ground);
 		}
 			healthScore--;
 			this.text2.setText(healthScore);
-			this.playerHit = this.sound.add('player_hit');
-			this.playerHit.play();
+			this.this.playerHit = this.sound.add('this.player_hit');
+			this.this.playerHit.play();
 		});
 		
 		
@@ -266,7 +259,6 @@ this.physics.add.collider(player, ground);
 		this.cameras.main.startFollow(player);  
 		
 /////////// game controls  /////////////////
-
 //cursors and keys
 		cursors = this.input.keyboard.createCursorKeys();
 		this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);		
@@ -360,54 +352,21 @@ this.physics.add.collider(player, ground);
 				this.B_button.tint = 0xffffff;
 				this.B_buttonState = false;
 		});
-		this.B_button.on('pointerdown', ()=>{
-				this.B_buttonState = true;
-				// B button weapon 2 (macaroni)
-		 if (player.flipX === false && macaroniAvailable >= 1 && this.B_buttonState === true){
-					player.anims.play('fire_macaroni', true);
-							this.macaroni = this.macaronis.create(player.x + 30, player.y, 'macaroni').play('macaroni_loop');
-							this.macaroni.setVelocityX(700);
-							this.time.addEvent({
-								delay: 1000,
-								callback: onEvent,
-								callbackScope: this
-							});	
-							function onEvent(){
-								this.macaronis.getChildren().map(child => child.destroy());
-							}			
-					macaroniAvailable--;	
-					this.macaroniText2.setText(macaroniAvailable);
-					// if run out of macaroni shots 
-				 if (macaroniAvailable <= 0){
-						this.macaroniText2.setText(0);
-				}
-				
-						
-			}
-			// B button weapon 2 (macaroni) left
-			else if (player.flipX === true && macaroniAvailable >= 1 && this.B_buttonState === true ){
-				player.anims.play('fire_macaroni', true);
-				this.huh = this.sound.add('huh');
-				this.huh.play();
-				this.macaroni = this.macaronis.create(player.x - 50, player.y, 'macaroni').play('macaroni_loop');
-				this.macaroni.flipX = true;
-				this.macaroni.setVelocityX(-700);
-				this.time.addEvent({
-						delay: 10000,
-						callback: onEvent,
-						callbackScope: this
-					});	
-					function onEvent(){
-						this.macaronis.getChildren().map(child => child.destroy());
+		this.B_button.on('pointerdown',  (pointer, time, lastFired)=>{
+					this.B_buttonState = true;
+					// Get bullet from bullets group
+					var playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+					var bullet = playerBullets.get().setActive(true).setVisible(true);
+					if (player.active === false){
+						return;
 					}
-					macaroniAvailable--;	
-					this.macaroniText2.setText(macaroniAvailable);
-					//// if run out of macaroni shots 
-					if (macaroniAvailable <= 0){
-						this.macaroniText2.setText(0);
+					if (bullet)
+					{
+						player.flipX === true ? this.macaroni = this.macaronis.create(player.x - 50, player.y, 'macaroni').play('macaroni_loop').setVelocityX(-700) : this.macaroni = this.macaronis.create(player.x + 50, player.y, 'macaroni').play('macaroni_loop').setVelocityX(700);
+					/*	bullet.fire(player);
+						this.physics.add.collider(enemy, bullet, enemyHitCallback);   */
 					}
-			}
-		});
+		}, this);
 		this.B_button.on('pointerup', ()=>{
 			this.B_buttonState = false;
 		});		
@@ -583,7 +542,9 @@ this.physics.add.collider(player, ground);
 	   player.anims.play('idle', true);
    }
 
-
+if (this.B_buttonState === true && macaroniAvailable === true){
+	player.anims.play('walk', true);
+}
 	
 		if (player.body.onFloor() === true && this.WKey.isDown){
 			player.body.setVelocityX(0);

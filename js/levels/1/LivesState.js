@@ -49,12 +49,6 @@ class LivesState extends Phaser.Scene{
 				}, this);
 		  }
 		}
-	// menu audio
-	this.menuMusic = this.sound.add('menu_music');
-	// score
-	
   }// end create function
-
-  
 ////////////
 }

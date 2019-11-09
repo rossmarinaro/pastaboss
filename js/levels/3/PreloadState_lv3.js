@@ -9,7 +9,15 @@ class PreloadState_lv3 extends Phaser.Scene {
   
  //////preload//////
   preload(){
-	this.add.text(260, 300, "Loading game...", {font: "35px Bangers", fill: '#ffff00'});
+		//loading text
+	this.loadingText =  this.add.text(300, 300, "Loading...", {font: "35px Digitizer", fill: '#ffff00'}).setStroke("#ff0000", 4);
+		 	//tween alpha loading pulse
+			 this.pulseTween = this.tweens.add({
+				targets: this.loadingText,
+				alpha: {value: 0.2, duration: 1000, ease: 'Power1'},
+				yoyo: true,
+				repeat: -1
+			});
 	//// gamepad buttons
     this.load.image('left_button', 'assets/buttons/left_button.png',64,64);
 	this.load.image('jump_button', 'assets/buttons/jump_button.png',96,64);
@@ -23,7 +31,7 @@ class PreloadState_lv3 extends Phaser.Scene {
 //// text	  
 	this.load.image('pastaboss_text', 'assets/images/pastaboss_text.png');
 ////map, environment, and background
-	this.load.image('pixel2', 'assets/backgrounds/pixel2.png');;
+	this.load.image('pixel2', 'assets/backgrounds/pixel2.png');
 	this.load.tilemapTiledJSON('map3',  'assets/maps/map3.json');
 	this.load.image('map3',  'assets/maps/map3.png'); 
 	this.load.spritesheet('tiles', 'assets/maps/tile_sheet_files/tiles.png', {frameWidth: 70, frameHeight: 70});
@@ -105,7 +113,7 @@ class PreloadState_lv3 extends Phaser.Scene {
 	this.load.image('player_weapon_fr2', 'assets/player/player_weapon/2.png');
 	this.load.image('player_weapon_fr3', 'assets/player/player_weapon/3.png');
 	this.load.image('player_weapon_fr4', 'assets/player/player_weapon/4.png');
-	//this.load.atlas('player_weapon', 'assets/player_weapon/tmp.png', 'assets/player_weapon/tmp.json');
+	//this.load.atlas('this.player_weapon', 'assets/this.player_weapon/tmp.png', 'assets/this.player_weapon/tmp.json');
 	//idle
 	this.load.image('idle1', 'assets/player/idle/1.png');
 	this.load.image('idle2', 'assets/player/idle/2.png');
@@ -137,8 +145,7 @@ class PreloadState_lv3 extends Phaser.Scene {
 	this.load.image('ramen', 'assets/images/rubberglovedub.png');
 	//hitbox
 	this.load.image('hitbox', 'assets/hitbox/1.png');
-	//exit door
-	this.load.image('exit', 'assets/doors/exit.png');
+
 		
   }
 

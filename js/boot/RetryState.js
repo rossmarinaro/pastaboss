@@ -32,7 +32,9 @@ class RetryState extends Phaser.Scene{
 				this.ring.play();
 				this.scene.start('MenuState');
 			}, this);
-	}		
+	}
+	//check music	
+	musicIsPlaying = false;
 ////end create
   }
   
