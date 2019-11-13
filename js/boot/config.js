@@ -18,19 +18,8 @@ var config = {
     },
     //array of stages/ minigames within the game
     scene: 
-        [BootState, PreloadState, Preload_IntroState, IntroState, MenuState, PlayState, PreloadState_lv2, PlayState_lv2,
-        PreloadState_lv3, PlayState_lv3, PreloadState_MiniGame1, 
-        PlayState_MiniGame1, PreloadState_MiniGame2, PlayState_MiniGame2,
-        PreloadState_MiniGame3, PlayState_MiniGame3,
-        RetryState, LivesState, LivesState_lv2, LivesState_lv3,
+        [BootState, PreloadState, Preload_IntroState, IntroState, MenuState, PlayState]
         /////////////////////////////////////////////////////// 
-            //extend
-                { extend: {
-                        player: null,
-                        playerBullets: null,
-                        time: 0,
-                    }}
-         ]
    
 };
 //////////////////////
