@@ -67,7 +67,7 @@ a{
 	
 	font-family: 'Bangers' , 'Arial Black' , sans-serif;
 	font-weight: 700;
-	font-size: 3em;
+	font-size: 2em;
 	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #000000;
 	text-decoration: none;
 	letter-spacing: 0.05em;
@@ -81,6 +81,20 @@ form label{
 		
 }
 
+
+figure > figcaption > p {
+	padding: 0 5% 0 5%;
+	text-align: center;
+	margin: 0 auto;
+	font-size: 0.5em;
+	font-family: 'Bangers', 'Arial Black', sans-serif;
+	font-weight: bold;
+	font-style: italic;
+	text-shadow: 0.08em 0.08em 0.08em #F4F442 , 0.1em 0.1em #000000;
+	color: #000000;
+	
+	
+}
 														/* id  */
 							
  /*navigation*/
@@ -108,22 +122,22 @@ form label{
 }
 
 #nav-button a:hover{
-		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A; 
-		color: #ff0000;
+	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A; 
+	color: #ff0000;
 
 }
 #navigation a:hover{
 	
-		color:#F4F442;
-		text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;
+	color:#F4F442;
+	text-shadow: 0.05em 0.05em 0.05em #F4F442 , 0.2em 0.2em 0.2em #CD0A0A;
 	
+}
+#book-content{
+	float: center;
+	left: 250px;
 }
 
-.content-grid{
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	
-}
+
 
 .video-wrapper iframe{
 
@@ -132,48 +146,7 @@ form label{
 	height: 520px;
 	position: relative;
 }
-.book-content{
- float: center;
-	left: 250px;
-}
-.book-text{
-	box-sizing: border-box;
-	border: 0.5em solid #000000;
-	background: #D39009;
-	margin: auto;
-	width: 80%;
-}
-.book-text p {
-	padding: 0 5% 0 5%;
-	text-align: center;
-	font-size: 2em;
-	font-family: 'Bangers', 'Arial Black', sans-serif;
-	font-weight: bold;
-	font-style: italic;
-	text-shadow: 0.08em 0.08em 0.08em #F4F442 , 0.1em 0.1em #000000;
-	color: #000000;
-	
-	
-}
-.video-text{
-	box-sizing: border-box;
-	border: 0.5em solid #000000;
-	background: #D39009;
-	margin: auto;
-	width: 80%;
-}
-.video-text p {
-	
-	text-align: center;
-	font-size: 2em;
-	font-family: 'Bangers', 'Arial Black', sans-serif;
-	font-weight: bold;
-	font-style: italic;
-	text-shadow: 0.08em 0.08em 0.08em #F4F442 , 0.1em 0.1em #000000;
-	color: #000000;
-	margin-left: 5%;
-	
-}
+
 .container{
 	
 	display: grid;
@@ -239,12 +212,6 @@ form label{
 
  }
  
- @media screen and ( max-width: 1400px){
-	 .content-grid{
-		 display: block;
-		 align-content: center;
-	 }
- }
   
  /*mobile*/ @media screen and ( max-width: 720px){
 	
@@ -258,11 +225,8 @@ form label{
 		a{
 		 font-size: 1.5em;	
 		}
-		.book-text p{
+		.content-text p{
 			font-size: 1em;
-		}
-		.video-text p{
-			font-size: 1.5em;
 		}
 		.video-wrapper	iframe{
 		 margin: auto;

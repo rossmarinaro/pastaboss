@@ -3,67 +3,105 @@
 <!--head-->
 <head>
 	<meta charset="utf-8">
-					<meta name="viewport" content="width=device-width, initial-scale=1.0">
-					<link rel="stylesheet" type="text/css" href="reset.css"/>
-					<link rel="stylesheet" type="text/css" href="style.css"/>
-					<link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
-					<title>Pastaboss! &#127837; &#128076;</title>
-					<script type="text/javascript" src="jquery.js"></script>
-					<script type="text/javascript" src="cycleplugin.js"></script>	
-		<!--				@media screen and (min-width: 1000px){
-		#book-cycle{
-			left: 35%;
-		}
-		}  -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="images/images/logo.png" type="image/png">
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<title>Pastaboss! &#127837; &#128076;</title>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="cycleplugin.js"></script>	
+
 	<style>
 
+
+		#game-demo-image:hover{
+				opacity: 0.5;
+		}
 		#book-cycle:hover{
 				opacity: 0.5;
 		}
 
+		.content-text {
+	
+			padding: 0 5% 0 5%;
+			text-align: center;
+			margin: 0 auto;
+			font-size: 2em;
+			font-family: 'Bangers', 'Arial Black', sans-serif;
+			font-weight: bold;
+			font-style: italic;
+			text-shadow: 0.08em 0.08em 0.08em #F4F442 , 0.1em 0.1em #000000;
+			color: #000000;
+
+		}
+
 		@media screen and (min-width: 800px){
-					#book-cycle{
-					margin-top:20px;
-					left:35%;
-					}
-					#book-cycle img{
-						width: 380px;
-						height: 580px;
-					}
-			}				
+		
+			img:not(#book-cycle img){
+				margin-left: 45%;
+			}
+			#book-cycle{
+				margin-top:20px;
+				left:35%;
+			}
+			#book-cycle img{
+				width: 380px;
+				height: 580px;
+			}
+		}				
 		@media screen and (max-width: 720px){
-					#book-cycle{
-					left: 5%;
-					}
-					#book-cycle img{
-						width: 220px;
-						height: 300px;
-						margin-right: 20px;
-					}
+
+			
+			#book-cycle{
+			left: 5%;
+			}
+			#book-cycle img{
+				width: 220px;
+				height: 300px;
+				margin-right: 20px;
+			}
+			.content-text{
+				font-size: 1em;
+			}
 		}	
 	</style>
 </head>
+
 <!--body-->
+
 <body>
-	<div class="font-style">
+
 		<header>
-<!--navigation-->	<div id="nav-button">
-						<a>&#9776;</a>
-					</div>										
-					<div id="navigation"> 		
-						<ul>
-							<li><a href="game.html">Games</a></li>
-							<li><a href="comics.html">Comics</a></li>
-							<li><a href="clips.html">Clips</a></li>
-							<li><a href="https://pastaboss.bandcamp.com">Bandcamp</a></li>
-							<li><a href="https://instagram.com/pastaboss/">Instagram</a></li>
-						</ul>
-					</div>						
+			<!--navigation-->
+			<div id="nav-button">
+			<a>&#9776;</a>
+			</div>										
+			<div id="navigation"> 		
+				<ul>
+					<li><a href="clips.html">Clips</a></li>
+					<li><a href="https://pastaboss.itch.io">Games</a></li>
+					<li><a href="https://instagram.com/pastaboss/">Instagram</a></li>
+					<li><a href="https://pastaboss.bandcamp.com">Bandcamp</a></li>
+					<li><a href="https://soundcloud.com/pastaboss">Soundcloud</a></li>
+				</ul>
+			</div>						
 		<header>
-		<section class="content-grid">
+
+		<section >
+
+		<!--game demo-->
+
+			
+				<figure>					 
+					<a href="https://pastaboss.onrender.com"><img id="game-demo-image" src="images/images/logo.png" alt="image"></a>
+					<figcaption>
+						<p class="content-text">Game Demo</p>				
+					</figcaption>
+				</figure>		
+				
 		<!--book-->
-				<div class="book-content">
-				 <figure id="book-cycle">					 
+		
+				<figure>	
+					<div id="book-cycle">
 						<img class="cycle-images" src="images/book/1.png" alt="image">
 						<img class="cycle-images" src="images/book/2.png" alt="image">
 						<img class="cycle-images" src="images/book/3.png" alt="image">
@@ -72,37 +110,44 @@
 						<img class="cycle-images" src="images/book/6.png" alt="image">
 						<img class="cycle-images" src="images/book/7.png" alt="image">
 						<img class="cycle-images" src="images/book/8.png" alt="image">
+					</div>				 
+			
+						<figcaption>
+							<p class="content-text"> "Pastaboss: A Brief Introduction"</p>
+							<p class="content-text">2019 release 30 page paperback comic book "Pastaboss Vol:1"</p>
+							<p class="content-text">Now available now on Amazon&copy;  Kindle </p>					
+						</figcaption>
 				</figure>		
-				<div class="book-text">
-					<p> "Pastaboss: A Brief Introduction"</p>
-					<p>2019 release 30 page paperback comic 
-					 book "Pastaboss Vol:1", now available now on Amazon&copy;  Kindle </p>					
-				</div>
-				</div>
+			
 		<!--featured video-->
-			<div class="video-content">
+
 			<figure class="video-wrapper">  
-				<iframe src="https://www.youtube.com/embed/HblOPqqm3aU" 
-				frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-				</iframe>
+				<iframe src="https://www.youtube.com/embed/HblOPqqm3aU" style="margin-left: 20%;" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<figcaption>
+							<p class="content-text"> Demo Reel <p>
+							<p class="content-text">An overview of latest happenings in the food grade realm</p>	
+						</figcaption>
+					</div>
+				<div>
 			</figure>
-			<div class="video-text">
-					<p> Demo Reel <p>
-					<p>An overview of latest happenings in the food grade realm</p>	
-				</div>
-				</div>
-			<div>
+	
 	</section>
-		<!--footer-->
+
+	<!--footer-->
+
 	<footer>
-					<h5><a href="mailto:pastabossross@gmail.com">CONTACT/BOOKING</a></h5>
-				<p><a href="https://rossmarinaro.github.io/rem/"><span>Website by Ross Marinaro</span></a><br></br>
-				Copyright &copy;2019 REMAREMYINITIALS / PASTABOSS</p>		
+			<h5><a href="mailto:pastabossross@gmail.com">CONTACT/BOOKING</a></h5>
+			<p><a href="https://rossmarinaro.github.io/portfolio/"><span>Website by Ross Marinaro</span></a><br></br>
+			Copyright &copy;2019 REMAREMYINITIALS / PASTABOSS</p>		
 	</footer>
-	</div>
+
+
 </body>
+
 <!--script-->
+
 <script type="text/javascript" src="script.js"></script> 
+
 </html>
 
 
